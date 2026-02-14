@@ -1,4 +1,4 @@
-import type { MetadataRoute } from "next";
+import type {MetadataRoute} from "next";
 
 export const dynamic = "force-static";
 export default function manifest(): MetadataRoute.Manifest {
@@ -33,14 +33,14 @@ export default function manifest(): MetadataRoute.Manifest {
     screenshots: [
       {
         src: getPath("/screenshots/home-desktop.png"),
-        sizes: "1280x673",
+        sizes: "1280x670",
         type: "image/png",
         form_factor: "wide",
         label: "Home screen on desktop",
       },
       {
         src: getPath("/screenshots/home-mobile.png"),
-        sizes: "720x1559",
+        sizes: "720x1600",
         type: "image/png",
         label: "Home screen on mobile",
       },

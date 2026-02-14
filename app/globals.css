@@ -5,59 +5,73 @@
 
 /* --- Brand palette extracted from the icon --- */
 @theme {
-    /* Brand blues (from icon) */
-    --color-brand-50:  #fcfdfd; /* almost white */
-    --color-brand-100: #c7ddeb;
-    --color-brand-200: #97bfdc;
-    --color-brand-300: #7298b9;
-    --color-brand-400: #54c4fa;
-    --color-brand-500: #3fa1ee;
-    --color-brand-600: #1d6dc9;
-    --color-brand-700: #17589f;
-    --color-brand-800: #1b437b;
-    --color-brand-900: #102b5e;
+  /* Brand blues (from icon) */
+  --color-brand-50: #fcfdfd; /* almost white */
+  --color-brand-100: #c7ddeb;
+  --color-brand-200: #97bfdc;
+  --color-brand-300: #7298b9;
+  --color-brand-400: #54c4fa;
+  --color-brand-500: #3fa1ee;
+  --color-brand-600: #1d6dc9;
+  --color-brand-700: #17589f;
+  --color-brand-800: #1b437b;
+  --color-brand-900: #102b5e;
 
-    /* Accent greens (checkmark glow) */
-    --color-accent-400: #41ec7b;
-    --color-accent-500: #1bba68;
-    --color-accent-600: #6cd520;
+  /* Accent greens (checkmark glow) */
+  --color-accent-400: #41ec7b;
+  --color-accent-500: #1bba68;
+  --color-accent-600: #6cd520;
 
-    /* Semantic tokens (so you don’t hardcode colors everywhere) */
-    --color-bg:        #fcfdfd;
-    --color-surface:   #ffffff;
-    --color-surface-2: #c7ddeb;
-    --color-text:      #102b5e;
-    --color-muted:     #7298b9;
+  /* Semantic tokens (so you don’t hardcode colors everywhere) */
+  --color-bg: #fcfdfd;
+  --color-surface: #ffffff;
+  --color-surface-2: #c7ddeb;
+  --color-text: #102b5e;
+  --color-muted: #7298b9;
 
-    /* Border / ring defaults */
-    --color-border:    #97bfdc;
+  /* Border / ring defaults */
+  --color-border: #97bfdc;
+
+  /* Error reds (aligned with accent intensity and brand saturation) */
+  --color-error-400: #ff5a6b; /* hover / light error */
+  --color-error-500: #e53950; /* primary error */
+  --color-error-600: #c6283e; /* strong error */
+  /* Semantic error tokens (recommended usage) */
+  --color-error: #e53950;
+  --color-error-bg: #fff1f3;
+  --color-error-border: #ffccd3;
+  --color-error-text: #c6283e;
 }
 
 @theme inline {
-    --color-background: var(--color-bg);
-    --color-foreground: var(--color-text);
-    --font-sans: var(--font-geist-sans);
-    --font-mono: var(--font-geist-mono);
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-text);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }
 
 /* Dark mode token overrides (matches the icon’s deep blues) */
 .dark {
-    @theme {
-        --color-bg:        #102b5e;
-        --color-surface:   #1b437b;
-        --color-surface-2: #17589f;
-        --color-text:      #fcfdfd;
-        --color-muted:     #c7ddeb;
-        --color-border:    #17589f;
-    }
+  @theme {
+    --color-bg: #102b5e;
+    --color-surface: #1b437b;
+    --color-surface-2: #17589f;
+    --color-text: #fcfdfd;
+    --color-muted: #c7ddeb;
+    --color-border: #17589f;
+    --color-error: #ff5a6b;
+    --color-error-bg: #3a0f16;
+    --color-error-border: #7a1c28;
+    --color-error-text: #ff9aa5;
+  }
 }
 
 /* Example global base styling using the semantic tokens */
 html, body {
-    height: 100%;
+  height: 100%;
 }
 
 body {
-    background: var(--color-bg);
-    color: var(--color-text);
+  background: var(--color-bg);
+  color: var(--color-text);
 }
