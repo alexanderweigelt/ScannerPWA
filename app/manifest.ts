@@ -14,8 +14,8 @@ export default function manifest(): MetadataRoute.Manifest {
     display: "standalone",
     display_override: ["window-controls-overlay"],
     orientation: "any",
-    background_color: "#111827",
-    theme_color: "#1c64f2",
+    background_color: "#102b5e",
+    theme_color: "#17589f",
     icons: [
       {
         src: getPath("/android-chrome-192x192.png"),
@@ -33,14 +33,14 @@ export default function manifest(): MetadataRoute.Manifest {
     screenshots: [
       {
         src: getPath("/screenshots/home-desktop.png"),
-        sizes: "1280x670",
+        sizes: "1280x506",
         type: "image/png",
         form_factor: "wide",
         label: "Home screen on desktop",
       },
       {
         src: getPath("/screenshots/home-mobile.png"),
-        sizes: "720x1600",
+        sizes: "720x1558",
         type: "image/png",
         label: "Home screen on mobile",
       },
