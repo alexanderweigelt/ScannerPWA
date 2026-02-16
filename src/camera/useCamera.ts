@@ -1,4 +1,4 @@
-import {useRef, useCallback, useState} from 'react';
+import { useRef, useCallback, useState } from 'react';
 
 interface UseCameraReturn {
   streamRef: React.RefObject<MediaStream | null>;
@@ -6,10 +6,13 @@ interface UseCameraReturn {
   isActive: boolean;
   startCamera: () => Promise<void>;
   stopCamera: () => void;
+  captureFrame: () => string | null;
+  videoRef: React.RefObject<HTMLVideoElement | null>;
 }
 
 export const useCamera = (): UseCameraReturn => {
   const streamRef = useRef<MediaStream | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isActive, setIsActive] = useState(false);
 
@@ -17,7 +20,7 @@ export const useCamera = (): UseCameraReturn => {
     try {
       setError(null);
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: {facingMode: 'user'},
+        video: { facingMode: 'user' },
         audio: false,
       });
       streamRef.current = stream;
@@ -37,5 +40,19 @@ export const useCamera = (): UseCameraReturn => {
     }
   }, []);
 
-  return {streamRef, error, isActive, startCamera, stopCamera};
+  const captureFrame = useCallback(() => {
+    if (!videoRef.current) return null;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = videoRef.current.videoWidth;
+    canvas.height = videoRef.current.videoHeight;
+
+    const context = canvas.getContext('2d');
+    if (!context) return null;
+
+    context.drawImage(videoRef.current, 0, 0);
+    return canvas.toDataURL('image/jpeg', 0.95);
+  }, []);
+
+  return { streamRef, error, isActive, startCamera, stopCamera, captureFrame, videoRef };
 };
