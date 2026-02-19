@@ -11,10 +11,16 @@ const config: Config = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
   },
-  testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/', '<rootDir>/tests/e2e/'],
+  testPathIgnorePatterns: [
+    '<rootDir>/.next/',
+    '<rootDir>/node_modules/',
+    '<rootDir>/tests/e2e/',
+    '<rootDir>/src/__tests__/mocks/'
+  ],
   collectCoverageFrom: [
     'app/**/*.{ts,tsx}',
     'src/**/*.{ts,tsx}',
+    '!src/__tests__/**',
     '!**/*.d.ts',
     '!**/node_modules/**',
     '!**/.next/**',
