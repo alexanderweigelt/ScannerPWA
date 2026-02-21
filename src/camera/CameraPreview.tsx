@@ -4,87 +4,99 @@ import { useCamera } from './useCamera';
 
 interface CameraPreviewProps {
   onError?: (error: string) => void;
+
+  /**
+   * Only called when the user accepts the scan.
+   * (You can then trigger the PDF export here later.)
+   */
   onCapture?: (imageData: string) => void;
 }
 
 export const CameraPreview: React.FC<CameraPreviewProps> = ({ onError, onCapture }) => {
-  const { streamRef, error, isActive, startCamera, stopCamera, captureFrame, videoRef } = useCamera();
-  const [capturedImage, setCapturedImage] = useState<string | null>(null);
-  const videoElementRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationFrameRef = useRef<number | null>(null);
+  const { error, isActive, startCamera, stopCamera, captureFrame, videoRef } = useCamera();
+  const [pendingScan, setPendingScan] = useState<string | null>(null);
+  const previewCanvasRef = useRef<HTMLCanvasElement>(null);
+  const rafRef = useRef<number | null>(null);
 
-  // Draw video frames to canvas continuously
-  const drawCanvasFrame = useCallback(() => {
-    if (canvasRef.current && videoElementRef.current && isActive && !capturedImage) {
-      const context = canvasRef.current.getContext('2d');
-      if (context) {
-        context.drawImage(
-          videoElementRef.current,
-          0,
-          0,
-          canvasRef.current.width,
-          canvasRef.current.height
-        );
-      }
-      animationFrameRef.current = requestAnimationFrame(drawCanvasFrame);
+  const stopPreviewLoop = useCallback(() => {
+    if (rafRef.current != null) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
     }
-  }, [isActive, capturedImage]);
+  }, []);
+
+  const drawLoop = useCallback(() => {
+    const video = videoRef.current;
+    const canvas = previewCanvasRef.current;
+
+    if (!video || !canvas || !isActive || pendingScan) return;
+
+    const vw = video.videoWidth;
+    const vh = video.videoHeight;
+
+    // Noch nicht ready
+    if (!vw || !vh || video.readyState < 2) {
+      rafRef.current = requestAnimationFrame(drawLoop);
+      return;
+    }
+
+    if (canvas.width !== vw) canvas.width = vw;
+    if (canvas.height !== vh) canvas.height = vh;
+
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      ctx.drawImage(video, 0, 0, vw, vh);
+    }
+
+    rafRef.current = requestAnimationFrame(drawLoop);
+  }, [isActive, pendingScan, videoRef]);
 
   useEffect(() => {
-    if (isActive && videoElementRef.current && streamRef.current) {
-      videoElementRef.current.srcObject = streamRef.current;
-      Object.assign(videoRef, { current: videoElementRef.current });
-
-      videoElementRef.current.onloadedmetadata = () => {
-        if (canvasRef.current) {
-          canvasRef.current.width = videoElementRef.current!.videoWidth;
-          canvasRef.current.height = videoElementRef.current!.videoHeight;
-          drawCanvasFrame();
-        }
-      };}
-  }, [isActive, streamRef, videoRef, drawCanvasFrame]);
-
-  useEffect(() => {
-    if (!capturedImage && isActive) {
-      drawCanvasFrame();
-    } else if (capturedImage && animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current);
+    if (isActive && !pendingScan) {
+      stopPreviewLoop();
+      rafRef.current = requestAnimationFrame(drawLoop);
+    } else {
+      stopPreviewLoop();
     }
-  }, [capturedImage, isActive, drawCanvasFrame]);
+  }, [isActive, pendingScan, drawLoop, stopPreviewLoop]);
 
   useEffect(() => {
     return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
+      stopPreviewLoop();
       stopCamera();
     };
-  }, [stopCamera]);
+  }, [stopPreviewLoop, stopCamera]);
 
   useEffect(() => {
-    if (error && onError) {
-      onError(error);
-    }
+    if (error) onError?.(error);
   }, [error, onError]);
 
   const handleCapture = () => {
-    if (canvasRef.current) {
-      const imageData = canvasRef.current.toDataURL('image/jpeg', 0.95);
-      setCapturedImage(imageData);
-      if (onCapture) {
-        onCapture(imageData);
-      }
-    }
+    const scannedDataUrl = captureFrame(); // OpenCV-Scan (oder Fallback)
+    if (!scannedDataUrl) return;
+
+    setPendingScan(scannedDataUrl);
+
+    requestAnimationFrame(() => {
+      stopCamera();
+    });
   };
 
-  const handleClearCapture = () => {
-    setCapturedImage(null);
+  const handleAccept = () => {
+    if (!pendingScan) return;
+    onCapture?.(pendingScan);
+  };
+
+  const handleRescan = async () => {
+    setPendingScan(null);
+    await startCamera();
   };
 
   return (
     <div className="w-full flex flex-col gap-4 p-4">
-      {!isActive && (
+      <video ref={videoRef} autoPlay playsInline muted className="hidden" />
+
+      {!isActive && !pendingScan && (
         <button
           onClick={startCamera}
           className="px-5 py-2 text-base font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors cursor-pointer"
@@ -93,26 +105,21 @@ export const CameraPreview: React.FC<CameraPreviewProps> = ({ onError, onCapture
         </button>
       )}
 
-      {isActive && !capturedImage && (
+      {isActive && !pendingScan && (
         <>
-          <video
-            ref={videoElementRef}
-            autoPlay
-            playsInline
-            muted
-            className="hidden"
-          />
           <canvas
-            ref={canvasRef}
+            ref={previewCanvasRef}
             className="w-full max-w-2xl rounded-lg bg-black aspect-video object-cover"
           />
+
           <div className="flex gap-2 justify-center">
             <button
               onClick={handleCapture}
               className="px-5 py-2 text-base font-medium text-white bg-green-600 rounded-md hover:bg-green-700 transition-colors cursor-pointer"
             >
-              Capture Frame
+              Capture Scan
             </button>
+
             <button
               onClick={stopCamera}
               className="px-5 py-2 text-base font-medium text-white bg-red-600 rounded-md hover:bg-red-700 transition-colors cursor-pointer"
@@ -123,25 +130,27 @@ export const CameraPreview: React.FC<CameraPreviewProps> = ({ onError, onCapture
         </>
       )}
 
-      {capturedImage && (
+      {pendingScan && (
         <>
           <img
-            src={capturedImage}
-            alt="Captured frame"
+            src={pendingScan}
+            alt="Scanned document preview"
             className="w-full max-w-2xl rounded-lg bg-black aspect-video object-contain"
           />
+
           <div className="flex gap-2 justify-center">
             <button
-              onClick={handleClearCapture}
+              onClick={handleAccept}
+              className="px-5 py-2 text-base font-medium text-white bg-green-600 rounded-md hover:bg-green-700 transition-colors cursor-pointer"
+            >
+              Accept Scan
+            </button>
+
+            <button
+              onClick={handleRescan}
               className="px-5 py-2 text-base font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors cursor-pointer"
             >
-              Capture Again
-            </button>
-            <button
-              onClick={stopCamera}
-              className="px-5 py-2 text-base font-medium text-white bg-red-600 rounded-md hover:bg-red-700 transition-colors cursor-pointer"
-            >
-              Stop Camera
+              Scan Again
             </button>
           </div>
         </>
