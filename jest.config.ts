@@ -15,7 +15,9 @@ const config: Config = {
     '<rootDir>/.next/',
     '<rootDir>/node_modules/',
     '<rootDir>/tests/e2e/',
-    '<rootDir>/src/__tests__/mocks/'
+    '<rootDir>/src/__tests__/mocks/',
+    '<rootDir>/src/__tests__/helpers/',
+    '<rootDir>/.claude/',
   ],
   collectCoverageFrom: [
     'app/**/*.{ts,tsx}',

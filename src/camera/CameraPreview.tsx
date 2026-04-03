@@ -15,7 +15,7 @@ interface CameraPreviewProps {
 }
 
 export const CameraPreview: React.FC<CameraPreviewProps> = ({ onError, onCapture, onStop, isOpenCVReady }) => {
-  const { error, isActive, startCamera, stopCamera, captureFrame, videoRef } = useCamera(isOpenCVReady);
+  const { error, scanError, isActive, startCamera, stopCamera, captureFrame, videoRef } = useCamera(isOpenCVReady);
   const [pendingScan, setPendingScan] = useState<string | null>(null);
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
   const rafRef = useRef<number | null>(null);
@@ -194,6 +194,14 @@ export const CameraPreview: React.FC<CameraPreviewProps> = ({ onError, onCapture
 
       {pendingScan && (
         <>
+          {scanError && (
+            <div
+              data-testid="scan-error-message"
+              className="w-full max-w-2xl mx-auto px-3 py-2 text-sm text-amber-800 bg-amber-100 border border-amber-300 rounded-md"
+            >
+              Scan processing failed — showing raw capture. ({scanError})
+            </div>
+          )}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={pendingScan}

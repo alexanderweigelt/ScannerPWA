@@ -16,6 +16,7 @@ describe('CameraPreview', () => {
     mockUseCamera.mockReturnValue({
       streamRef: { current: null },
       error: null,
+      scanError: null,
       isActive: false,
       startCamera: jest.fn(),
       stopCamera: jest.fn(),

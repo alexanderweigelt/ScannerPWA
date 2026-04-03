@@ -8,6 +8,11 @@
 - Do not change public APIs unless required by the task.
 - Avoid unrelated refactorings.
 
+## Coding Rules
+- Documentation: Use JSDoc (https://jsdoc.app/) for all functions, methods, and classes.
+- Notations: Use `// some note` for inline notations.
+- For future updates, provide minimal JSDoc for new/modified functions and methods.
+
 ## TypeScript and React
 - Use strict TypeScript.
 - Do not use `any`.

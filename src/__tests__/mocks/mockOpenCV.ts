@@ -31,7 +31,13 @@ export class MockMat implements OpenCVMatrix {
   type(): number { return this.typeValue; }
   ptr(): number { return 0; }
   copyTo(): void {}
-  clone(): MockMat { return new MockMat(this.rows, this.cols, this.typeValue); }
+  clone(): MockMat {
+    const copy = new MockMat(this.rows, this.cols, this.typeValue);
+    copy.data8U = this.data8U;
+    copy.data32F = this.data32F;
+    copy.data32S = this.data32S;
+    return copy;
+  }
   release(): void {}
   delete(): void {}
 }
@@ -78,6 +84,8 @@ export function createMockOpenCV(): OpenCVAPI {
     Rect: jest.fn((x, y, w, h) => ({ x, y, width: w, height: h })) as any,
     Scalar: jest.fn() as any,
     morphologyEx: jest.fn() as MockedFn<OpenCVAPI['morphologyEx']>,
+    transpose: jest.fn() as MockedFn<OpenCVAPI['transpose']>,
+    flip: jest.fn() as MockedFn<OpenCVAPI['flip']>,
 
     // Constants
     CV_8U: 0,
@@ -201,6 +209,16 @@ export function createMockOpenCV(): OpenCVAPI {
   });
 
   mock(cv.matFromArray).mockReturnValue(new MockMat());
+
+  mock(cv.transpose).mockImplementation((src: OpenCVMatrix, dst: OpenCVMatrix) => {
+    dst.rows = src.cols;
+    dst.cols = src.rows;
+  });
+
+  mock(cv.flip).mockImplementation((src: OpenCVMatrix, dst: OpenCVMatrix) => {
+    dst.rows = src.rows;
+    dst.cols = src.cols;
+  });
 
   return cv;
 }

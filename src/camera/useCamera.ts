@@ -1,10 +1,11 @@
 import { useRef, useCallback, useState, useEffect } from "react";
-import { scanIntoCanvas } from "@/src/scan/scanIntoCanvas";
+import { runScanPipeline } from "@/src/scan/scanPipeline";
 import { requireOpenCV } from "@/src/types/opencv";
 
 interface UseCameraReturn {
   streamRef: React.RefObject<MediaStream | null>;
   error: string | null;
+  scanError: string | null;
   isActive: boolean;
   startCamera: () => Promise<void>;
   stopCamera: () => void;
@@ -35,15 +36,16 @@ async function getRearCameraStream() {
 
 export const useCamera = (isOpenCVReady?: boolean): UseCameraReturn => {
   const streamRef = useRef<MediaStream | null>(null);
-
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const resultCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const [error, setError] = useState<string | null>(null);
+  const [scanError, setScanError] = useState<string | null>(null);
   const [isActive, setIsActive] = useState(false);
 
   const startCamera = useCallback(async () => {
     setError(null);
+    setScanError(null);
     try {
       const stream = await getRearCameraStream();
 
@@ -69,46 +71,50 @@ export const useCamera = (isOpenCVReady?: boolean): UseCameraReturn => {
     setIsActive(false);
   }, []);
 
-  const captureFrame = useCallback((sourceCanvas: HTMLCanvasElement) => {
-    const resultCanvas = resultCanvasRef.current;
-    if (!resultCanvas) {
-      resultCanvasRef.current = document.createElement("canvas");
-    }
-    const finalResultCanvas = resultCanvasRef.current!;
+  const captureFrame = useCallback(
+    (sourceCanvas: HTMLCanvasElement): string | null => {
+      if (!resultCanvasRef.current) {
+        resultCanvasRef.current = document.createElement("canvas");
+      }
+      const finalResultCanvas = resultCanvasRef.current;
 
-    const snapshot = document.createElement("canvas");
-    snapshot.width = sourceCanvas.width;
-    snapshot.height = sourceCanvas.height;
-    const snapshotCtx = snapshot.getContext("2d");
-    if (!snapshotCtx) {
-      return null;
-    }
-    snapshotCtx.drawImage(sourceCanvas, 0, 0);
+      const snapshot = document.createElement("canvas");
+      snapshot.width = sourceCanvas.width;
+      snapshot.height = sourceCanvas.height;
+      const snapshotCtx = snapshot.getContext("2d");
+      if (!snapshotCtx) {
+        return null;
+      }
+      snapshotCtx.drawImage(sourceCanvas, 0, 0);
 
-    const cv = requireOpenCV();
+      const cv = requireOpenCV();
 
-    if (cv && isOpenCVReady) {
-      try {
-        const success = scanIntoCanvas(cv, snapshot, finalResultCanvas);
+      if (cv && isOpenCVReady) {
+        const result = runScanPipeline(cv, snapshot, finalResultCanvas);
 
-        if (success) {
+        if (result.ok) {
+          setScanError(null);
           return finalResultCanvas.toDataURL("image/jpeg", 0.95);
         }
-      } catch (e) {
-        console.error("OpenCV scan error:", e);
-      }
-    }
 
-    // fallback: return the raw snapshot
-    console.warn("OpenCV not available or scan failed, falling back to raw frame");
-    return snapshot.toDataURL("image/jpeg", 0.95);
-  }, [isOpenCVReady]);
+        console.warn(`[scan] failed: ${result.reason} — ${result.message}`);
+        setScanError(result.message);
+      } else {
+        setScanError(null);
+      }
+
+      // Fallback: return raw snapshot so the UI still has something to show
+      return snapshot.toDataURL("image/jpeg", 0.95);
+    },
+    [isOpenCVReady]
+  );
 
   useEffect(() => stopCamera, [stopCamera]);
 
   return {
     streamRef,
     error,
+    scanError,
     isActive,
     startCamera,
     stopCamera,
