@@ -10,10 +10,10 @@ export default function Home() {
           <h1 className="flex max-w-xs text-6xl gap-4 font-semibold leading-10 tracking-tight text-brand-800 dark:text-brand-50">
             <Image
               className="dark:invert"
-              src="./scanner.svg"
+              src="./icons/scanner.svg"
               alt="Scanner PWA logo"
               width={48}
-              height={20}
+              height={48}
               priority
             />
             Scanner

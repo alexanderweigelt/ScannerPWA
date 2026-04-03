@@ -6,7 +6,7 @@ This project was bootstrapped with [`create-next-app`](https://nextjs.org/docs/a
 
 The application uses:
 
-- **[jscanify](https://github.com/puffinsoft/jscanify)** for document detection and image processing  
+- **[OpenCV](https://docs.opencv.org/4.13.0/index.html)** for document detection and image processing  
 - **[jsPDF](https://github.com/parallax/jsPDF)** for generating PDF files  
 - **Next.js (App Router)** as the application framework  
 - PWA capabilities via Web App Manifest + Service Worker  
@@ -19,7 +19,7 @@ All processing happens entirely **client-side** — no backend required.
 
 - Camera preview using `getUserMedia`
 - Capture document image
-- Apply scan processing with jscanify
+- Apply scan processing with [OpenCV](https://docs.opencv.org/4.13.0/index.html)
 - Generate PDF with jsPDF
 - Download the PDF
 - Installable as a PWA
@@ -38,7 +38,7 @@ All processing happens entirely **client-side** — no backend required.
 
 - **[Next.js](https://nextjs.org/docs) (App Router)**
 - **TypeScript**
-- **[jscanify](https://github.com/puffinsoft/jscanify)**
+- **[[OpenCV](https://docs.opencv.org/4.13.0/index.html)](https://github.com/puffinsoft/[OpenCV](https://docs.opencv.org/4.13.0/index.html))**
 - **[jsPDF](https://github.com/parallax/jsPDF)**
 - Web APIs:
   - `navigator.mediaDevices.getUserMedia`
@@ -60,7 +60,7 @@ app/
     └── globals.css
 src/
     ├── camera/               // Camera access & capture logic
-    ├── scan/                 // jscanify wrapper
+    ├── scan/                 // OpenCV wrapper
     ├── pdf/                  // jsPDF wrapper
     ├── storage/              // IndexedDB (optional)
     └── lib/                  // Shared utilities
@@ -73,7 +73,7 @@ public/
 
 1. Camera stream → Video element
 2. Capture frame → Canvas
-3. Canvas → jscanify processing
+3. Canvas → [OpenCV](https://docs.opencv.org/4.13.0/index.html) processing
 4. Processed image → jsPDF
 5. jsPDF → Blob → Download
 
@@ -81,7 +81,7 @@ All steps run locally in the browser.
 
 ### PWA Details
 
-- Web App Manifest (`public/manifest.json`)
+- Web App Manifest (`manifest.webmanifest`)
 - Service Worker (custom or via plugin)
 - Installable on mobile & desktop
 - HTTPS required for camera access (except `localhost`)

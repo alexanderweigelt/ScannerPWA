@@ -18,13 +18,13 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: "#17589f",
     icons: [
       {
-        src: getPath("/android-chrome-192x192.png"),
+        src: getPath("/icons/android-chrome-192x192.png"),
         sizes: "192x192",
         type: "image/png",
         purpose: "any",
       },
       {
-        src: getPath("/android-chrome-512x512.png"),
+        src: getPath("/icons/android-chrome-512x512.png"),
         sizes: "512x512",
         type: "image/png",
         purpose: "any",
@@ -46,11 +46,5 @@ export default function manifest(): MetadataRoute.Manifest {
       },
     ],
     categories: ["productivity", "utilities"],
-
-    // Experimental: The next settings are experimental technology!
-    // Check the Browser compatibility table carefully before using this in production.
-    launch_handler: {
-      client_mode: "navigate-existing",
-    },
   };
 }
