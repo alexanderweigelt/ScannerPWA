@@ -110,3 +110,12 @@ Scan results use **typed result models** (success / recoverable failure / fatal 
 - Live preview renders video → hidden `<video>` → `<canvas>` via `requestAnimationFrame` loop.
 - Service Worker registered via `<ServiceWorkerRegister>` in layout.
 - `basePath` must be set correctly for the Service Worker scope.
+
+## Security
+
+See `AGENTS.md` → Security Policies for all agent security rules.
+
+Project-specific constraints:
+- OpenCV.js must remain self-hosted (`public/vendor/`) — never load from CDN (XSS/integrity risk).
+- Canvas-processed image data stays in memory only — no persistence to localStorage.
+- `getOpenCV()` guards prevent execution before WASM is ready — preserve this pattern.
