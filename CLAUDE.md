@@ -45,6 +45,12 @@ pnpm run test:coverage
 pnpm run test:e2e
 ```
 
+## Coding Rules
+
+- **Documentation**: Use JSDoc (https://jsdoc.app/) for all functions, methods, and classes.
+- **Notations**: Use `// some note` for inline notations.
+- For future updates, provide minimal JSDoc for new/modified functions and methods.
+
 ## Architecture
 
 ### Source Layout

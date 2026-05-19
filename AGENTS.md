@@ -42,6 +42,9 @@ Preserve future extensibility for:
 - Keep OpenCV.js self-hosted in `public/vendor/opencv.js`
 - Use canvas-based processing
 - Use strict TypeScript (`any` forbidden)
+- Use JSDoc (https://jsdoc.app/) for all documentation of functions, methods, and classes
+- Use `// some note` for code notations
+- Provide minimal JSDoc for new or modified functions/methods in future changes
 - Always preserve rear-camera fallback logic
 - Keep portrait A4 workflows as the default
 - Keep PDF generation isolated in `src/pdf/`

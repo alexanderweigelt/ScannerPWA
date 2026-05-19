@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     "coverage/**",
     "next-env.d.ts",
     "public/vendor/**",
+    ".claude/**",
+    ".github/**",
   ]),
 ]);
 
