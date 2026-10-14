@@ -11,7 +11,7 @@ Fachliches Verhalten steht in den [Anforderungsdatensätzen](docs/requirements/)
 (Überblick [REQUIREMENTS.md](REQUIREMENTS.md)), Gestaltung in
 [DESIGN.md](DESIGN.md), offene Fragen im
 [Klärungsjournal](docs/clarifications.md). Sicherheitskontrollen und das
-Bedrohungsmodell gehören in `SECURITY.md` (P05); diese Datei liefert dafür
+Bedrohungsmodell stehen in [SECURITY.md](SECURITY.md); diese Datei liefert dafür
 Komponenten, Flüsse und Vertrauensgrenzen.
 
 **Status:** Entscheidungen gelten erst, wenn Alex sie in der jeweiligen ADR
@@ -39,7 +39,7 @@ Architekturrelevante Qualitätsziele, je mit Anforderung als Quelle:
 ### Zielkette Wartbarkeit und Reproduzierbarkeit
 
 Die gemeinsamen Ziele „korrektes Verhalten“ und „zugängliche Bedienung“ sind in
-den FR bzw. in DESIGN.md verankert, „sichere Auslieferung“ folgt in P05. Diese
+den FR bzw. in DESIGN.md verankert, „sichere Auslieferung“ steht in [SECURITY.md](SECURITY.md). Diese
 Datei verantwortet das Ziel wartbarer Code und reproduzierbare Änderungen:
 
 | Ziel | Messbares Kriterium | Nachweis | Gate | Quelle |
@@ -111,8 +111,8 @@ Konten (siehe [REQUIREMENTS.md, Ausschlüsse](REQUIREMENTS.md#ausschlüsse)).
 
 **Gemeinsamer Ursprung:** `alexanderweigelt.github.io` ist der Ursprung aller
 Projektseiten dieses GitHub-Kontos. Cache Storage, IndexedDB und
-Berechtigungen gelten je Ursprung, nicht je Unterpfad. Bewertung in P05
-(Risiko R-05).
+Berechtigungen gelten je Ursprung, nicht je Unterpfad. Bewertung in
+[SECURITY.md](SECURITY.md) (T-04, SEC-09; Restrisiko von Alex angenommen).
 
 ## 4. Lösungsstrategie
 
@@ -476,10 +476,10 @@ berichtet tatsächliche Ausführung.
 | `npm run format:check` (`prettier --check .`) | Format | ENG-2 | CI |
 | `npm run test:unit` (`vitest run`) | Zustandsmaschine, Pipeline-Stufen, Referenzbilder (FR-006/007/008-AC), PDF-Struktur (FR-010-AC-1, FR-021-AC-1), Seitenliste (FR-018 bis FR-020) | AC-Tests | CI, Pre-Push |
 | `npm run build` (`vite build`) + Build-Prüfung | `dist/` mit Basis `/ScannerPWA/`, CSP-Meta vorhanden, kein Inline-Skript, Precache-Liste vollständig | ENG-3, FR-014 | CI vor Deployment |
-| `npm run test:e2e` (`playwright test`) | Ablauf in Chromium (Desktop, Smartphone-Profil, simulierte Kamera), Firefox, WebKit (iPhone-Profil, ohne Kamera); `vite preview` unter `/ScannerPWA/`; Offline (FR-013), Netzmitschnitt (FR-011), Diagnose (FR-016-AC-1 gegen Diagnose-Build, FR-016-AC-2 gegen Produktions-Build), Fokus und Live-Region (A11Y-2, A11Y-8), Installierbarkeit soweit automatisierbar (FR-012-AC-1) | AC-Tests | CI |
+| `npm run test:e2e` (`playwright test`) | Ablauf in Chromium (Desktop, Smartphone-Profil, simulierte Kamera), Firefox, WebKit (iPhone-Profil, ohne Kamera); `vite preview` unter `/ScannerPWA/`; Offline (FR-013), Netzmitschnitt (FR-011), Sicherheitsprüfungen laut SECURITY.md Abschnitt 7 (u. a. App im `iframe`, CSP-Verstöße, Speicherinhalt), Diagnose (FR-016-AC-1 gegen Diagnose-Build, FR-016-AC-2 gegen Produktions-Build), Fokus und Live-Region (A11Y-2, A11Y-8), Installierbarkeit soweit automatisierbar (FR-012-AC-1) | AC-Tests | CI |
 | `npm run test:a11y` (Playwright + `@axe-core/playwright`, Tags `wcag2a`, `wcag2aa`, `wcag21aa`, `wcag22aa`) | Scan aller Ansichten und Teilzustände (DESIGN.md) im Desktop- und Smartphone-Format | A11Y-1, -3, -7, -9 | CI |
 | `npm run test:memory` | Messverfahren 8.2 (Chromium) | FR-017 | CI, sobald OQ-005 beantwortet |
-| `npm run test:deployed` (Playwright gegen `https://alexanderweigelt.github.io/ScannerPWA/`) | Antwortheader und HTTPS-Umleitung, CSP-Meta in ausgelieferter Seite, Ressourcen unter Unterpfad, Offline-Start (FR-014-AC-1) | Auslieferung | nach Deployment; Fehlschlag meldet, sperrt nicht rückwirkend |
+| `npm run test:deployed` (Playwright gegen `https://alexanderweigelt.github.io/ScannerPWA/`) | Antwortheader (HSTS, `nosniff`, `Content-Type`) und HTTPS-Umleitung, TLS-Probe je Protokollversion (`openssl s_client`), CSP-Meta in ausgelieferter Seite, Ressourcen unter Unterpfad, Offline-Start (FR-014-AC-1) | Auslieferung | nach Deployment; Fehlschlag meldet, sperrt nicht rückwirkend |
 | `npm audit --audit-level=high` | bekannte Schwachstellen | ENG-5 | CI |
 | `npx secretlint "**/*"` | Secret-Scan des Repositorys | 10.3 | CI, Pre-Commit |
 | `npm run check:spec` | FR/AC/OQ/ADR-IDs, `test_refs`, relative Links (P10) | ENG-4 | CI |
@@ -497,7 +497,7 @@ DESIGN.md.
 * **Lockfile:** `package-lock.json` ist eingecheckt; CI nutzt ausschließlich `npm ci`. Versionen in `package.json` exakt (`save-exact=true` in `.npmrc`).
 * **Laufzeitabhängigkeiten:** keine geplant (`dependencies` leer). Jede neue Laufzeitabhängigkeit braucht eine ADR.
 * **Build-Abhängigkeiten:** nur die in ADR-0001, ADR-0006 und hier genannten Werkzeuge (Vite, TypeScript, ESLint, typescript-eslint, Prettier, Vitest, Playwright, axe-core, secretlint, simple-git-hooks).
-* **Aktualisierung:** gesammelt per PR mit vollständigem Gate-Lauf; Dependabot für npm und GitHub Actions (Einrichtung P10, Vorschlag).
+* **Aktualisierung:** per PR mit vollständigem Gate-Lauf; Dependabot für npm und GitHub Actions (von Alex entschieden, SECURITY.md SD-6; Einrichtung P10), Fristen nach SECURITY.md SD-5.
 * **Laufzeiten:** Node 24 LTS (`engines`, `.nvmrc`); Browser nach ADR-0008.
 * **Reproduzierbarer Build:** keine Zeitstempel oder Zufallswerte im Bundle außer dem Inhalts-Hash; Build-Version im Service Worker ist der Hash der Precache-Liste.
 
@@ -508,13 +508,13 @@ DESIGN.md.
 | R-01 | Eigene Erkennung erreicht auf realen Fotos nicht die nötige Qualität (früherer Stand scheiterte, Ursache unbekannt) | FR-006 nicht erfüllt | Referenzbilder früh (OQ-002), Diagnosemodus, Plan B OpenCV.js laut ADR-0002 |
 | R-02 | Rechenzeit der Pipeline auf älteren Smartphones | lange Verarbeitung | Arbeitskopie ≤ 1000 px für Erkennung; Messung auf echtem Gerät |
 | R-03 | iOS Safari: Kameraverhalten in installierter PWA, Download-Verhalten | FR-001, FR-010 auf iOS | Manuelle Prüfung auf echtem iPhone |
-| R-04 | Antwortheader von GitHub Pages (HSTS, `nosniff`, Cache-Header) sind UNKNOWN; aus dieser Umgebung nicht abrufbar | Lücken in sicherer Auslieferung | Header-Test `test:deployed`; Bewertung in P05 |
-| R-05 | Gemeinsamer Ursprung mit anderen Projektseiten von `alexanderweigelt.github.io` | Andere Seiten desselben Ursprungs können Caches und Speicher lesen oder Service Worker in ihrem Pfad registrieren | P05 bewerten; heute keine Bilddaten in persistentem Speicher |
-| R-06 | Kein `frame-ancestors` per Meta-Element | Einbettung in fremde Seiten nicht verhinderbar | P05 bewerten (Clickjacking auf Kamera-Aktion) |
-| R-07 | Lieferkette der Build-Werkzeuge (npm, Actions) | Manipulierter Build | Lockfile, `npm ci`, Audit, Actions per SHA; P05 |
+| R-04 | Antwortheader von GitHub Pages (HSTS, `nosniff`, Cache-Header) sind UNKNOWN; aus dieser Umgebung nicht abrufbar | Lücken in sicherer Auslieferung | Header-Test `test:deployed`; SECURITY.md T-01, T-06, SEC-02, SEC-06 |
+| R-05 | Gemeinsamer Ursprung mit anderen Projektseiten von `alexanderweigelt.github.io` | Andere Seiten desselben Ursprungs können Caches und Speicher lesen oder Service Worker in ihrem Pfad registrieren | SECURITY.md T-04, SEC-09: Restrisiko von Alex ohne Gate angenommen (SD-1b) |
+| R-06 | Kein `frame-ancestors` per Meta-Element | Einbettung in fremde Seiten nicht verhinderbar | SECURITY.md T-05, SEC-08: keine Kamera im Frame (SD-2) |
+| R-07 | Lieferkette der Build-Werkzeuge (npm, Actions) | Manipulierter Build | SECURITY.md T-08, T-09, SEC-16 bis SEC-18 |
 | R-08 | Fehlende Kriterien (FIND-002) und offene Fragen (OQ-002, OQ-005, OQ-006) | Tests unvollständig | P06/P07 |
 
-Für P05 zu bewerten: R-04 bis R-07, Speicherorte (OQ-004), CSP-Wert (ADR-0005).
+R-04 bis R-07, Speicherorte (OQ-004) und CSP-Wert (ADR-0005, unverändert übernommen) sind in [SECURITY.md](SECURITY.md) bewertet.
 
 ## 12. Abdeckung
 
