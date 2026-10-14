@@ -31,7 +31,8 @@ hinzufügen → PDF exportieren, mit möglichst wenig Reibung.
 | Maintainer | Prüft Scanqualität über Referenzbilder und Diagnosemodus. |
 
 Es gibt keine Konten, Rollen oder serverseitigen Akteure. Die Sprache der
-Oberfläche ist UNKNOWN ([OQ-001](docs/clarifications.md#offene-fragen)).
+Oberfläche ist Deutsch (OQ-001, Antwort von Alex am 14.10.2026, siehe
+[Antworten](docs/clarifications.md#antworten)).
 
 ## Rahmenbedingungen (vorgegeben)
 
