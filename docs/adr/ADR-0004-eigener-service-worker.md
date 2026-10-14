@@ -39,7 +39,7 @@ Verhalten (CMP-06):
 
 * `install`: alle Dateien der Liste in einen Cache `scanner-<buildhash>` laden; schlägt eine fehl, scheitert die Installation (kein halber Offline-Stand).
 * `activate`: alte `scanner-*`-Caches löschen.
-* `fetch`: nur gleicher Ursprung und `GET`; Navigation im Scope → gecachtes `index.html` (Suchparameter ignoriert, ADR-0007); sonst Cache, dann Netz. Keine Laufzeit-Caches, keine fremden Ursprünge.
+* `fetch`: nur gleicher Ursprung und `GET`; Navigation im Scope → gecachtes `index.html` (Suchparameter ignoriert); sonst Cache, dann Netz. Keine Laufzeit-Caches, keine fremden Ursprünge.
 * Update: neuer Worker wartet; kein `skipWaiting` während einer Sitzung. Er übernimmt beim nächsten Start der App.
 * Registrierung relativ (`./sw.js`, Scope `./`), damit der Unterpfad gilt.
 

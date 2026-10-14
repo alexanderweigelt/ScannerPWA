@@ -125,7 +125,7 @@ Berechtigungen gelten je Ursprung, nicht je Unterpfad. Bewertung in P05
 | Offline | Eigener Service Worker, Precache der Build-Dateien | [ADR-0004](docs/adr/ADR-0004-eigener-service-worker.md) |
 | Auslieferung, CSP | Pages-Workflow; CSP als Meta-Element ohne Inline-Code | [ADR-0005](docs/adr/ADR-0005-pages-deployment-und-csp-meta.md) |
 | Tests | Vitest, Playwright (simulierte Kamera), axe-core | [ADR-0006](docs/adr/ADR-0006-testwerkzeuge.md) |
-| Diagnose | `?diagnose=1` | [ADR-0007](docs/adr/ADR-0007-diagnosemodus-per-url-parameter.md) |
+| Diagnose | Nur im Entwicklungs- bzw. Diagnose-Build, nicht in der veröffentlichten App | [ADR-0007](docs/adr/ADR-0007-diagnosemodus-nur-im-entwicklungs-build.md) |
 | Plattformen | Aktuelle und vorige Browser-Hauptversion, iOS ≥ 17, Node 24 LTS | [ADR-0008](docs/adr/ADR-0008-unterstuetzte-browser.md) |
 
 Stufe 2 (mehrere Seiten) ist von Beginn an in der Seitenliste (CMP-05)
@@ -419,9 +419,11 @@ in den Teilzustand des aktuellen Zustands mit „Erneut versuchen“ bzw.
 
 ### 8.4 Diagnosemodus (FR-016)
 
-`?diagnose=1` beim Start (ADR-0007). Der Worker liefert dann Kantenbild,
+Nur im Entwicklungsserver und im Build `vite build --mode diagnose`
+(ADR-0007); der veröffentlichte Produktions-Build enthält keinen Diagnose-Code.
+Im Diagnose-Build liefert der Worker Kantenbild,
 Kandidaten und gewählte Ecken als zusätzliche Puffer; CMP-01 zeigt sie im
-`diagnostic-panel`. Ohne den Parameter werden sie weder berechnet noch
+`diagnostic-panel`. Im Produktions-Build werden sie weder berechnet noch
 übertragen.
 
 ### 8.5 Zugänglichkeit
@@ -432,8 +434,9 @@ Fokus nach Ansichtswechsel auf `h1`, eine Live-Region für Statusmeldungen,
 
 ## 9. Architekturentscheidungen
 
-Siehe [docs/adr](docs/adr/README.md). ADR-0002 ist von Alex angenommen
-(OQ-007); die übrigen werden einzeln mit Alex entschieden (Journal).
+Siehe [docs/adr](docs/adr/README.md). Alle acht ADRs hat Alex am 14.10.2026
+einzeln per Auswahl entschieden (`accepted`); Belege im
+[Journal, Antworten](docs/clarifications.md#antworten).
 
 ## 10. Engineering-Regeln und geplante Gates
 
@@ -456,7 +459,7 @@ berichtet tatsächliche Ausführung.
 
 ### 10.3 Eingaben, Ausgabe, Ursprung, Transport
 
-* **Untrusted Eingaben** an tatsächlichen Grenzen: Kamerabild (nur als Pixel verarbeitet, Größe begrenzt), Worker-Nachrichten (Form- und Grenzprüfung, TB-3), URL-Parameter (nur `diagnose=1` wird ausgewertet, alles andere ignoriert). Es gibt keine Datei-Uploads, Formulare oder fremden Daten.
+* **Untrusted Eingaben** an tatsächlichen Grenzen: Kamerabild (nur als Pixel verarbeitet, Größe begrenzt), Worker-Nachrichten (Form- und Grenzprüfung, TB-3), URL-Parameter (werden nicht ausgewertet). Es gibt keine Datei-Uploads, Formulare oder fremden Daten.
 * **Ausgabe:** nur sichere DOM-APIs (10.2). Bilder über Objekt-URLs (`blob:`) aus eigenen Blobs.
 * **Geheimnisse:** keine. Der Client enthält keine Schlüssel; CI braucht nur das automatische `GITHUB_TOKEN` mit minimalen Rechten. Secret-Scan als Gate.
 * **CSP:** Meta-Element in `index.html`, Wert in ADR-0005; Vite-Build ohne Inline-Skripte und -Styles (`build.modulePreload.polyfill: false` bzw. Prüfung des Builds), keine Hashes oder Nonces nötig.
@@ -473,7 +476,7 @@ berichtet tatsächliche Ausführung.
 | `npm run format:check` (`prettier --check .`) | Format | ENG-2 | CI |
 | `npm run test:unit` (`vitest run`) | Zustandsmaschine, Pipeline-Stufen, Referenzbilder (FR-006/007/008-AC), PDF-Struktur (FR-010-AC-1, FR-021-AC-1), Seitenliste (FR-018 bis FR-020) | AC-Tests | CI, Pre-Push |
 | `npm run build` (`vite build`) + Build-Prüfung | `dist/` mit Basis `/ScannerPWA/`, CSP-Meta vorhanden, kein Inline-Skript, Precache-Liste vollständig | ENG-3, FR-014 | CI vor Deployment |
-| `npm run test:e2e` (`playwright test`) | Ablauf in Chromium (Desktop, Smartphone-Profil, simulierte Kamera), Firefox, WebKit (iPhone-Profil, ohne Kamera); `vite preview` unter `/ScannerPWA/`; Offline (FR-013), Netzmitschnitt (FR-011), Diagnose (FR-016), Fokus und Live-Region (A11Y-2, A11Y-8), Installierbarkeit soweit automatisierbar (FR-012-AC-1) | AC-Tests | CI |
+| `npm run test:e2e` (`playwright test`) | Ablauf in Chromium (Desktop, Smartphone-Profil, simulierte Kamera), Firefox, WebKit (iPhone-Profil, ohne Kamera); `vite preview` unter `/ScannerPWA/`; Offline (FR-013), Netzmitschnitt (FR-011), Diagnose (FR-016-AC-1 gegen Diagnose-Build, FR-016-AC-2 gegen Produktions-Build), Fokus und Live-Region (A11Y-2, A11Y-8), Installierbarkeit soweit automatisierbar (FR-012-AC-1) | AC-Tests | CI |
 | `npm run test:a11y` (Playwright + `@axe-core/playwright`, Tags `wcag2a`, `wcag2aa`, `wcag21aa`, `wcag22aa`) | Scan aller Ansichten und Teilzustände (DESIGN.md) im Desktop- und Smartphone-Format | A11Y-1, -3, -7, -9 | CI |
 | `npm run test:memory` | Messverfahren 8.2 (Chromium) | FR-017 | CI, sobald OQ-005 beantwortet |
 | `npm run test:deployed` (Playwright gegen `https://alexanderweigelt.github.io/ScannerPWA/`) | Antwortheader und HTTPS-Umleitung, CSP-Meta in ausgelieferter Seite, Ressourcen unter Unterpfad, Offline-Start (FR-014-AC-1) | Auslieferung | nach Deployment; Fehlschlag meldet, sperrt nicht rückwirkend |
@@ -511,8 +514,7 @@ DESIGN.md.
 | R-07 | Lieferkette der Build-Werkzeuge (npm, Actions) | Manipulierter Build | Lockfile, `npm ci`, Audit, Actions per SHA; P05 |
 | R-08 | Fehlende Kriterien (FIND-002) und offene Fragen (OQ-002, OQ-005, OQ-006) | Tests unvollständig | P06/P07 |
 
-Für P05 zu bewerten: R-04 bis R-07, Speicherorte (OQ-004), Diagnosemodus für
-jede Person einschaltbar (ADR-0007), CSP-Wert (ADR-0005).
+Für P05 zu bewerten: R-04 bis R-07, Speicherorte (OQ-004), CSP-Wert (ADR-0005).
 
 ## 12. Abdeckung
 
