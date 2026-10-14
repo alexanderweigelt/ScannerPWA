@@ -15,14 +15,14 @@
       "id": "FR-004-AC-1",
       "given": "Die Person hat den Kamerazugriff verweigert.",
       "when": "Sie löst „Kamera starten“ aus.",
-      "then": "Eine verständliche Meldung erklärt die Ursache und bietet einen erneuten Versuch sowie die Rückkehr zum Startbildschirm an.",
+      "then": "Eine Meldung nennt die verweigerte Kameraberechtigung als Ursache und bietet einen erneuten Versuch sowie die Rückkehr zum Startbildschirm an.",
       "test_refs": []
     },
     {
       "id": "FR-004-AC-2",
       "given": "Das Gerät besitzt keine nutzbare Kamera.",
       "when": "Die Person löst „Kamera starten“ aus.",
-      "then": "Eine verständliche Meldung wird angezeigt und die App bleibt bedienbar.",
+      "then": "Eine Meldung nennt, dass keine nutzbare Kamera gefunden wurde, bietet einen erneuten Versuch sowie die Rückkehr zum Startbildschirm an, und beide Aktionen lassen sich auslösen.",
       "test_refs": []
     }
   ],

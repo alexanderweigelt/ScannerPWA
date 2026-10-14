@@ -17,7 +17,7 @@
       "id": "FR-008-AC-1",
       "given": "Das Referenzfoto ohne erkennbares Dokument liegt vor.",
       "when": "Die Verarbeitung läuft.",
-      "then": "Die App meldet verständlich, dass kein Dokument erkannt wurde, zeigt das Foto weiter an und bietet „Neu aufnehmen“ an; die Prüfung läuft automatisiert.",
+      "then": "Eine Meldung nennt, dass kein Dokument erkannt wurde; die App zeigt das Foto weiter an und bietet „Neu aufnehmen“ an; die Prüfung läuft automatisiert.",
       "test_refs": []
     },
     {
