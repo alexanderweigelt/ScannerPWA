@@ -7,9 +7,9 @@ Dokumentationssprache Deutsch, Bezeichner Englisch.
 
 | Feld | Wert |
 | --- | --- |
-| Aktueller Schritt | P04 Architektur und Diagramme – abgeschlossen, von Alex akzeptiert, Merge freigegeben (PR #14) |
-| Nächster Schritt | P05 Projektsicherheit in neuer Session aus `main` |
-| Aktive Frage | keine (alle acht P04-Entscheidungen beantwortet) |
+| Aktueller Schritt | P05 Projektsicherheit – in Arbeit (Start 14.10.2026 17:31:51Z, neue Session aus `main` `215e760`) |
+| Nächster Schritt | Sicherheitsentscheidungen SD-1 bis SD-6 einzeln mit Alex klären, dann `SECURITY.md` fertigstellen und PR öffnen |
+| Aktive Frage | SD-1 (neu gestellt 17:39:27Z): Laufen unter `https://alexanderweigelt.github.io` außer ScannerPWA weitere Pages? Optionen: Nein / Ja / Weiß nicht. Danach SD-2 bis SD-6 laut [SECURITY.md, Abschnitt 8](../SECURITY.md#8-sicherheitsentscheidungen) |
 | Review | P01: Selbstreview, danach menschliches Review durch Alex (PR #11 nach einer Rückweisungsrunde akzeptiert, 14.10.2026). P02: Selbstreview, danach menschliches Review durch Alex (PR #12 ohne Änderungswunsch akzeptiert, 14.10.2026). P03: Selbstreview, danach menschliches Review durch Alex (PR #13 ohne Änderungswunsch akzeptiert, 14.10.2026). P04: Selbstreview; erster Stand von Alex zurückgewiesen (FIND-010), Entscheidungen danach von Alex getroffen; PR #14 von Alex akzeptiert (Review „PR akzeptiert“, 14.10.2026 17:29Z) |
 
 ## Delegation und Befugnisse
@@ -98,6 +98,12 @@ Inhalte, Quellen und IDs wurden nicht umgedeutet; Befunde gehen an P06/P07.
 | --- | --- | --- | --- |
 | FIND-010 | Library-Befund: P04 legte sieben von acht Technikentscheidungen als `proposed`-ADR vor, ohne Alex zu fragen. Alex wies das zurück („Absolut unverständlich wer die Entscheidung zur Architektur getroffen hat. Ich hätte einen Dialog erwartet in dem ich abgefragt werde.“, 14.10.2026 17:10Z). Die Formulierung „Present meaningful alternatives with tradeoffs, or decide within existing delegation“ in P04 ließ zu, eine allgemeine Ausführungsfreigabe als Entscheidungsdelegation zu lesen. | P04, L02, L07 | Entscheidungen werden einzeln per Auswahl nachgeholt; Hinweis für die Library: Technikentscheidungen ohne ausdrückliche Entscheidungsdelegation einzeln abfragen. |
 | FIND-009 | Den Vorrang Front- vor Webcam (FR-002) kann die App mit `facingMode: ideal "environment"` nicht steuern; ohne Rückkamera wählt der Browser. Verstärkt FIND-002. | FR-002, [ARCHITECTURE.md FLOW-02](../ARCHITECTURE.md#flow-02-kamera-starten) | Offen für P06: Vorrang streichen oder Kriterium mit Geräteauswahl nach Berechtigung ergänzen. |
+
+## Befunde aus P05
+
+| ID | Befund | Betrifft | Behandlung |
+| --- | --- | --- | --- |
+| FIND-011 | Library-/Agentenbefund: Die erste SD-1-Frage (17:35:39Z) setzte als Fakt voraus, dass ScannerPWA den Ursprung „mit deinen anderen Pages“ teilt. Diese Annahme stammte aus dem P04-Auftrag und war nicht belegt. Alex wies die Aussage zurück (17:38:16Z, „Die Aussage ist falsch. Die URL ist https://alexanderweigelt.github.io/ScannerPWA/“). Sachlich bleibt: Ursprung = Schema + Host + Port, der Pfad trennt nicht. | SD-1, ARCHITECTURE.md R-05 und Abschnitt 3 („Ursprung aller Projektseiten dieses GitHub-Kontos“), L02 | Frage zurückgezogen; zuerst Faktfrage gestellt (17:39:27Z). Hinweis für die Library: Annahmen in Entscheidungsfragen als Annahme kennzeichnen oder vorher als Fakt abfragen. Formulierung in ARCHITECTURE.md nach Antwort prüfen |
 
 ## Schrittstatus
 
