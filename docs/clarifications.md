@@ -9,7 +9,7 @@ Dokumentationssprache Deutsch, Bezeichner Englisch.
 | --- | --- |
 | Aktueller Schritt | P04 Architektur und Diagramme – Entscheidungsdialog läuft (PR #14, nach Rückweisung durch Alex) |
 | Nächster Schritt | Acht Entscheidungen einzeln mit Alex klären (Reihenfolge: OQ-007/ADR-0002, ADR-0001, ADR-0008, ADR-0003, ADR-0004, ADR-0005, ADR-0006, ADR-0007); ADR-Status nach jeder Antwort anpassen; danach Review und Merge-Anweisung, dann P05 |
-| Aktive Frage | ADR-0001 Sprache, Build und UI-Framework (gestellt 14.10.2026 als Auswahl im Projektthread) |
+| Aktive Frage | ADR-0008 Browser und Node-Version (gestellt 14.10.2026 als Auswahl im Projektthread) |
 | Review | P01: Selbstreview, danach menschliches Review durch Alex (PR #11 nach einer Rückweisungsrunde akzeptiert, 14.10.2026). P02: Selbstreview, danach menschliches Review durch Alex (PR #12 ohne Änderungswunsch akzeptiert, 14.10.2026). P03: Selbstreview, danach menschliches Review durch Alex (PR #13 ohne Änderungswunsch akzeptiert, 14.10.2026). P04: Selbstreview; menschliches Review ausstehend |
 
 ## Delegation und Befugnisse
@@ -53,6 +53,7 @@ Fragen werden gestellt, wenn ihr zuständiger Schritt sie benötigt.
 | --- | --- | --- |
 | OQ-001: In welcher Sprache ist die Oberfläche? | Deutsch. Übernommen in `REQUIREMENTS.md` (Akteure) und `DESIGN.md` (Overview, Components, A11Y-9); deutsche Bedienbezeichnungen in den FR gelten damit (FIND-004 erledigt). | Alex, Auswahl auf Entscheidungskarte im Projektthread, 14.10.2026 16:32:43Z (Optionen Deutsch / Englisch / Gerätesprache, Empfehlung Deutsch) |
 | OQ-007: Wie werden Dokumenterkennung und Entzerrung umgesetzt? | Eigene Pipeline im Web Worker, OpenCV.js als Plan B, falls die Referenzbilder nicht bestanden werden. Übernommen in [ADR-0002](adr/ADR-0002-eigene-bildverarbeitung-im-worker.md) (`accepted`) und ARCHITECTURE.md. | Alex, Auswahl auf Entscheidungskarte im Projektthread, 14.10.2026 17:17:24Z (Optionen eigene Pipeline / OpenCV.js / eigene Pipeline mit Plan B; Empfehlung war eigene Pipeline ohne Plan B) |
+| ADR-0001: Welche Sprache, welches Build-Werkzeug und welche UI-Schicht? | TypeScript strict mit Vite, ohne UI-Framework. Übernommen in [ADR-0001](adr/ADR-0001-typescript-vite-ohne-ui-framework.md) (`accepted`). | Alex, Auswahl auf Entscheidungskarte im Projektthread, 14.10.2026 17:19:46Z (Optionen TS + Vite ohne Framework / TS + Vite + Preact oder Lit / JavaScript ohne Build; Empfehlung TS + Vite ohne Framework) |
 
 ## Unbearbeitete Themen für spätere Schritte
 
