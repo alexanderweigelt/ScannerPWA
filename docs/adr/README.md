@@ -14,7 +14,7 @@ Bilder bleiben auf dem Gerät) sind keine ADRs; sie stehen in
 | ADR | Titel | Status |
 | --- | --- | --- |
 | [ADR-0001](ADR-0001-typescript-vite-ohne-ui-framework.md) | TypeScript und Vite ohne UI-Framework | proposed |
-| [ADR-0002](ADR-0002-eigene-bildverarbeitung-im-worker.md) | Eigene Bildverarbeitung in TypeScript im Web Worker | proposed |
+| [ADR-0002](ADR-0002-eigene-bildverarbeitung-im-worker.md) | Eigene Bildverarbeitung im Web Worker, OpenCV.js als Plan B | accepted |
 | [ADR-0003](ADR-0003-eigener-pdf-writer.md) | Eigener minimaler PDF-Writer | proposed |
 | [ADR-0004](ADR-0004-eigener-service-worker.md) | Eigener Service Worker mit Precache-Liste aus dem Build | proposed |
 | [ADR-0005](ADR-0005-pages-deployment-und-csp-meta.md) | Deployment per Pages-Workflow und CSP als Meta-Element | proposed |

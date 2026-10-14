@@ -14,8 +14,9 @@ Fachliches Verhalten steht in den [Anforderungsdatensätzen](docs/requirements/)
 Bedrohungsmodell gehören in `SECURITY.md` (P05); diese Datei liefert dafür
 Komponenten, Flüsse und Vertrauensgrenzen.
 
-**Status:** Alle Entscheidungen sind Vorschläge des Agenten aus P04
-(`proposed`), bis Alex sie annimmt. Nichts davon ist implementiert.
+**Status:** Entscheidungen gelten erst, wenn Alex sie in der jeweiligen ADR
+angenommen hat (`accepted`); Stand siehe [ADR-Übersicht](docs/adr/README.md).
+Nichts davon ist implementiert.
 
 ## 1. Ziele
 
@@ -119,7 +120,7 @@ Berechtigungen gelten je Ursprung, nicht je Unterpfad. Bewertung in P05
 | --- | --- | --- |
 | Sprache, Build, UI | TypeScript strict, Vite mit `base: '/ScannerPWA/'`, DOM-APIs direkt, kein UI-Framework | [ADR-0001](docs/adr/ADR-0001-typescript-vite-ohne-ui-framework.md) |
 | Zustände | Explizite Zustandsmaschine als diskriminierte Union, eine Ansicht je Zustand | dieser Abschnitt, Abschnitt 8.1 |
-| Bildverarbeitung | Eigene Pipeline auf Typed Arrays im Module-Worker | [ADR-0002](docs/adr/ADR-0002-eigene-bildverarbeitung-im-worker.md) (OQ-007) |
+| Bildverarbeitung | Eigene Pipeline auf Typed Arrays im Module-Worker; OpenCV.js als Plan B | [ADR-0002](docs/adr/ADR-0002-eigene-bildverarbeitung-im-worker.md) (accepted, OQ-007) |
 | PDF | Eigener Writer, JPEG je Seite unverändert eingebettet | [ADR-0003](docs/adr/ADR-0003-eigener-pdf-writer.md) |
 | Offline | Eigener Service Worker, Precache der Build-Dateien | [ADR-0004](docs/adr/ADR-0004-eigener-service-worker.md) |
 | Auslieferung, CSP | Pages-Workflow; CSP als Meta-Element ohne Inline-Code | [ADR-0005](docs/adr/ADR-0005-pages-deployment-und-csp-meta.md) |
@@ -431,9 +432,8 @@ Fokus nach Ansichtswechsel auf `h1`, eine Live-Region für Statusmeldungen,
 
 ## 9. Architekturentscheidungen
 
-Siehe [docs/adr](docs/adr/README.md) (ADR-0001 bis ADR-0008, alle
-`proposed`). Offene Entscheidung bei Alex: OQ-007 (Bildverarbeitung,
-ADR-0002).
+Siehe [docs/adr](docs/adr/README.md). ADR-0002 ist von Alex angenommen
+(OQ-007); die übrigen werden einzeln mit Alex entschieden (Journal).
 
 ## 10. Engineering-Regeln und geplante Gates
 
@@ -502,14 +502,14 @@ DESIGN.md.
 
 | ID | Risiko / Annahme | Folge | Umgang |
 | --- | --- | --- | --- |
-| R-01 | Eigene Erkennung erreicht auf realen Fotos nicht die nötige Qualität (früherer Stand scheiterte, Ursache unbekannt) | FR-006 nicht erfüllt | Referenzbilder früh (OQ-002), Diagnosemodus, Neubewertung laut ADR-0002 |
+| R-01 | Eigene Erkennung erreicht auf realen Fotos nicht die nötige Qualität (früherer Stand scheiterte, Ursache unbekannt) | FR-006 nicht erfüllt | Referenzbilder früh (OQ-002), Diagnosemodus, Plan B OpenCV.js laut ADR-0002 |
 | R-02 | Rechenzeit der Pipeline auf älteren Smartphones | lange Verarbeitung | Arbeitskopie ≤ 1000 px für Erkennung; Messung auf echtem Gerät |
 | R-03 | iOS Safari: Kameraverhalten in installierter PWA, Download-Verhalten | FR-001, FR-010 auf iOS | Manuelle Prüfung auf echtem iPhone |
 | R-04 | Antwortheader von GitHub Pages (HSTS, `nosniff`, Cache-Header) sind UNKNOWN; aus dieser Umgebung nicht abrufbar | Lücken in sicherer Auslieferung | Header-Test `test:deployed`; Bewertung in P05 |
 | R-05 | Gemeinsamer Ursprung mit anderen Projektseiten von `alexanderweigelt.github.io` | Andere Seiten desselben Ursprungs können Caches und Speicher lesen oder Service Worker in ihrem Pfad registrieren | P05 bewerten; heute keine Bilddaten in persistentem Speicher |
 | R-06 | Kein `frame-ancestors` per Meta-Element | Einbettung in fremde Seiten nicht verhinderbar | P05 bewerten (Clickjacking auf Kamera-Aktion) |
 | R-07 | Lieferkette der Build-Werkzeuge (npm, Actions) | Manipulierter Build | Lockfile, `npm ci`, Audit, Actions per SHA; P05 |
-| R-08 | Fehlende Kriterien (FIND-002) und offene Fragen (OQ-002, OQ-005, OQ-006, OQ-007) | Tests unvollständig | P06/P07 |
+| R-08 | Fehlende Kriterien (FIND-002) und offene Fragen (OQ-002, OQ-005, OQ-006) | Tests unvollständig | P06/P07 |
 
 Für P05 zu bewerten: R-04 bis R-07, Speicherorte (OQ-004), Diagnosemodus für
 jede Person einschaltbar (ADR-0007), CSP-Wert (ADR-0005).
@@ -523,7 +523,7 @@ jede Person einschaltbar (ADR-0007), CSP-Wert (ADR-0005).
 | FR-003 | CMP-01, CMP-03 | FLOW-02 | Hochformat = Rahmen (FIND-007) |
 | FR-004 | CMP-02, CMP-03 | FLOW-02 | |
 | FR-005 | CMP-03 | FLOW-03 | |
-| FR-006 | CMP-04 | FLOW-03 | ADR-0002, OQ-002, OQ-007 |
+| FR-006 | CMP-04 | FLOW-03 | ADR-0002, OQ-002 |
 | FR-007 | CMP-04, CMP-07 | FLOW-03, FLOW-04 | |
 | FR-008 | CMP-02, CMP-04 | FLOW-03 | |
 | FR-009 | CMP-01, CMP-05 | FLOW-04 | |

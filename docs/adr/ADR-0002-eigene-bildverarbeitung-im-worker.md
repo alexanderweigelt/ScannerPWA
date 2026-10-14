@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: accepted
 date: 2026-10-14
-decision-makers: Alex (Frage OQ-007 gestellt, Antwort ausstehend)
+decision-makers: Alex (OQ-007, Auswahl am 14.10.2026 17:17Z)
 consulted: –
 informed: –
 ---
 
-# ADR-0002 – Eigene Bildverarbeitung in TypeScript im Web Worker
+# ADR-0002 – Eigene Bildverarbeitung im Web Worker, OpenCV.js als Plan B
 
 ## Context and Problem Statement
 
@@ -30,17 +30,24 @@ Verarbeitung umgesetzt, und wo läuft sie?
 
 ## Considered Options
 
-* Eigene Pipeline in TypeScript auf Typed Arrays, im Web Worker
+* Eigene Pipeline in TypeScript auf Typed Arrays, im Web Worker (ohne Plan B)
 * OpenCV.js (WASM) selbst gehostet, im Web Worker
 * Eigene Pipeline, OpenCV.js als Plan B bei Nichtbestehen der Referenzbilder
 
 ## Decision Outcome
 
-Chosen option: "Eigene Pipeline in TypeScript auf Typed Arrays, im Web Worker"
-(Vorschlag; Entscheidung bei Alex über OQ-007), because sie ohne
+Chosen option: "Eigene Pipeline, OpenCV.js als Plan B bei Nichtbestehen der
+Referenzbilder" (Entscheidung Alex, OQ-007), because die eigene Pipeline ohne
 mehrere Megabyte WASM auskommt, jede Stufe als reine Funktion mit
 Referenzbildern in Node testbar ist und Zwischenergebnisse für den
-Diagnosemodus direkt verfügbar sind.
+Diagnosemodus direkt verfügbar sind, und weil ein benannter Rückfallweg das
+Risiko R-01 begrenzt.
+
+**Plan B:** Besteht die eigene Pipeline die Referenzbild-Prüfung FR-006-AC-1
+nicht, wird OpenCV.js selbst gehostet im selben Worker hinter derselben
+Nachrichtenschnittstelle eingesetzt (Erkennung und Entzerrung). Der Wechsel
+braucht eine Folge-ADR mit gemessener Bundle-Größe und Speicherverhalten
+(FR-017); Hauptthread und Tests bleiben unverändert.
 
 Pipeline (CMP-04, reine Funktionen auf `Uint8ClampedArray`/`Float32Array`):
 
@@ -71,8 +78,7 @@ weder DOM noch `OffscreenCanvas`, was die Safari-Unterstützung vereinfacht.
 
 Unit-Tests je Stufe; Referenzbild-Tests FR-006-AC-1 (Erfolg) und
 FR-008-AC-1 (sauberes Scheitern) in CI (Bilder: OQ-002). Fällt die
-Erfolgsprüfung mit vertretbarem Aufwand nicht grün aus, wird diese ADR neu
-bewertet (Option Plan B).
+Erfolgsprüfung mit vertretbarem Aufwand nicht grün aus, greift Plan B.
 
 ## Pros and Cons of the Options
 
@@ -83,12 +89,12 @@ bewertet (Option Plan B).
 * Bad, because Speicher wird manuell freigegeben (`Mat.delete()`); Fehler dort widersprechen FR-017.
 * Bad, because derselbe Ansatz wie der gescheiterte Stand, ohne bekannte Ursache.
 
-### Eigene Pipeline, OpenCV.js als Plan B
+### Eigene Pipeline in TypeScript auf Typed Arrays, im Web Worker (ohne Plan B)
 
-* Good, because Rückfallweg ist benannt.
-* Neutral, because der Plan B ist auch bei der gewählten Option über die Neubewertung oben möglich.
+* Good, because kleinster Offline-Cache, keine Fremdabhängigkeit.
+* Bad, because kein vorab festgelegter Rückfallweg bei unzureichender Qualität.
 
 ## More Information
 
 Offene Abhängigkeit: Referenzbilder und Lesbarkeitsmaß (OQ-002).
-Die Frage OQ-007 steht in [docs/clarifications.md](../clarifications.md#offene-fragen).
+Antwort auf OQ-007 in [docs/clarifications.md](../clarifications.md#antworten).

@@ -9,7 +9,7 @@ Dokumentationssprache Deutsch, Bezeichner Englisch.
 | --- | --- |
 | Aktueller Schritt | P04 Architektur und Diagramme – Entscheidungsdialog läuft (PR #14, nach Rückweisung durch Alex) |
 | Nächster Schritt | Acht Entscheidungen einzeln mit Alex klären (Reihenfolge: OQ-007/ADR-0002, ADR-0001, ADR-0008, ADR-0003, ADR-0004, ADR-0005, ADR-0006, ADR-0007); ADR-Status nach jeder Antwort anpassen; danach Review und Merge-Anweisung, dann P05 |
-| Aktive Frage | OQ-007 Bildverarbeitung (gestellt 14.10.2026 16:51Z als Auswahl im Projektthread; Antwort ausstehend) |
+| Aktive Frage | ADR-0001 Sprache, Build und UI-Framework (gestellt 14.10.2026 als Auswahl im Projektthread) |
 | Review | P01: Selbstreview, danach menschliches Review durch Alex (PR #11 nach einer Rückweisungsrunde akzeptiert, 14.10.2026). P02: Selbstreview, danach menschliches Review durch Alex (PR #12 ohne Änderungswunsch akzeptiert, 14.10.2026). P03: Selbstreview, danach menschliches Review durch Alex (PR #13 ohne Änderungswunsch akzeptiert, 14.10.2026). P04: Selbstreview; menschliches Review ausstehend |
 
 ## Delegation und Befugnisse
@@ -36,7 +36,7 @@ Dokumentationssprache Deutsch, Bezeichner Englisch.
 
 ## Offene Fragen
 
-OQ-001 ist beantwortet (siehe Antworten). Keine offene Frage blockiert P05;
+OQ-001 und OQ-007 sind beantwortet (siehe Antworten). Keine offene Frage blockiert P05;
 Fragen werden gestellt, wenn ihr zuständiger Schritt sie benötigt.
 
 | ID | Frage | Zuständig | Betrifft | Blockiert | Vorschlag (keine Antwort) |
@@ -46,13 +46,13 @@ Fragen werden gestellt, wenn ihr zuständiger Schritt sie benötigt.
 | OQ-004 | Zielbild sagt „Bilder bleiben im Arbeitsspeicher“, Stufe 3 sieht lokale Entwürfe vor. Wie lange und wo dürfen Seiten lokal gespeichert werden, und wie werden sie gelöscht? | FR-026, FR-011, SECURITY.md (P05) | Stufe 3, Datenschutz | nein | Nur nach Zustimmung, mit Löschaktion; Entscheidung in P05 |
 | OQ-006 | Gelten Icon und Farbwelt des früheren Stands (`backup/opencv-stand-2026-10-14:public/icons/scanner.svg`, Blau `#102b5e`/`#17589f`) als Identität der App? | DESIGN.md | App-Icon (FR-012), Farb-Tokens | nein; Icon wird bei Umsetzung FR-012 gebraucht | Ja, Icon übernehmen; Tokens in `DESIGN.md` sind daraus abgeleitet |
 | OQ-005 | Welche Speichertoleranz gilt bei wiederholtem Scannen, und gibt es eine Höchstzahl an Seiten? | FR-017, FR-018 | Speicher, Stufe 2 | nein | Messverfahren und Toleranz ≤ 10 % nach 20 Zyklen, siehe [ARCHITECTURE.md, 8.2](../ARCHITECTURE.md#82-speicher-fr-017); Höchstzahl offen |
-| OQ-007 | Wie werden Dokumenterkennung und Entzerrung umgesetzt: eigene TypeScript-Pipeline im Worker, OpenCV.js selbst gehostet, oder eigene Pipeline mit OpenCV.js als Plan B? | [ADR-0002](adr/ADR-0002-eigene-bildverarbeitung-im-worker.md) | FR-006, FR-007, FR-008, FR-016 | ADR-0002 bleibt `proposed`; blockiert Umsetzung, nicht P05 | Eigene TS-Pipeline im Worker (Empfehlung auf der Entscheidungskarte) |
 
 ## Antworten
 
 | Frage | Antwort | Grundlage |
 | --- | --- | --- |
 | OQ-001: In welcher Sprache ist die Oberfläche? | Deutsch. Übernommen in `REQUIREMENTS.md` (Akteure) und `DESIGN.md` (Overview, Components, A11Y-9); deutsche Bedienbezeichnungen in den FR gelten damit (FIND-004 erledigt). | Alex, Auswahl auf Entscheidungskarte im Projektthread, 14.10.2026 16:32:43Z (Optionen Deutsch / Englisch / Gerätesprache, Empfehlung Deutsch) |
+| OQ-007: Wie werden Dokumenterkennung und Entzerrung umgesetzt? | Eigene Pipeline im Web Worker, OpenCV.js als Plan B, falls die Referenzbilder nicht bestanden werden. Übernommen in [ADR-0002](adr/ADR-0002-eigene-bildverarbeitung-im-worker.md) (`accepted`) und ARCHITECTURE.md. | Alex, Auswahl auf Entscheidungskarte im Projektthread, 14.10.2026 17:17:24Z (Optionen eigene Pipeline / OpenCV.js / eigene Pipeline mit Plan B; Empfehlung war eigene Pipeline ohne Plan B) |
 
 ## Unbearbeitete Themen für spätere Schritte
 
