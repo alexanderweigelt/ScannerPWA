@@ -7,18 +7,18 @@ Dokumentationssprache Deutsch, Bezeichner Englisch.
 
 | Feld | Wert |
 | --- | --- |
-| Aktueller Schritt | P01 Projektaufnahme und Anforderungen – abgeschlossen, Review ausstehend |
+| Aktueller Schritt | P01 Projektaufnahme und Anforderungen – abgeschlossen und von Alex freigegeben |
 | Nächster Schritt | P02 Anforderungsvorlage (`docs/requirements/TEMPLATE.md`, Datensätze vereinheitlichen) |
 | Aktive Frage | keine |
-| Review | Selbstreview durch den Agenten. Menschliches Review durch Alex am 14.10.2026: PR zurückgewiesen (28 Kommentare „Kein direkter Verweis auf claude.ai“), umgesetzt in `563ce0a`; erneutes Review steht aus |
+| Review | Selbstreview durch den Agenten. Menschliches Review durch Alex am 14.10.2026: PR zurückgewiesen (28 Kommentare „Kein direkter Verweis auf claude.ai“), umgesetzt; anschließend PR #11 von Alex akzeptiert (14.10.2026) |
 
 ## Delegation und Befugnisse
 
 | Befugnis | Umfang und Grenzen | Quelle |
 | --- | --- | --- |
 | Ausführung P01 | Agent führt P01 aus; Start durch Alex mit „Starte“ (14.10.2026, Projektthread). | Alex, 14.10.2026 |
-| Git | Arbeit auf eigenem Branch, Ergebnis als Pull Request. Kein direkter Push auf `main` (einmalige Ausnahme beim Leeren von `main`, Commit `d126d41`, ist verbraucht). | Alex, Arbeitsweise vom 14.10.2026 |
-| Merge | Nicht erteilt; Merge entscheidet Alex. | – |
+| Git | Arbeit auf eigenem Branch, Ergebnis als Pull Request. Keine claude.ai-Links in Dateien, PR-Beschreibungen oder Commit-Nachrichten. Kein direkter Push auf `main` (einmalige Ausnahme beim Leeren von `main`, Commit `d126d41`, ist verbraucht). | Alex, Arbeitsweise vom 14.10.2026 |
+| Merge | Nur auf ausdrückliche Anweisung je PR. Für PR #11 (P01) erteilt als Squash-and-Merge nach `main`. | Alex, 14.10.2026 |
 | Externe Artefakte | Keine Issues, Releases oder Veröffentlichungen erteilt. | – |
 | Library-Ordner | „AI Prompt Library“ wird nur gelesen, nie beschrieben. | Alex, 14.10.2026 |
 
@@ -60,7 +60,7 @@ sie benötigt.
 
 | Schritt | Status | Ergebnis | Prüfungen |
 | --- | --- | --- | --- |
-| P01 | bereit für Review | `REQUIREMENTS.md`, 26 Datensätze `docs/requirements/FR-001` bis `FR-026` (21 ready, 5 draft), dieses Journal | ID-Eindeutigkeit, JSON-Gültigkeit, Pflichtfelder und relative Links per Skript geprüft (siehe Durchlaufprotokoll) |
+| P01 | abgeschlossen, von Alex akzeptiert | `REQUIREMENTS.md`, 26 Datensätze `docs/requirements/FR-001` bis `FR-026` (21 ready, 5 draft), dieses Journal | ID-Eindeutigkeit, JSON-Gültigkeit, Pflichtfelder und relative Links per Skript geprüft (siehe Durchlaufprotokoll) |
 | P02–P10 | offen | – | – |
 
 ## Durchlaufprotokoll (Funktionsprüfung der Prompt Library)
@@ -85,11 +85,11 @@ Status je Prüfung: erfüllt / nicht erfüllt / nicht geprüft. Gesamtstatus:
 | L04 | erfüllt (maschinell), manuelle Checkliste nicht geprüft | Block „COMMON CONTRACT“ bis „END COMMON CONTRACT“ aus allen zehn Dateien extrahiert: je 87 Zeilen, identischer SHA-256 (Präfix `83aec07fa6aca7ba`) | Vergleich per Shell-Skript, 14.10.2026 | Library verlangt Abgleich als Checkliste ohne Helper; dieser steht aus. Der Library-Ordner ist kein Git-Repo, daher kein Git-Bezug |
 | L05 | nicht geprüft (P01-Ergebnis vorhanden) | siehe Schrittergebnisse | – | P02–P10 |
 | L06 | nicht geprüft | – | – | P10 |
-| L07 | nicht geprüft (P01 erfüllt) | Status und Selbstreview dokumentiert; Ergebnis als PR, kein Push auf `main` | PR erstellt | Menschliches Review, spätere Schritte |
+| L07 | nicht geprüft (P01 erfüllt) | Status und Selbstreview dokumentiert; Ergebnis als PR, kein Push auf `main` | PR erstellt, Review-Runde umgesetzt, von Alex akzeptiert | spätere Schritte |
 
 ### Schrittergebnisse
 
 | Schritt | Prüfung | Status | Beleg | Lücke |
 | --- | --- | --- | --- | --- |
-| P01 | 1: Nutzeraufgaben und Grenzen in REQUIREMENTS.md und FRs | erfüllt (Selbstreview) | Jeder Zielbild-Abschnitt ist mindestens einem FR oder REQUIREMENTS.md zugeordnet | Menschliches Review |
-| P01 | 2: Offene Fragen mit Fundstellen, Journal, Befugnisse, kein Stack | erfüllt (Selbstreview) | Abschnitte „Offene Fragen“ und „Delegation und Befugnisse“; keine Technik gewählt | Menschliches Review |
+| P01 | 1: Nutzeraufgaben und Grenzen in REQUIREMENTS.md und FRs | erfüllt (Review Alex) | Jeder Zielbild-Abschnitt ist mindestens einem FR oder REQUIREMENTS.md zugeordnet | keine |
+| P01 | 2: Offene Fragen mit Fundstellen, Journal, Befugnisse, kein Stack | erfüllt (Review Alex) | Abschnitte „Offene Fragen“ und „Delegation und Befugnisse“; keine Technik gewählt | keine |
