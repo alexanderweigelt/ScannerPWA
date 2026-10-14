@@ -18,6 +18,6 @@ Bilder bleiben auf dem Gerät) sind keine ADRs; sie stehen in
 | [ADR-0003](ADR-0003-eigener-pdf-writer.md) | Eigener minimaler PDF-Writer | accepted |
 | [ADR-0004](ADR-0004-eigener-service-worker.md) | Eigener Service Worker mit Precache-Liste aus dem Build | accepted |
 | [ADR-0005](ADR-0005-pages-deployment-und-csp-meta.md) | Deployment per Pages-Workflow und CSP als Meta-Element | accepted |
-| [ADR-0006](ADR-0006-testwerkzeuge.md) | Vitest, Playwright und axe-core als Testwerkzeuge | proposed |
+| [ADR-0006](ADR-0006-testwerkzeuge.md) | Vitest, Playwright und axe-core als Testwerkzeuge | accepted |
 | [ADR-0007](ADR-0007-diagnosemodus-per-url-parameter.md) | Diagnosemodus per URL-Parameter | proposed |
 | [ADR-0008](ADR-0008-unterstuetzte-browser.md) | Unterstützte Browser und Laufzeiten | accepted |
