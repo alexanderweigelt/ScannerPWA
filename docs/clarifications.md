@@ -7,10 +7,10 @@ Dokumentationssprache Deutsch, Bezeichner Englisch.
 
 | Feld | Wert |
 | --- | --- |
-| Aktueller Schritt | P03 Designgrundlage – `DESIGN.md` erstellt, bereit zum Review (Selbstreview erfolgt) |
-| Nächster Schritt | Review von Alex für P03; danach P04 Architektur und Diagramme in neuer Session aus `main` |
+| Aktueller Schritt | P03 Designgrundlage – abgeschlossen und von Alex freigegeben (PR #13) |
+| Nächster Schritt | P04 Architektur und Diagramme in neuer Session aus `main` |
 | Aktive Frage | keine (OQ-001 in P03 beantwortet) |
-| Review | P01: Selbstreview, danach menschliches Review durch Alex (PR #11 nach einer Rückweisungsrunde akzeptiert, 14.10.2026). P02: Selbstreview, danach menschliches Review durch Alex (PR #12 ohne Änderungswunsch akzeptiert, 14.10.2026). P03: Selbstreview; menschliches Review ausstehend |
+| Review | P01: Selbstreview, danach menschliches Review durch Alex (PR #11 nach einer Rückweisungsrunde akzeptiert, 14.10.2026). P02: Selbstreview, danach menschliches Review durch Alex (PR #12 ohne Änderungswunsch akzeptiert, 14.10.2026). P03: Selbstreview, danach menschliches Review durch Alex (PR #13 ohne Änderungswunsch akzeptiert, 14.10.2026) |
 
 ## Delegation und Befugnisse
 
@@ -20,7 +20,7 @@ Dokumentationssprache Deutsch, Bezeichner Englisch.
 | Ausführung P02 | Agent führt P02 in neuer Session aus den Dateien auf `main` aus („Nächster Schritt ist P02 in einer neuen Session direkt mit den Dateien auf main starten.“). | Alex, 14.10.2026 |
 | Ausführung P03 | Agent führt P03 in neuer Session aus den Dateien auf `main` aus („Nun folgt: P03 in einer neuen Session aus main“). Gestaltungswerte entscheidet der Agent als Vorschlag; Markenidentität (OQ-006) und Sprache (OQ-001, beantwortet) bleiben Alex vorbehalten. | Alex, 14.10.2026 |
 | Git | Arbeit auf eigenem Branch, Ergebnis als Pull Request. Keine claude.ai-Links in Dateien, PR-Beschreibungen oder Commit-Nachrichten. Kein direkter Push auf `main` (einmalige Ausnahme beim Leeren von `main`, Commit `d126d41`, ist verbraucht). | Alex, Arbeitsweise vom 14.10.2026 |
-| Merge | Nur auf ausdrückliche Anweisung je PR. Für PR #11 (P01) erteilt als Squash-and-Merge nach `main`. Für PR #12 (P02) erteilt als Squash-and-Merge nach `main` („PR ist akzeptiert - merge“). | Alex, 14.10.2026 |
+| Merge | Nur auf ausdrückliche Anweisung je PR. Für PR #11 (P01) erteilt als Squash-and-Merge nach `main`. Für PR #12 (P02) erteilt als Squash-and-Merge nach `main` („PR ist akzeptiert - merge“). Für PR #13 (P03) erteilt („PR Akzeptiert - merge freigegeben“), Squash-and-Merge nach `main`. | Alex, 14.10.2026 |
 | Externe Artefakte | Keine Issues, Releases oder Veröffentlichungen erteilt. | – |
 | Library-Ordner | „AI Prompt Library“ wird nur gelesen, nie beschrieben. | Alex, 14.10.2026 |
 
@@ -87,7 +87,7 @@ Inhalte, Quellen und IDs wurden nicht umgedeutet; Befunde gehen an P06/P07.
 | --- | --- | --- | --- |
 | P01 | abgeschlossen, von Alex akzeptiert | `REQUIREMENTS.md`, 26 Datensätze `docs/requirements/FR-001` bis `FR-026` (21 ready, 5 draft), dieses Journal | ID-Eindeutigkeit, JSON-Gültigkeit, Pflichtfelder und relative Links per Skript geprüft (siehe Durchlaufprotokoll) |
 | P02 | abgeschlossen, von Alex akzeptiert | [`docs/requirements/TEMPLATE.md`](requirements/TEMPLATE.md); FR-004 und FR-008 sprachlich beobachtbar gemacht; Link in `REQUIREMENTS.md`; Befunde FIND-001 bis FIND-006 | Formatprüfung per Ad-hoc-Python-Skript außerhalb des Repos (P02 legt keine Werkzeuge an): 26 FR, 39 AC, JSON, Pflichtfelder, IDs, Überschriften, OQ-Bezüge, relative Links und Anker fehlerfrei; Fehlerprobe erkannt (siehe Durchlaufprotokoll) |
-| P03 | bereit zum Review | [`DESIGN.md`](../DESIGN.md) (21 Farb-, 6 Schrift-, 9 Abstands-, 5 Rundungs-Tokens, 18 Komponenten-Einträge; Ansichten/Zustände; Zielkette A11Y-1 bis A11Y-9); OQ-006, FIND-007, FIND-008 | Ad-hoc-Python-Skript außerhalb des Repos: YAML-Kopf, Token-Typen, 36 Referenzen, Abschnittsreihenfolge, relative Links, 22 Kontrastpaare nachgerechnet, Abdeckung aller 26 FR fehlerfrei; Fehlerprobe erkannt (siehe Durchlaufprotokoll). Nicht ausgeführt: Zugänglichkeitsscan, Tastatur-, Zoom- und Screenreader-Prüfung (keine Oberfläche vorhanden) |
+| P03 | abgeschlossen, von Alex akzeptiert | [`DESIGN.md`](../DESIGN.md) (21 Farb-, 6 Schrift-, 9 Abstands-, 5 Rundungs-Tokens, 18 Komponenten-Einträge; Ansichten/Zustände; Zielkette A11Y-1 bis A11Y-9); OQ-006, FIND-007, FIND-008 | Ad-hoc-Python-Skript außerhalb des Repos: YAML-Kopf, Token-Typen, 36 Referenzen, Abschnittsreihenfolge, relative Links, 22 Kontrastpaare nachgerechnet, Abdeckung aller 26 FR fehlerfrei; Fehlerprobe erkannt (siehe Durchlaufprotokoll). Nicht ausgeführt: Zugänglichkeitsscan, Tastatur-, Zoom- und Screenreader-Prüfung (keine Oberfläche vorhanden) |
 | P04–P10 | offen | – | – |
 
 ## Durchlaufprotokoll (Funktionsprüfung der Prompt Library)
@@ -114,7 +114,7 @@ Status je Prüfung: erfüllt / nicht erfüllt / nicht geprüft. Gesamtstatus:
 | L04 | erfüllt (maschinell), manuelle Checkliste nicht geprüft | Block „COMMON CONTRACT“ bis „END COMMON CONTRACT“ aus allen zehn Dateien extrahiert: je 87 Zeilen, identischer SHA-256 (Präfix `83aec07fa6aca7ba`); zu Beginn von P02 und P03 unverändert wiederholt | Vergleich per Shell-Skript, 14.10.2026 (P01, P02, P03) | Library verlangt Abgleich als Checkliste ohne Helper; dieser steht aus. Der Library-Ordner ist kein Git-Repo, daher kein Git-Bezug |
 | L05 | nicht geprüft (P01–P03-Ergebnisse vorhanden) | siehe Schrittergebnisse; `DESIGN.md` verlinkt FR statt sie zu kopieren; mögliche Widersprüche als FIND-001 bis FIND-008 erfasst | – | P04–P10, Behandlung der Befunde in P06 |
 | L06 | nicht geprüft | – | – | P10 |
-| L07 | nicht geprüft (P01–P03 erfüllt) | Status und Review je Schritt dokumentiert; Ergebnis als PR, kein Push auf `main`, kein Merge ohne Anweisung; P03 als Selbstreview gekennzeichnet | P03-PR erstellt, Review ausstehend | spätere Schritte |
+| L07 | nicht geprüft (P01–P03 erfüllt) | Status und Review je Schritt dokumentiert; Ergebnis als PR, kein Push auf `main`, kein Merge ohne Anweisung; P03 als Selbstreview gekennzeichnet | P03-PR erstellt, von Alex akzeptiert, Merge erst nach seiner Anweisung | spätere Schritte |
 
 ### Schrittergebnisse
 
@@ -124,5 +124,5 @@ Status je Prüfung: erfüllt / nicht erfüllt / nicht geprüft. Gesamtstatus:
 | P01 | 2: Offene Fragen mit Fundstellen, Journal, Befugnisse, kein Stack | erfüllt (Review Alex) | Abschnitte „Offene Fragen“ und „Delegation und Befugnisse“; keine Technik gewählt | keine |
 | P02 | 1: TEMPLATE.md und FRs im selben Format, beobachtbare Kriterien, gültige Referenzen | erfüllt (Review Alex) | Formatprüfung: 26 FR, 39 AC, keine Fehler; Fehlerprobe mit kaputtem JSON und doppelter AC-ID wurde zurückgewiesen (2 von 2 Fehlern gemeldet). Kriterien in FR-004 und FR-008 ohne „verständlich“ formuliert | Beobachtbarkeit von „lesbar“ hängt an OQ-002 (FIND-006); Prüfung noch nicht automatisiert (P10) |
 | P02 | 2: Bedeutungen und IDs erhalten, Platzhalter keine Produktanforderungen | erfüllt (Review Alex) | Keine ID, Quelle, Basis oder Status geändert; Diff betrifft nur drei Kriterientexte. Beispiel in TEMPLATE.md nutzt `FR-PLACEHOLDER`, liegt nicht unter `FR-*.md` und ist nicht in `REQUIREMENTS.md` gelistet | keine |
-| P03 | 1: DESIGN.md beschreibt benötigte Tokens, Komponenten und Zustände ohne zusätzliche Funktionen | erfüllt (Selbstreview) | Jede Komponente und jeder Teilzustand in `DESIGN.md` nennt ein FR; Abdeckung aller 26 FR per Skript geprüft; Do's and Don'ts schließen Bedienelemente ohne FR aus; Stufe 3 (`draft`) nicht gestaltet | Identität hängt an OQ-006; menschliches Review ausstehend |
-| P03 | 2: Bedienungs- und Zugänglichkeitsziele mit geplanten automatischen und manuellen Nachweisen | erfüllt als Planung (Selbstreview) | Zielkette A11Y-1 bis A11Y-9 mit Kriterium, Nachweis, Gate und WCAG-2.2-Quelle; 22 Kontrastpaare berechnet; manuelle Prüfungen mit Verantwortung (Vorschlag Alex). Fehlerprobe: verfälschte Randfarbe, falsche Token-Referenz und vertauschte Abschnittsreihenfolge wurden gemeldet (3 von 3 Fehlerarten, Exit-Code 1) | Scans und manuelle Prüfungen erst mit Oberfläche ausführbar (P10 bzw. Umsetzung); Werkzeugwahl P04 |
+| P03 | 1: DESIGN.md beschreibt benötigte Tokens, Komponenten und Zustände ohne zusätzliche Funktionen | erfüllt (Review Alex) | Jede Komponente und jeder Teilzustand in `DESIGN.md` nennt ein FR; Abdeckung aller 26 FR per Skript geprüft; Do's and Don'ts schließen Bedienelemente ohne FR aus; Stufe 3 (`draft`) nicht gestaltet | Identität hängt an OQ-006 |
+| P03 | 2: Bedienungs- und Zugänglichkeitsziele mit geplanten automatischen und manuellen Nachweisen | erfüllt als Planung (Review Alex) | Zielkette A11Y-1 bis A11Y-9 mit Kriterium, Nachweis, Gate und WCAG-2.2-Quelle; 22 Kontrastpaare berechnet; manuelle Prüfungen mit Verantwortung (Vorschlag Alex). Fehlerprobe: verfälschte Randfarbe, falsche Token-Referenz und vertauschte Abschnittsreihenfolge wurden gemeldet (3 von 3 Fehlerarten, Exit-Code 1) | Scans und manuelle Prüfungen erst mit Oberfläche ausführbar (P10 bzw. Umsetzung); Werkzeugwahl P04 |
