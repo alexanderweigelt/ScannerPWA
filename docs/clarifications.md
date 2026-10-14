@@ -7,7 +7,7 @@ Dokumentationssprache Deutsch, Bezeichner Englisch.
 
 | Feld | Wert |
 | --- | --- |
-| Aktueller Schritt | P04 Architektur und Diagramme – bereit zum Review (PR) |
+| Aktueller Schritt | P04 Architektur und Diagramme – bereit zum Review (PR #14) |
 | Nächster Schritt | Review und Merge-Anweisung durch Alex; danach P05 Projektsicherheit in neuer Session aus `main` |
 | Aktive Frage | OQ-007 Bildverarbeitung (gestellt 14.10.2026 16:51Z als Auswahl im Projektthread; Antwort ausstehend) |
 | Review | P01: Selbstreview, danach menschliches Review durch Alex (PR #11 nach einer Rückweisungsrunde akzeptiert, 14.10.2026). P02: Selbstreview, danach menschliches Review durch Alex (PR #12 ohne Änderungswunsch akzeptiert, 14.10.2026). P03: Selbstreview, danach menschliches Review durch Alex (PR #13 ohne Änderungswunsch akzeptiert, 14.10.2026). P04: Selbstreview; menschliches Review ausstehend |
@@ -114,7 +114,7 @@ Status je Prüfung: erfüllt / nicht erfüllt / nicht geprüft. Gesamtstatus:
 | P01 | 0 | 2 (Startbefehl „Starte“, Review-Kommentar) | 1 (Rückweisung im Review) | 15:29:59Z bis 15:34:20Z (Commit), gemessen an Thread-Start und Systemzeit |
 | P02 | 0 | 1 (Startbefehl) | 0 | 16:16:32Z bis 16:19:49Z (Commit), gemessen an Startnachricht und Systemzeit; Review-Zeit nicht enthalten |
 | P03 | 1 (OQ-001, Auswahl mit drei Optionen und Empfehlung; beantwortet rund 5 min nach dem Stellen, um 16:32:43Z, ohne Freitext) | 1 (Startbefehl) | 0 | 16:26:58Z bis 16:34:04Z (Commit), gemessen an Startnachricht und Systemzeit; Arbeit lief während der Wartezeit auf die Antwort weiter; Review nicht enthalten |
-| P04 | 1 (OQ-007, Auswahl mit drei Optionen und Empfehlung; Antwort bei PR-Erstellung ausstehend, Arbeit lief mit Empfehlung weiter) | 1 (Startbefehl) | 0 | 16:44:07Z bis Commit (Zeit im PR), gemessen an Startnachricht und Systemzeit; Review nicht enthalten |
+| P04 | 1 (OQ-007, Auswahl mit drei Optionen und Empfehlung; Antwort bei PR-Erstellung ausstehend, Arbeit lief mit Empfehlung weiter) | 1 (Startbefehl) | 0 | 16:44:07Z bis 16:57:08Z (Commit `3d6cba7`), gemessen an Startnachricht und Systemzeit; Review nicht enthalten |
 
 ### Library-Prüfungen
 
