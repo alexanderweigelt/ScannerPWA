@@ -9,7 +9,7 @@ Dokumentationssprache Deutsch, Bezeichner Englisch.
 | --- | --- |
 | Aktueller Schritt | P04 Architektur und Diagramme – Entscheidungsdialog läuft (PR #14, nach Rückweisung durch Alex) |
 | Nächster Schritt | Acht Entscheidungen einzeln mit Alex klären (Reihenfolge: OQ-007/ADR-0002, ADR-0001, ADR-0008, ADR-0003, ADR-0004, ADR-0005, ADR-0006, ADR-0007); ADR-Status nach jeder Antwort anpassen; danach Review und Merge-Anweisung, dann P05 |
-| Aktive Frage | ADR-0004 Offline und Service Worker (gestellt 14.10.2026 als Auswahl im Projektthread) |
+| Aktive Frage | ADR-0005 Deployment und CSP (gestellt 14.10.2026 als Auswahl im Projektthread) |
 | Review | P01: Selbstreview, danach menschliches Review durch Alex (PR #11 nach einer Rückweisungsrunde akzeptiert, 14.10.2026). P02: Selbstreview, danach menschliches Review durch Alex (PR #12 ohne Änderungswunsch akzeptiert, 14.10.2026). P03: Selbstreview, danach menschliches Review durch Alex (PR #13 ohne Änderungswunsch akzeptiert, 14.10.2026). P04: Selbstreview; menschliches Review ausstehend |
 
 ## Delegation und Befugnisse
@@ -56,6 +56,7 @@ Fragen werden gestellt, wenn ihr zuständiger Schritt sie benötigt.
 | ADR-0001: Welche Sprache, welches Build-Werkzeug und welche UI-Schicht? | TypeScript strict mit Vite, ohne UI-Framework. Übernommen in [ADR-0001](adr/ADR-0001-typescript-vite-ohne-ui-framework.md) (`accepted`). | Alex, Auswahl auf Entscheidungskarte im Projektthread, 14.10.2026 17:19:46Z (Optionen TS + Vite ohne Framework / TS + Vite + Preact oder Lit / JavaScript ohne Build; Empfehlung TS + Vite ohne Framework) |
 | ADR-0008: Welche Browser und welche Node-Version? | Aktuelle und vorige Browser-Hauptversion, iOS/Safari ab 17, Node 24 LTS. Übernommen in [ADR-0008](adr/ADR-0008-unterstuetzte-browser.md) (`accepted`). | Alex, Auswahl auf Entscheidungskarte im Projektthread, 14.10.2026 17:20:13Z (Optionen aktuell + vorige mit iOS ab 17 / nur aktuelle Versionen mit Node 26 / breit mit Polyfills; Empfehlung aktuell + vorige) |
 | ADR-0003: Womit wird das PDF auf dem Gerät erzeugt? | Eigener kleiner PDF-Writer mit JPEG-Seiten. Übernommen in [ADR-0003](adr/ADR-0003-eigener-pdf-writer.md) (`accepted`). | Alex, Auswahl auf Entscheidungskarte im Projektthread, 14.10.2026 17:20:48Z (Optionen eigener Writer / pdf-lib / jsPDF; Empfehlung eigener Writer) |
+| ADR-0004: Wie funktioniert die App offline? | Eigener Service Worker mit Precache-Liste aus dem Build. Übernommen in [ADR-0004](adr/ADR-0004-eigener-service-worker.md) (`accepted`). | Alex, Auswahl auf Entscheidungskarte im Projektthread, 14.10.2026 17:21:19Z (Optionen eigener Service Worker / vite-plugin-pwa mit Workbox; Empfehlung eigener Service Worker) |
 
 ## Unbearbeitete Themen für spätere Schritte
 

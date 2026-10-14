@@ -1,7 +1,7 @@
 ---
-status: proposed
+status: accepted
 date: 2026-10-14
-decision-makers: Alex (Annahme ausstehend)
+decision-makers: Alex (Auswahl am 14.10.2026 17:21:19Z)
 consulted: –
 informed: –
 ---
