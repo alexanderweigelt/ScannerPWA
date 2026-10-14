@@ -4,6 +4,8 @@
 Datensätze unter [docs/requirements](docs/requirements/); diese Datei fasst sie
 nur zusammen. Offene Fragen, Entscheidungen und Status stehen in
 [docs/clarifications.md](docs/clarifications.md).
+Neue und geänderte Datensätze folgen der
+[Vorlage für Anforderungsdatensätze](docs/requirements/TEMPLATE.md).
 
 **Grundlage:** das von Alex am 14.10.2026 angenommene
 Zielbild Scanner PWA
