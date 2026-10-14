@@ -10,7 +10,7 @@ Dokumentationssprache Deutsch, Bezeichner Englisch.
 | Aktueller Schritt | P01 Projektaufnahme und Anforderungen – abgeschlossen, Review ausstehend |
 | Nächster Schritt | P02 Anforderungsvorlage (`docs/requirements/TEMPLATE.md`, Datensätze vereinheitlichen) |
 | Aktive Frage | keine |
-| Review | Selbstreview durch den Agenten; menschliches Review des PR steht aus |
+| Review | Selbstreview durch den Agenten. Menschliches Review durch Alex am 14.10.2026: PR zurückgewiesen (28 Kommentare „Kein direkter Verweis auf claude.ai“), umgesetzt in `563ce0a`; erneutes Review steht aus |
 
 ## Delegation und Befugnisse
 
@@ -73,7 +73,7 @@ Status je Prüfung: erfüllt / nicht erfüllt / nicht geprüft. Gesamtstatus:
 
 | Schritt | Fragen an Alex | Freitexteingaben | Unterbrechungen | Dauer |
 | --- | --- | --- | --- | --- |
-| P01 | 0 | 1 (Startbefehl „Starte“) | 0 | 15:29:59Z bis 15:34:20Z (Commit), gemessen an Thread-Start und Systemzeit |
+| P01 | 0 | 2 (Startbefehl „Starte“, Review-Kommentar) | 1 (Rückweisung im Review) | 15:29:59Z bis 15:34:20Z (Commit), gemessen an Thread-Start und Systemzeit |
 
 ### Library-Prüfungen
 
