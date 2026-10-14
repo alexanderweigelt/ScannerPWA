@@ -26,7 +26,7 @@ Dokumentationssprache Deutsch, Bezeichner Englisch.
 
 | Eingabe | Art | Fundstelle |
 | --- | --- | --- |
-| Zielbild Scanner PWA (von Alex angenommen) | geliefert | <https://claude.ai/code/artifact/f047bfc6-ec21-486c-a9f9-e126312b5b1a> |
+| Zielbild Scanner PWA (von Alex angenommen) | geliefert | Dokument „Zielbild Scanner PWA“ bei Alex, angenommen 14.10.2026; kein Link im Repository |
 | Hosting-Vorgabe statische GitHub Page unter `/ScannerPWA/` | geliefert | Zielbild, Abschnitt „Rahmenbedingungen“ |
 | Früherer Projektstand (OpenCV-basiert, Ziel nicht erreicht) | beobachtet | Branch `backup/opencv-stand-2026-10-14` (`b735648`); nur als Kontext, keine Technik übernommen |
 | Referenzbilder des früheren Stands | beobachtet | `backup/opencv-stand-2026-10-14:src/__tests__/fixtures/successful-scan.png`, `failed-scan.png` (siehe OQ-002) |

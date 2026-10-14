@@ -8,8 +8,8 @@
   "statement": "Wenn die Person vor dem Export das Seitenformat Letter wählt, soll die App das PDF im Format Letter hoch erzeugen; ohne Auswahl bleibt A4 hoch.",
   "basis": "supplied",
   "source_refs": [
-    "https://claude.ai/code/artifact/f047bfc6-ec21-486c-a9f9-e126312b5b1a (Zielbild Scanner PWA, Abschnitt „Ausbaustufen“)",
-    "https://claude.ai/code/artifact/f047bfc6-ec21-486c-a9f9-e126312b5b1a (Zielbild Scanner PWA, Abschnitt „UX-Anforderungen“)"
+    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „Ausbaustufen“",
+    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „UX-Anforderungen“"
   ],
   "acceptance_criteria": [
     {

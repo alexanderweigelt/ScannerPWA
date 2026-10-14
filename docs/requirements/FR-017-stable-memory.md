@@ -8,7 +8,7 @@
   "statement": "Wenn die Person wiederholt aufnimmt, verwirft und neu aufnimmt, soll der Speicherverbrauch der App nicht stetig steigen.",
   "basis": "supplied",
   "source_refs": [
-    "https://claude.ai/code/artifact/f047bfc6-ec21-486c-a9f9-e126312b5b1a (Zielbild Scanner PWA, Abschnitt „Qualitätsziele“)"
+    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „Qualitätsziele“"
   ],
   "acceptance_criteria": [
     {

@@ -8,7 +8,7 @@
   "statement": "Die App soll sich jederzeit in genau einem erkennbaren Zustand befinden: Start, Kamera aktiv, Scan-Vorschau, Seitenliste oder Export.",
   "basis": "supplied",
   "source_refs": [
-    "https://claude.ai/code/artifact/f047bfc6-ec21-486c-a9f9-e126312b5b1a (Zielbild Scanner PWA, Abschnitt „UX-Anforderungen“)"
+    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „UX-Anforderungen“"
   ],
   "acceptance_criteria": [
     {

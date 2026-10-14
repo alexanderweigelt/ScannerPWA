@@ -8,8 +8,8 @@
   "statement": "Wenn die Person in der Seitenliste eine Seite an eine andere Position verschiebt, soll die App die angezeigte Reihenfolge entsprechend ändern.",
   "basis": "supplied",
   "source_refs": [
-    "https://claude.ai/code/artifact/f047bfc6-ec21-486c-a9f9-e126312b5b1a (Zielbild Scanner PWA, Abschnitt „Kernfunktionen und Nutzerablauf“)",
-    "https://claude.ai/code/artifact/f047bfc6-ec21-486c-a9f9-e126312b5b1a (Zielbild Scanner PWA, Abschnitt „Ausbaustufen“)"
+    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „Kernfunktionen und Nutzerablauf“",
+    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „Ausbaustufen“"
   ],
   "acceptance_criteria": [
     {

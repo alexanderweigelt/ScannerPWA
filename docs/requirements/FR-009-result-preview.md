@@ -8,7 +8,7 @@
   "statement": "Wenn die Verarbeitung erfolgreich war, soll die App die erzeugte Seite als Vorschau mit den Aktionen „Übernehmen“ und „Neu aufnehmen“ anzeigen.",
   "basis": "supplied",
   "source_refs": [
-    "https://claude.ai/code/artifact/f047bfc6-ec21-486c-a9f9-e126312b5b1a (Zielbild Scanner PWA, Abschnitt „Kernfunktionen und Nutzerablauf“)"
+    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „Kernfunktionen und Nutzerablauf“"
   ],
   "acceptance_criteria": [
     {

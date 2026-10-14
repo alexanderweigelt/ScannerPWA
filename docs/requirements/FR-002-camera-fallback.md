@@ -8,7 +8,7 @@
   "statement": "Wenn die Kamera gestartet wird, soll die App automatisch die Rückkamera verwenden; ist diese nicht verfügbar, die Frontkamera; ist auch diese nicht verfügbar, eine angeschlossene Webcam.",
   "basis": "supplied",
   "source_refs": [
-    "https://claude.ai/code/artifact/f047bfc6-ec21-486c-a9f9-e126312b5b1a (Zielbild Scanner PWA, Abschnitt „UX-Anforderungen“)"
+    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „UX-Anforderungen“"
   ],
   "acceptance_criteria": [
     {

@@ -8,8 +8,8 @@
   "statement": "Wenn eine Sitzung mit übernommenen Seiten unterbrochen wurde und die App erneut geöffnet wird, soll die App anbieten, die Seiten aus einem lokalen Entwurf auf dem Gerät wiederherzustellen.",
   "basis": "supplied",
   "source_refs": [
-    "https://claude.ai/code/artifact/f047bfc6-ec21-486c-a9f9-e126312b5b1a (Zielbild Scanner PWA, Abschnitt „Ausbaustufen“)",
-    "https://claude.ai/code/artifact/f047bfc6-ec21-486c-a9f9-e126312b5b1a (Zielbild Scanner PWA, Abschnitt „Rahmenbedingungen“)"
+    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „Ausbaustufen“",
+    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „Rahmenbedingungen“"
   ],
   "acceptance_criteria": [
     {

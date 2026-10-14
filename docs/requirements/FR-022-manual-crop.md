@@ -8,7 +8,7 @@
   "statement": "Wenn eine Seite in der Ergebnis-Vorschau angezeigt wird, soll die Person die erkannten Ecken manuell verschieben können und die App soll die Seite mit den angepassten Ecken neu entzerren.",
   "basis": "supplied",
   "source_refs": [
-    "https://claude.ai/code/artifact/f047bfc6-ec21-486c-a9f9-e126312b5b1a (Zielbild Scanner PWA, Abschnitt „Ausbaustufen“)"
+    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „Ausbaustufen“"
   ],
   "acceptance_criteria": [
     {

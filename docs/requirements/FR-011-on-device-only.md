@@ -8,8 +8,8 @@
   "statement": "Die App soll Kamerabilder, Scans und PDFs ausschließlich auf dem Gerät verarbeiten und keine dieser Daten über das Netzwerk übertragen; zur Laufzeit soll sie keine Ressourcen von fremden Servern laden.",
   "basis": "supplied",
   "source_refs": [
-    "https://claude.ai/code/artifact/f047bfc6-ec21-486c-a9f9-e126312b5b1a (Zielbild Scanner PWA, Abschnitt „Zielgruppe und Nutzungsszenario“)",
-    "https://claude.ai/code/artifact/f047bfc6-ec21-486c-a9f9-e126312b5b1a (Zielbild Scanner PWA, Abschnitt „Rahmenbedingungen“)"
+    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „Zielgruppe und Nutzungsszenario“",
+    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „Rahmenbedingungen“"
   ],
   "acceptance_criteria": [
     {

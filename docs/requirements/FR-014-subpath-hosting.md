@@ -8,7 +8,7 @@
   "statement": "Die App soll als statische Website unter https://alexanderweigelt.github.io/ScannerPWA/ ausgeliefert werden und unter diesem Unterpfad vollständig funktionieren.",
   "basis": "supplied",
   "source_refs": [
-    "https://claude.ai/code/artifact/f047bfc6-ec21-486c-a9f9-e126312b5b1a (Zielbild Scanner PWA, Abschnitt „Rahmenbedingungen“)"
+    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „Rahmenbedingungen“"
   ],
   "acceptance_criteria": [
     {

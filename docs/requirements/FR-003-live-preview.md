@@ -8,8 +8,8 @@
   "statement": "Während die Kamera aktiv ist, soll die App die Live-Vorschau im Hochformat ohne Verzerrung anzeigen und eine Aktion zum Beenden der Kamera anbieten. Wenn die Person die Kamera beendet, soll die App die Kamera freigeben und zum Startbildschirm zurückkehren.",
   "basis": "supplied",
   "source_refs": [
-    "https://claude.ai/code/artifact/f047bfc6-ec21-486c-a9f9-e126312b5b1a (Zielbild Scanner PWA, Abschnitt „Kernfunktionen und Nutzerablauf“)",
-    "https://claude.ai/code/artifact/f047bfc6-ec21-486c-a9f9-e126312b5b1a (Zielbild Scanner PWA, Abschnitt „UX-Anforderungen“)"
+    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „Kernfunktionen und Nutzerablauf“",
+    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „UX-Anforderungen“"
   ],
   "acceptance_criteria": [
     {

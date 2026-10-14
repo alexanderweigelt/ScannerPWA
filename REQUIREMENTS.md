@@ -6,7 +6,7 @@ nur zusammen. Offene Fragen, Entscheidungen und Status stehen in
 [docs/clarifications.md](docs/clarifications.md).
 
 **Grundlage:** das von Alex am 14.10.2026 angenommene
-[Zielbild Scanner PWA](https://claude.ai/code/artifact/f047bfc6-ec21-486c-a9f9-e126312b5b1a)
+Zielbild Scanner PWA
 (Basis `supplied`). Technik, Frameworks und Architektur werden erst in P04
 entschieden.
 

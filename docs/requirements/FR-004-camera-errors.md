@@ -8,7 +8,7 @@
   "statement": "Wenn der Kamerazugriff verweigert wird oder keine Kamera verfügbar ist, soll die App eine verständliche Meldung anzeigen und einen Weg zurück sowie einen erneuten Versuch anbieten, ohne zu hängen.",
   "basis": "supplied",
   "source_refs": [
-    "https://claude.ai/code/artifact/f047bfc6-ec21-486c-a9f9-e126312b5b1a (Zielbild Scanner PWA, Abschnitt „UX-Anforderungen“)"
+    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „UX-Anforderungen“"
   ],
   "acceptance_criteria": [
     {

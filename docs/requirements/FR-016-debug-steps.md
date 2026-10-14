@@ -8,7 +8,7 @@
   "statement": "Wenn ein Diagnosemodus aktiv ist, soll die App die Zwischenschritte der Bildverarbeitung (u. a. erkannte Kanten bzw. Ecken und entzerrtes Bild) anzeigen.",
   "basis": "supplied",
   "source_refs": [
-    "https://claude.ai/code/artifact/f047bfc6-ec21-486c-a9f9-e126312b5b1a (Zielbild Scanner PWA, Abschnitt „Qualitätsziele“)"
+    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „Qualitätsziele“"
   ],
   "acceptance_criteria": [
     {
