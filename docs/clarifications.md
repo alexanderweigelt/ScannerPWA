@@ -7,8 +7,8 @@ Dokumentationssprache Deutsch, Bezeichner Englisch.
 
 | Feld | Wert |
 | --- | --- |
-| Aktueller Schritt | P04 Architektur und Diagramme – bereit zum Review (PR #14) |
-| Nächster Schritt | Review und Merge-Anweisung durch Alex; danach P05 Projektsicherheit in neuer Session aus `main` |
+| Aktueller Schritt | P04 Architektur und Diagramme – Entscheidungsdialog läuft (PR #14, nach Rückweisung durch Alex) |
+| Nächster Schritt | Acht Entscheidungen einzeln mit Alex klären (Reihenfolge: OQ-007/ADR-0002, ADR-0001, ADR-0008, ADR-0003, ADR-0004, ADR-0005, ADR-0006, ADR-0007); ADR-Status nach jeder Antwort anpassen; danach Review und Merge-Anweisung, dann P05 |
 | Aktive Frage | OQ-007 Bildverarbeitung (gestellt 14.10.2026 16:51Z als Auswahl im Projektthread; Antwort ausstehend) |
 | Review | P01: Selbstreview, danach menschliches Review durch Alex (PR #11 nach einer Rückweisungsrunde akzeptiert, 14.10.2026). P02: Selbstreview, danach menschliches Review durch Alex (PR #12 ohne Änderungswunsch akzeptiert, 14.10.2026). P03: Selbstreview, danach menschliches Review durch Alex (PR #13 ohne Änderungswunsch akzeptiert, 14.10.2026). P04: Selbstreview; menschliches Review ausstehend |
 
@@ -89,6 +89,7 @@ Inhalte, Quellen und IDs wurden nicht umgedeutet; Befunde gehen an P06/P07.
 
 | ID | Befund | Betrifft | Behandlung |
 | --- | --- | --- | --- |
+| FIND-010 | Library-Befund: P04 legte sieben von acht Technikentscheidungen als `proposed`-ADR vor, ohne Alex zu fragen. Alex wies das zurück („Absolut unverständlich wer die Entscheidung zur Architektur getroffen hat. Ich hätte einen Dialog erwartet in dem ich abgefragt werde.“, 14.10.2026 17:10Z). Die Formulierung „Present meaningful alternatives with tradeoffs, or decide within existing delegation“ in P04 ließ zu, eine allgemeine Ausführungsfreigabe als Entscheidungsdelegation zu lesen. | P04, L02, L07 | Entscheidungen werden einzeln per Auswahl nachgeholt; Hinweis für die Library: Technikentscheidungen ohne ausdrückliche Entscheidungsdelegation einzeln abfragen. |
 | FIND-009 | Den Vorrang Front- vor Webcam (FR-002) kann die App mit `facingMode: ideal "environment"` nicht steuern; ohne Rückkamera wählt der Browser. Verstärkt FIND-002. | FR-002, [ARCHITECTURE.md FLOW-02](../ARCHITECTURE.md#flow-02-kamera-starten) | Offen für P06: Vorrang streichen oder Kriterium mit Geräteauswahl nach Berechtigung ergänzen. |
 
 ## Schrittstatus
@@ -114,14 +115,14 @@ Status je Prüfung: erfüllt / nicht erfüllt / nicht geprüft. Gesamtstatus:
 | P01 | 0 | 2 (Startbefehl „Starte“, Review-Kommentar) | 1 (Rückweisung im Review) | 15:29:59Z bis 15:34:20Z (Commit), gemessen an Thread-Start und Systemzeit |
 | P02 | 0 | 1 (Startbefehl) | 0 | 16:16:32Z bis 16:19:49Z (Commit), gemessen an Startnachricht und Systemzeit; Review-Zeit nicht enthalten |
 | P03 | 1 (OQ-001, Auswahl mit drei Optionen und Empfehlung; beantwortet rund 5 min nach dem Stellen, um 16:32:43Z, ohne Freitext) | 1 (Startbefehl) | 0 | 16:26:58Z bis 16:34:04Z (Commit), gemessen an Startnachricht und Systemzeit; Arbeit lief während der Wartezeit auf die Antwort weiter; Review nicht enthalten |
-| P04 | 1 (OQ-007, Auswahl mit drei Optionen und Empfehlung; Antwort bei PR-Erstellung ausstehend, Arbeit lief mit Empfehlung weiter) | 1 (Startbefehl) | 0 | 16:44:07Z bis 16:57:08Z (Commit `3d6cba7`), gemessen an Startnachricht und Systemzeit; Review nicht enthalten |
+| P04 | 1 bis zur Rückweisung (OQ-007, Auswahl mit drei Optionen und Empfehlung); weitere folgen im Entscheidungsdialog | 2 (Startbefehl; Rückweisung 17:10:03Z) | 1 (Rückweisung: Architektur ohne Dialog entschieden) | 16:44:07Z bis 16:57:08Z (Commit `3d6cba7`), gemessen an Startnachricht und Systemzeit; Review nicht enthalten |
 
 ### Library-Prüfungen
 
 | ID | Status | Beleg | Aktion | Verbleibende Lücke |
 | --- | --- | --- | --- | --- |
 | L01 | nicht geprüft (P01–P04 erfüllt) | P01 lief mit Zielbild und Repo-Zugriff; P02, P03 und P04 liefen allein mit ihren Eingaben von `main` (`dda0896`, `b82a2b7`, `b1a0318`), ohne spätere Schritte vorauszusetzen; P04 verweist Einrichtung und Kommandoausführung ausdrücklich an P09/P10 und Sicherheitsbewertung an P05 | P01–P04 ausgeführt | P05–P10 ausstehend |
-| L02 | teilweise erfüllt | P01, P02 ohne Frage. P03 und P04 stellten je genau eine Frage (OQ-001, OQ-007) als Auswahl mit drei Optionen, Folgen und Empfehlung, ohne Freitext; vorhandene Antworten wurden nicht erneut abgefragt. P04 entschied übrige Technik als `proposed`-ADR statt sie einzeln abzufragen | Fragen gestellt | Antwort auf OQ-007 ausstehend; Fragen späterer Schritte |
+| L02 | nicht erfüllt in P04 (siehe FIND-010), sonst teilweise erfüllt | P01, P02 ohne Frage. P03 und P04 stellten je genau eine Frage (OQ-001, OQ-007) als Auswahl mit drei Optionen, Folgen und Empfehlung, ohne Freitext; vorhandene Antworten wurden nicht erneut abgefragt. P04 entschied übrige Technik als `proposed`-ADR statt sie einzeln abzufragen | Fragen gestellt | Antwort auf OQ-007 ausstehend; Fragen späterer Schritte |
 | L03 | teilweise erfüllt | P02, P03 und P04 starteten je in einer neuen Session ohne Chat-Historie, aus den Dateien auf `main` und der Library. Zusätzlich lagen Projektnotizen und ein Auftragstext der Projektsitzung vor (Arbeitsregeln, keine Inhalte). P04 speicherte die aktive Frage OQ-007 im Journal vor dem Stellen | P02–P04 ausgeführt | Fortsetzung in neuer Session nach Pause mit aktiver Frage nicht geprüft; OQ-007 kann diesen Fall belegen, falls die Antwort erst in einer späteren Session übernommen wird |
 | L04 | erfüllt (maschinell), manuelle Checkliste nicht geprüft | Block „COMMON CONTRACT“ bis „END COMMON CONTRACT“ aus allen zehn Dateien extrahiert: je 87 Zeilen, identischer SHA-256 (Präfix `83aec07fa6aca7ba`); zu Beginn von P02, P03 und P04 unverändert wiederholt | Vergleich per Shell-Skript, 14.10.2026 (P01–P04) | Library verlangt Abgleich als Checkliste ohne Helper; dieser steht aus. Der Library-Ordner ist kein Git-Repo, daher kein Git-Bezug |
 | L05 | nicht geprüft (P01–P04-Ergebnisse vorhanden) | siehe Schrittergebnisse; `ARCHITECTURE.md` verlinkt FR, DESIGN.md und ADRs statt sie zu kopieren; CSP-Wert steht nur in ADR-0005, Gates nur in ARCHITECTURE.md Abschnitt 10; mögliche Widersprüche als FIND-001 bis FIND-009 erfasst | – | P05–P10, Behandlung der Befunde in P06 |
