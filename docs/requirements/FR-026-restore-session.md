@@ -1,0 +1,27 @@
+# FR-026 – Unterbrochene Sitzung lokal wiederherstellen
+
+```json
+{
+  "id": "FR-026",
+  "title": "Unterbrochene Sitzung lokal wiederherstellen",
+  "status": "draft",
+  "statement": "Wenn eine Sitzung mit übernommenen Seiten unterbrochen wurde und die App erneut geöffnet wird, soll die App anbieten, die Seiten aus einem lokalen Entwurf auf dem Gerät wiederherzustellen.",
+  "basis": "supplied",
+  "source_refs": [
+    "https://claude.ai/code/artifact/f047bfc6-ec21-486c-a9f9-e126312b5b1a (Zielbild Scanner PWA, Abschnitt „Ausbaustufen“)",
+    "https://claude.ai/code/artifact/f047bfc6-ec21-486c-a9f9-e126312b5b1a (Zielbild Scanner PWA, Abschnitt „Rahmenbedingungen“)"
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "FR-026-AC-1",
+      "given": "Zwei Seiten wurden übernommen und die App wurde geschlossen.",
+      "when": "Die App wird erneut geöffnet.",
+      "then": "Die App bietet an, die zwei Seiten wiederherzustellen; nach Zustimmung erscheinen sie in derselben Reihenfolge.",
+      "test_refs": []
+    }
+  ],
+  "open_question_ids": [
+    "OQ-004"
+  ]
+}
+```
