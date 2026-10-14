@@ -7,10 +7,10 @@ Dokumentationssprache Deutsch, Bezeichner Englisch.
 
 | Feld | Wert |
 | --- | --- |
-| Aktueller Schritt | P02 Anforderungsvorlage – bereit zum Review (PR an `main`) |
-| Nächster Schritt | P03 Designgrundlage (`DESIGN.md`), nach Freigabe und Merge von P02 |
+| Aktueller Schritt | P02 Anforderungsvorlage – abgeschlossen und von Alex freigegeben (PR #12) |
+| Nächster Schritt | P03 Designgrundlage (`DESIGN.md`) in neuer Session aus `main` |
 | Aktive Frage | keine |
-| Review | P01: Selbstreview, danach menschliches Review durch Alex (PR #11 nach einer Rückweisungsrunde akzeptiert, 14.10.2026). P02: nur Selbstreview durch den Agenten; menschliches Review ausstehend |
+| Review | P01: Selbstreview, danach menschliches Review durch Alex (PR #11 nach einer Rückweisungsrunde akzeptiert, 14.10.2026). P02: Selbstreview, danach menschliches Review durch Alex (PR #12 ohne Änderungswunsch akzeptiert, 14.10.2026) |
 
 ## Delegation und Befugnisse
 
@@ -19,7 +19,7 @@ Dokumentationssprache Deutsch, Bezeichner Englisch.
 | Ausführung P01 | Agent führt P01 aus; Start durch Alex mit „Starte“ (14.10.2026, Projektthread). | Alex, 14.10.2026 |
 | Ausführung P02 | Agent führt P02 in neuer Session aus den Dateien auf `main` aus („Nächster Schritt ist P02 in einer neuen Session direkt mit den Dateien auf main starten.“). | Alex, 14.10.2026 |
 | Git | Arbeit auf eigenem Branch, Ergebnis als Pull Request. Keine claude.ai-Links in Dateien, PR-Beschreibungen oder Commit-Nachrichten. Kein direkter Push auf `main` (einmalige Ausnahme beim Leeren von `main`, Commit `d126d41`, ist verbraucht). | Alex, Arbeitsweise vom 14.10.2026 |
-| Merge | Nur auf ausdrückliche Anweisung je PR. Für PR #11 (P01) erteilt als Squash-and-Merge nach `main`. Für den P02-PR noch nicht erteilt. | Alex, 14.10.2026 |
+| Merge | Nur auf ausdrückliche Anweisung je PR. Für PR #11 (P01) erteilt als Squash-and-Merge nach `main`. Für PR #12 (P02) erteilt als Squash-and-Merge nach `main` („PR ist akzeptiert - merge“). | Alex, 14.10.2026 |
 | Externe Artefakte | Keine Issues, Releases oder Veröffentlichungen erteilt. | – |
 | Library-Ordner | „AI Prompt Library“ wird nur gelesen, nie beschrieben. | Alex, 14.10.2026 |
 
@@ -76,7 +76,7 @@ Inhalte, Quellen und IDs wurden nicht umgedeutet; Befunde gehen an P06/P07.
 | Schritt | Status | Ergebnis | Prüfungen |
 | --- | --- | --- | --- |
 | P01 | abgeschlossen, von Alex akzeptiert | `REQUIREMENTS.md`, 26 Datensätze `docs/requirements/FR-001` bis `FR-026` (21 ready, 5 draft), dieses Journal | ID-Eindeutigkeit, JSON-Gültigkeit, Pflichtfelder und relative Links per Skript geprüft (siehe Durchlaufprotokoll) |
-| P02 | bereit zum Review | [`docs/requirements/TEMPLATE.md`](requirements/TEMPLATE.md); FR-004 und FR-008 sprachlich beobachtbar gemacht; Link in `REQUIREMENTS.md`; Befunde FIND-001 bis FIND-006 | Formatprüfung per Ad-hoc-Python-Skript außerhalb des Repos (P02 legt keine Werkzeuge an): 26 FR, 39 AC, JSON, Pflichtfelder, IDs, Überschriften, OQ-Bezüge, relative Links und Anker fehlerfrei; Fehlerprobe erkannt (siehe Durchlaufprotokoll) |
+| P02 | abgeschlossen, von Alex akzeptiert | [`docs/requirements/TEMPLATE.md`](requirements/TEMPLATE.md); FR-004 und FR-008 sprachlich beobachtbar gemacht; Link in `REQUIREMENTS.md`; Befunde FIND-001 bis FIND-006 | Formatprüfung per Ad-hoc-Python-Skript außerhalb des Repos (P02 legt keine Werkzeuge an): 26 FR, 39 AC, JSON, Pflichtfelder, IDs, Überschriften, OQ-Bezüge, relative Links und Anker fehlerfrei; Fehlerprobe erkannt (siehe Durchlaufprotokoll) |
 | P03–P10 | offen | – | – |
 
 ## Durchlaufprotokoll (Funktionsprüfung der Prompt Library)
@@ -102,7 +102,7 @@ Status je Prüfung: erfüllt / nicht erfüllt / nicht geprüft. Gesamtstatus:
 | L04 | erfüllt (maschinell), manuelle Checkliste nicht geprüft | Block „COMMON CONTRACT“ bis „END COMMON CONTRACT“ aus allen zehn Dateien extrahiert: je 87 Zeilen, identischer SHA-256 (Präfix `83aec07fa6aca7ba`); zu Beginn von P02 unverändert wiederholt | Vergleich per Shell-Skript, 14.10.2026 (P01 und P02) | Library verlangt Abgleich als Checkliste ohne Helper; dieser steht aus. Der Library-Ordner ist kein Git-Repo, daher kein Git-Bezug |
 | L05 | nicht geprüft (P01-, P02-Ergebnisse vorhanden) | siehe Schrittergebnisse; mögliche Widersprüche als FIND-001 bis FIND-006 erfasst | – | P03–P10, Behandlung der Befunde in P06 |
 | L06 | nicht geprüft | – | – | P10 |
-| L07 | nicht geprüft (P01 erfüllt, P02 ausstehend) | Status und Review je Schritt dokumentiert; Ergebnis als PR, kein Push auf `main`, kein Merge ohne Anweisung | P02-PR erstellt, nur Selbstreview | Review von P02 durch Alex; spätere Schritte |
+| L07 | nicht geprüft (P01, P02 erfüllt) | Status und Review je Schritt dokumentiert; Ergebnis als PR, kein Push auf `main`, kein Merge ohne Anweisung | P02-PR erstellt, von Alex akzeptiert, Merge erst nach seiner Anweisung | spätere Schritte |
 
 ### Schrittergebnisse
 
@@ -110,5 +110,5 @@ Status je Prüfung: erfüllt / nicht erfüllt / nicht geprüft. Gesamtstatus:
 | --- | --- | --- | --- | --- |
 | P01 | 1: Nutzeraufgaben und Grenzen in REQUIREMENTS.md und FRs | erfüllt (Review Alex) | Jeder Zielbild-Abschnitt ist mindestens einem FR oder REQUIREMENTS.md zugeordnet | keine |
 | P01 | 2: Offene Fragen mit Fundstellen, Journal, Befugnisse, kein Stack | erfüllt (Review Alex) | Abschnitte „Offene Fragen“ und „Delegation und Befugnisse“; keine Technik gewählt | keine |
-| P02 | 1: TEMPLATE.md und FRs im selben Format, beobachtbare Kriterien, gültige Referenzen | erfüllt (Selbstreview) | Formatprüfung: 26 FR, 39 AC, keine Fehler; Fehlerprobe mit kaputtem JSON und doppelter AC-ID wurde zurückgewiesen (2 von 2 Fehlern gemeldet). Kriterien in FR-004 und FR-008 ohne „verständlich“ formuliert | Beobachtbarkeit von „lesbar“ hängt an OQ-002 (FIND-006); Prüfung noch nicht automatisiert (P10) |
-| P02 | 2: Bedeutungen und IDs erhalten, Platzhalter keine Produktanforderungen | erfüllt (Selbstreview) | Keine ID, Quelle, Basis oder Status geändert; Diff betrifft nur drei Kriterientexte. Beispiel in TEMPLATE.md nutzt `FR-PLACEHOLDER`, liegt nicht unter `FR-*.md` und ist nicht in `REQUIREMENTS.md` gelistet | Menschliches Review ausstehend |
+| P02 | 1: TEMPLATE.md und FRs im selben Format, beobachtbare Kriterien, gültige Referenzen | erfüllt (Review Alex) | Formatprüfung: 26 FR, 39 AC, keine Fehler; Fehlerprobe mit kaputtem JSON und doppelter AC-ID wurde zurückgewiesen (2 von 2 Fehlern gemeldet). Kriterien in FR-004 und FR-008 ohne „verständlich“ formuliert | Beobachtbarkeit von „lesbar“ hängt an OQ-002 (FIND-006); Prüfung noch nicht automatisiert (P10) |
+| P02 | 2: Bedeutungen und IDs erhalten, Platzhalter keine Produktanforderungen | erfüllt (Review Alex) | Keine ID, Quelle, Basis oder Status geändert; Diff betrifft nur drei Kriterientexte. Beispiel in TEMPLATE.md nutzt `FR-PLACEHOLDER`, liegt nicht unter `FR-*.md` und ist nicht in `REQUIREMENTS.md` gelistet | keine |
