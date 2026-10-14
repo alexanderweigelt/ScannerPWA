@@ -7,8 +7,8 @@ Dokumentationssprache Deutsch, Bezeichner Englisch.
 
 | Feld | Wert |
 | --- | --- |
-| Aktueller Schritt | P05 Projektsicherheit – abgeschlossen, von Alex akzeptiert (PR #15, Review „PR akzeptiert“, 14.10.2026 17:49:41Z); Merge-Anweisung ausstehend |
-| Nächster Schritt | Merge von PR #15 nach Anweisung von Alex; danach P06 Konsolidierung und Modellreview in neuer Session aus `main` |
+| Aktueller Schritt | P05 Projektsicherheit – abgeschlossen, von Alex akzeptiert (PR #15, Review „PR akzeptiert“, 14.10.2026 17:49:41Z); Squash-and-Merge von Alex freigegeben (17:50:09Z) |
+| Nächster Schritt | P06 Konsolidierung und Modellreview in neuer Session aus `main` |
 | Aktive Frage | keine (SD-1 bis SD-6 beantwortet, SD-3 zurückgestellt) |
 | Review | P05: Selbstreview (Skriptprüfung siehe Schrittstatus), danach menschliches Review durch Alex (PR #15 ohne Änderungswunsch akzeptiert, 14.10.2026 17:49:41Z). P01: Selbstreview, danach menschliches Review durch Alex (PR #11 nach einer Rückweisungsrunde akzeptiert, 14.10.2026). P02: Selbstreview, danach menschliches Review durch Alex (PR #12 ohne Änderungswunsch akzeptiert, 14.10.2026). P03: Selbstreview, danach menschliches Review durch Alex (PR #13 ohne Änderungswunsch akzeptiert, 14.10.2026). P04: Selbstreview; erster Stand von Alex zurückgewiesen (FIND-010), Entscheidungen danach von Alex getroffen; PR #14 von Alex akzeptiert (Review „PR akzeptiert“, 14.10.2026 17:29Z) |
 
@@ -22,7 +22,7 @@ Dokumentationssprache Deutsch, Bezeichner Englisch.
 | Ausführung P04 | Agent führt P04 in neuer Session aus den Dateien auf `main` aus („Nächster Schritt ist P04 in einer neuen Session direkt mit den Dateien auf main starten.“). Technische Entscheidungen trifft Alex: jede wird einzeln als Auswahl mit Vorschlägen und Empfehlung gestellt, Freitext nur im Bedarfsfall (Alex, 14.10.2026 17:10Z und 17:16Z). Eine ADR steht erst nach seiner Auswahl auf `accepted`. | Alex, 14.10.2026 |
 | Ausführung P05 | Agent führt P05 in neuer Session aus den Dateien auf `main` aus („Führe den nächsten Schritt P05 aus dem aktuellen Stand von main aus“). Sicherheitsentscheidungen trifft Alex einzeln per Auswahl (SD-1 bis SD-6). | Alex, 14.10.2026 17:31:51Z |
 | Git | Arbeit auf eigenem Branch, Ergebnis als Pull Request. Keine claude.ai-Links in Dateien, PR-Beschreibungen oder Commit-Nachrichten. Kein direkter Push auf `main` (einmalige Ausnahme beim Leeren von `main`, Commit `d126d41`, ist verbraucht). | Alex, Arbeitsweise vom 14.10.2026 |
-| Merge | Nur auf ausdrückliche Anweisung je PR. Für PR #11 (P01) erteilt als Squash-and-Merge nach `main`. Für PR #12 (P02) erteilt als Squash-and-Merge nach `main` („PR ist akzeptiert - merge“). Für PR #13 (P03) erteilt („PR Akzeptiert - merge freigegeben“), Squash-and-Merge nach `main`. Für PR #14 (P04) erteilt per Auswahl „Squash-and-Merge“ auf Entscheidungskarte (14.10.2026 17:30:06Z). | Alex, 14.10.2026 |
+| Merge | Nur auf ausdrückliche Anweisung je PR. Für PR #11 (P01) erteilt als Squash-and-Merge nach `main`. Für PR #12 (P02) erteilt als Squash-and-Merge nach `main` („PR ist akzeptiert - merge“). Für PR #13 (P03) erteilt („PR Akzeptiert - merge freigegeben“), Squash-and-Merge nach `main`. Für PR #14 (P04) erteilt per Auswahl „Squash-and-Merge“ auf Entscheidungskarte (14.10.2026 17:30:06Z). Für PR #15 (P05) erteilt per Auswahl „Squash-and-Merge“ auf Entscheidungskarte (14.10.2026 17:50:09Z). | Alex, 14.10.2026 |
 | Externe Artefakte | Keine Issues, Releases oder Veröffentlichungen erteilt. | – |
 | Library-Ordner | „AI Prompt Library“ wird nur gelesen, nie beschrieben. | Alex, 14.10.2026 |
 
