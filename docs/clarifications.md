@@ -7,7 +7,7 @@ Dokumentationssprache Deutsch, Bezeichner Englisch.
 
 | Feld | Wert |
 | --- | --- |
-| Aktueller Schritt | P07 Entscheidungen und Spezifikationsbaseline – bereit für Review (PR von Branch `claude/project-thread-5pusbx`); Baseline-Bezug ausstehend bis zum Merge |
+| Aktueller Schritt | P07 Entscheidungen und Spezifikationsbaseline – bereit für Review (PR #17); Baseline-Bezug ausstehend bis zum Merge |
 | Nächster Schritt | Review und Merge-Anweisung durch Alex; danach P08 Projekt-README in neuer Session aus `main`, dort den Merge-Commit als Baseline-Bezug in [baseline-review.md](baseline-review.md) eintragen |
 | Aktive Frage | keine (OQ-002, OQ-005, OQ-006 und FIND-023 in P07 beantwortet; OQ-010 ist eine Messung; OQ-011 erst vor Stufe 2) |
 | Review | P07: Selbstreview des Agenten, keine unabhängige Prüfung; menschliches Review ausstehend. P06: Selbstreview des Agenten, keine unabhängige Prüfung; danach menschliches Review durch Alex (PR #16 ohne Änderungswunsch genehmigt, 15.10.2026 07:04:38Z). P05: Selbstreview (Skriptprüfung siehe Schrittstatus), danach menschliches Review durch Alex (PR #15 ohne Änderungswunsch akzeptiert, 14.10.2026 17:49:41Z). P01: Selbstreview, danach menschliches Review durch Alex (PR #11 nach einer Rückweisungsrunde akzeptiert, 14.10.2026). P02: Selbstreview, danach menschliches Review durch Alex (PR #12 ohne Änderungswunsch akzeptiert, 14.10.2026). P03: Selbstreview, danach menschliches Review durch Alex (PR #13 ohne Änderungswunsch akzeptiert, 14.10.2026). P04: Selbstreview; erster Stand von Alex zurückgewiesen (FIND-010), Entscheidungen danach von Alex getroffen; PR #14 von Alex akzeptiert (Review „PR akzeptiert“, 14.10.2026 17:29Z) |

@@ -11,7 +11,7 @@ Entscheidungen und Befunde stehen im [Journal](clarifications.md).
 | Feld | Wert |
 | --- | --- |
 | Ausgangsstand | `main` bei `9ea14d6` (P06, Squash-Merge von PR #16) |
-| Baseline | **ausstehend**: der Squash-Merge-Commit des P07-PR auf `main`. Er existiert erst nach Merge-Anweisung von Alex und wird in P08 hier und im Journal eingetragen. Ein Tag ist nicht erteilt und wird nicht angelegt. |
+| Baseline | **ausstehend**: der Squash-Merge-Commit von PR #17 (P07) auf `main`. Er existiert erst nach Merge-Anweisung von Alex und wird in P08 hier und im Journal eingetragen. Ein Tag ist nicht erteilt und wird nicht angelegt. |
 | Review | Selbstreview des Agenten; menschliches Review des PR ausstehend |
 
 Bis zum Eintrag gilt: **bereit für Baseline, Bezug ausstehend.** P10 darf
