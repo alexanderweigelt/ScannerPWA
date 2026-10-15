@@ -283,8 +283,14 @@ sequenceDiagram
 
 `facingMode` als `ideal` (nicht `exact`) liefert die Rückkamera, wenn
 vorhanden, sonst eine andere Kamera, ohne Auswahl durch die Person
-(FR-002). Den Vorrang Front- vor Webcam steuert der Browser; ein Kriterium
-dafür fehlt in FR-002 (FIND-002). Vor der Aktion wird nie `getUserMedia`
+(FR-002-AC-1, FR-002-AC-2). Den Vorrang Front- vor Webcam (FR-002-AC-3,
+Antwort von Alex auf OQ-008) setzt CMP-03 selbst durch: Ist die gelieferte
+Kamera keine Rückkamera, liest er nach der Zustimmung die Richtung aller
+Kameras (`getCapabilities().facingMode` bzw. `getSettings().facingMode`) und
+wechselt ohne Rückfrage auf eine Kamera mit `user`, falls vorhanden. Kameras
+ohne gemeldete Richtung gelten als Webcam. Nachweis manuell auf echten
+Geräten (Abschnitt 10.4); die simulierte Kamera im Browser-Test meldet keine
+Richtung. Vor der Aktion wird nie `getUserMedia`
 aufgerufen (FR-001-AC-1); läuft die App im Frame einer anderen Seite, bleibt
 sie im Teilzustand „Eingebettet“ und ruft `getUserMedia` nie auf (FR-027,
 SECURITY.md SEC-08). Beim Verlassen des Zustands „Kamera aktiv“ werden
@@ -495,7 +501,7 @@ Pre-Push `typecheck` und `test:unit`. Hooks ersetzen CI nicht.
 
 Manuelle Gates (Verantwortung Maintainer, Vorschlag Alex; Ergebnis im
 Journal): Kamera auf echtem Android-Smartphone und iPhone sowie Laptop-Webcam
-(FR-002, FR-003, FR-005, FR-012-AC-2), Screenreader- und Zoomprüfung nach
+(FR-002 einschließlich AC-3 auf einem Gerät ohne Rückkamera, FR-003, FR-005, FR-012-AC-2), Screenreader- und Zoomprüfung nach
 DESIGN.md.
 
 ### 10.5 Abhängigkeiten, Laufzeiten, Build
@@ -518,7 +524,7 @@ DESIGN.md.
 | R-05 | Gemeinsamer Ursprung mit anderen Projektseiten von `alexanderweigelt.github.io` | Andere Seiten desselben Ursprungs können Caches und Speicher lesen oder Service Worker in ihrem Pfad registrieren | SECURITY.md T-04, SEC-09: Restrisiko von Alex ohne Gate angenommen (SD-1b) |
 | R-06 | Kein `frame-ancestors` per Meta-Element | Einbettung in fremde Seiten nicht verhinderbar | SECURITY.md T-05, SEC-08: keine Kamera im Frame (SD-2) |
 | R-07 | Lieferkette der Build-Werkzeuge (npm, Actions) | Manipulierter Build | SECURITY.md T-08, T-09, SEC-16 bis SEC-18 |
-| R-08 | Fehlende Kriterien (FIND-002) und offene Fragen (OQ-002, OQ-005, OQ-006) | Tests unvollständig | P06/P07 |
+| R-08 | Offene Fragen (OQ-002, OQ-005, OQ-006) | Tests unvollständig | P06/P07 |
 
 R-04 bis R-07, Speicherorte (OQ-004) und CSP-Wert (ADR-0005, unverändert übernommen) sind in [SECURITY.md](SECURITY.md) bewertet.
 
@@ -527,7 +533,7 @@ R-04 bis R-07, Speicherorte (OQ-004) und CSP-Wert (ADR-0005, unverändert übern
 | FR | Bausteine | Fluss | Hinweis |
 | --- | --- | --- | --- |
 | FR-001 | CMP-01, CMP-03 | FLOW-02 | |
-| FR-002 | CMP-03 | FLOW-02 | Front vor Webcam: Browser (FIND-002) |
+| FR-002 | CMP-03 | FLOW-02 | Front vor Webcam durch CMP-03 (OQ-008), Nachweis manuell |
 | FR-003 | CMP-01, CMP-03 | FLOW-02 | Hochformat = Rahmen (FIND-007) |
 | FR-004 | CMP-02, CMP-03 | FLOW-02 | |
 | FR-005 | CMP-03 | FLOW-03 | |
