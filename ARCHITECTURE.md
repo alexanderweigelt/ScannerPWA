@@ -217,13 +217,13 @@ stateDiagram-v2
   state ScanVorschau {
     [*] --> Verarbeitung
     Verarbeitung --> Erfolg
-    Verarbeitung --> NichtErkannt
+    Verarbeitung --> NichtErkannt: kein Viereck / Zeitgrenze
   }
   ScanVorschau --> KameraAktiv: Neu aufnehmen
   ScanVorschau --> Seitenliste: Übernehmen
   Seitenliste --> KameraAktiv: Seite hinzufügen
   Seitenliste --> Export: PDF erstellen
-  Export --> Seitenliste: Fertig
+  Export --> Seitenliste: Fertig / Abbrechen
 ```
 
 Der Zustand ist eine diskriminierte Union (`{ kind: 'start' | 'camera' |
@@ -412,6 +412,15 @@ Teilzustand (`{ kind: 'start', error: 'denied' | 'unavailable' }`,
 quer durch die Oberfläche. Unerwartete Ausnahmen in Worker oder Export führen
 in den Teilzustand des aktuellen Zustands mit „Erneut versuchen“ bzw.
 „Neu aufnehmen“, nie in eine Ansicht ohne Aktion.
+
+Abbruch und Zeitgrenze (FR-015-AC-2/AC-3, Antwort von Alex auf OQ-009):
+„Neu aufnehmen“ während der Verarbeitung beendet den Worker (`terminate()`)
+und startet für die nächste Aufnahme einen neuen; Ergebnisse einer
+abgebrochenen Verarbeitung werden verworfen. CMP-07 schreibt das PDF
+seitenweise asynchron und prüft zwischen den Seiten ein `AbortSignal`, damit
+„Abbrechen“ und die Zeitgrenze wirken. Die Zeitgrenze überwacht CMP-02 mit
+einem Zeitgeber je Vorgang; ihr Wert ist UNKNOWN bis zur Messung auf einem
+echten Gerät (R-02, OQ-010).
 
 ### 8.2 Speicher (FR-017)
 

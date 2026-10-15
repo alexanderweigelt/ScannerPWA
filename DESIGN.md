@@ -217,9 +217,9 @@ Klärung bleibt bei P06).
 | --- | --- | --- | --- | --- | --- |
 | Start („Scanner“) | Start | Standard; Kamerafehler (`alert-error`); eingebettet in fremder Seite (Hinweistext, keine Kamera-Aktion) | „Kamera starten“; eingebettet: Link „Scanner direkt öffnen“ | „Erneut versuchen“, „Zurück“ bei Fehler | [FR-001](docs/requirements/FR-001-start-camera.md), [FR-004](docs/requirements/FR-004-camera-errors.md), [FR-027](docs/requirements/FR-027-no-camera-when-framed.md) |
 | Kamera („Dokument aufnehmen“) | Kamera aktiv | Kamera startet (`progress-indicator`); Live-Vorschau | Auslöser (`shutter-button`) | „Kamera beenden“ | [FR-002](docs/requirements/FR-002-camera-fallback.md), [FR-003](docs/requirements/FR-003-live-preview.md), [FR-005](docs/requirements/FR-005-capture-photo.md) |
-| Ergebnis („Seite prüfen“) | Scan-Vorschau | Verarbeitung (`progress-indicator` über eingefrorenem Foto); Erfolg; Erkennung fehlgeschlagen (`alert-error` mit Foto) | „Übernehmen“ bzw. bei Fehler „Neu aufnehmen“ | „Neu aufnehmen“ | [FR-006](docs/requirements/FR-006-detect-and-rectify.md) bis [FR-009](docs/requirements/FR-009-result-preview.md), [FR-016](docs/requirements/FR-016-debug-steps.md) |
+| Ergebnis („Seite prüfen“) | Scan-Vorschau | Verarbeitung (`progress-indicator` über eingefrorenem Foto, „Neu aufnehmen“ bricht ab); Erfolg; Erkennung fehlgeschlagen oder Zeitgrenze erreicht (`alert-error` mit Foto) | „Übernehmen“ bzw. bei Fehler und während der Verarbeitung „Neu aufnehmen“ | „Neu aufnehmen“ | [FR-006](docs/requirements/FR-006-detect-and-rectify.md) bis [FR-009](docs/requirements/FR-009-result-preview.md), [FR-016](docs/requirements/FR-016-debug-steps.md) |
 | Seiten („Seiten (n)“) | Seitenliste | mit Seiten; leer (`empty-state`) | „PDF erstellen“ (leer: deaktiviert) | „Seite hinzufügen“, je Seite „Löschen“, „Nach oben“, „Nach unten“ | [FR-009](docs/requirements/FR-009-result-preview.md)-AC-3, [FR-018](docs/requirements/FR-018-add-page.md) bis [FR-020](docs/requirements/FR-020-reorder-pages.md) |
-| Export („PDF erstellen“) | Export | PDF wird erstellt (`progress-indicator`); Download gestartet (`status-success`) | „Fertig“ (zurück zu Seiten) | – | [FR-010](docs/requirements/FR-010-export-pdf.md), [FR-021](docs/requirements/FR-021-multipage-pdf.md) |
+| Export („PDF erstellen“) | Export | PDF wird erstellt (`progress-indicator`); Zeitgrenze erreicht (`alert-error`); Download gestartet (`status-success`) | „Fertig“ (zurück zu Seiten); während der Erstellung „Abbrechen“, nach Zeitgrenze „Erneut versuchen“ | nach Zeitgrenze „Zurück“ zu Seiten | [FR-010](docs/requirements/FR-010-export-pdf.md), [FR-021](docs/requirements/FR-021-multipage-pdf.md), [FR-015](docs/requirements/FR-015-clear-states.md)-AC-2/AC-3 |
 
 In Stufe 1 zeigt die Seitenansicht genau eine Seite ohne Verschiebe- und
 Hinzufügen-Aktionen; diese erscheinen mit Stufe 2
@@ -354,7 +354,9 @@ entfernt und nie von Leisten verdeckt.
 Erlaube den Zugriff in den Browser-Einstellungen und versuche es erneut.“,
 „Keine nutzbare Kamera gefunden.“, „Die Kamera ist in eingebetteten Seiten gesperrt.
 Öffne den Scanner direkt.“, „Kein Dokument erkannt. Lege das Dokument
-auf einen kontrastreichen Untergrund und nimm es neu auf.“
+auf einen kontrastreichen Untergrund und nimm es neu auf.“, „Die Verarbeitung hat
+zu lange gedauert. Nimm das Dokument neu auf.“, „Das PDF konnte nicht
+rechtzeitig erstellt werden. Versuche es erneut.“
 
 **Diagnosemodus:** Die Darstellung steht hier. Er existiert nur im
 Entwicklungs- und Diagnose-Build
