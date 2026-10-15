@@ -80,6 +80,7 @@ Fragen werden gestellt, wenn ihr zuständiger Schritt sie benötigt.
 
 ## Unbearbeitete Themen für spätere Schritte
 
+- Abnahme-Stage vor einem Release (Alex, 15.10.2026 07:41:20Z): Vor dem Release wird nicht auf die GitHub Page (Produktivumgebung) deployt; daher ist zu klären, auf welcher Stage ein Release abgenommen wird. Projektspezifisch, kein Blocker für P07–P10 und kein Library-Befund; aufrufen, sobald die erste Release-Abnahme ansteht (Bezug: manuelle Gates ARCHITECTURE.md 10.4, `test:deployed`, SECURITY.md Abschnitt 7).
 - Echte Smartphone-Fotos (Erfolg und Fehler) liefert Alex nach (Antwort auf OQ-002); bis dahin gelten nur die Backup-Bilder.
 - Soll-Ecken der Referenzbilder markieren und Zahlenwerte des Lesbarkeitsmaßes an den Bildern prüfen (P10/Umsetzung FR-006).
 - Eigenes SVG-Icon zeichnen bei Umsetzung von FR-012 (Antwort auf OQ-006), Freigabe durch Alex im PR.
