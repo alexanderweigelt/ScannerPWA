@@ -11,11 +11,10 @@ Entscheidungen und Befunde stehen im [Journal](clarifications.md).
 | Feld | Wert |
 | --- | --- |
 | Ausgangsstand | `main` bei `9ea14d6` (P06, Squash-Merge von PR #16) |
-| Baseline | **ausstehend**: der Squash-Merge-Commit von PR #17 (P07) auf `main`. Er existiert erst nach Merge-Anweisung von Alex und wird in P08 hier und im Journal eingetragen. Ein Tag ist nicht erteilt und wird nicht angelegt. |
-| Review | Selbstreview des Agenten; menschliches Review des PR ausstehend |
+| Baseline | `827177cb3a6947851681728dc0be3cfd676046fd` (`827177c`), Squash-Merge von PR #17 (P07) auf `main` am 15.10.2026, eingetragen in P08. Ein Tag ist nicht erteilt und wird nicht angelegt. |
+| Review | Selbstreview des Agenten; menschliches Review durch Alex (PR #17 akzeptiert, 15.10.2026 07:43:26Z) |
 
-Bis zum Eintrag gilt: **bereit für Baseline, Bezug ausstehend.** P10 darf
-keinen Bezug voraussetzen, der hier nicht eingetragen ist. Eine spätere
+Die Baseline ist der Commit oben; P10 prüft gegen diesen Bezug. Eine spätere
 Änderung der Spezifikation braucht einen neuen, reviewten Git-Bezug.
 
 ## Umfang
@@ -114,6 +113,6 @@ Nicht ausgeführt, ausdrücklich ausstehend:
 
 ## Bereitschaft
 
-**Spezifikation: bereit für Baseline**, Bezug ausstehend bis Merge. Automatische
+**Spezifikation: Baseline `827177c`** (eingetragen in P08). Automatische
 Prüfung: ausstehend (P10). Code, Tests, Deployment und Produktionsreife: nicht
 vorhanden bzw. nicht belegt.
