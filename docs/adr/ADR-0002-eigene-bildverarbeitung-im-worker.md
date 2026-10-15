@@ -77,7 +77,7 @@ weder DOM noch `OffscreenCanvas`, was die Safari-Unterstützung vereinfacht.
 ### Confirmation
 
 Unit-Tests je Stufe; Referenzbild-Tests FR-006-AC-1 (Erfolg) und
-FR-008-AC-1 (sauberes Scheitern) in CI (Bilder: OQ-002). Fällt die
+FR-008-AC-1 (sauberes Scheitern) in CI (Bilder und Maß: Antwort auf OQ-002, Kriterien in FR-006-AC-1 und FR-008-AC-1). Fällt die
 Erfolgsprüfung mit vertretbarem Aufwand nicht grün aus, greift Plan B.
 
 ## Pros and Cons of the Options
@@ -96,5 +96,5 @@ Erfolgsprüfung mit vertretbarem Aufwand nicht grün aus, greift Plan B.
 
 ## More Information
 
-Offene Abhängigkeit: Referenzbilder und Lesbarkeitsmaß (OQ-002).
+Referenzbilder und Lesbarkeitsmaß: Antwort von Alex auf OQ-002 (15.10.2026); echte Smartphone-Fotos von Alex stehen noch aus.
 Antwort auf OQ-007 in [docs/clarifications.md](../clarifications.md#antworten).

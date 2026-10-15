@@ -10,14 +10,15 @@
   "source_refs": [
     "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „Kernfunktionen und Nutzerablauf“",
     "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „UX-Anforderungen“",
-    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „Qualitätsziele“"
+    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „Qualitätsziele“",
+    "Antwort von Alex auf OQ-002, 15.10.2026 07:20:27Z (Bilder) und 07:21:46Z (Messverfahren), siehe [Journal, Antworten](../clarifications.md#antworten)"
   ],
   "acceptance_criteria": [
     {
       "id": "FR-006-AC-1",
       "given": "Das Referenzfoto für eine erfolgreiche Erkennung liegt vor.",
       "when": "Die Verarbeitung läuft.",
-      "then": "Es entsteht eine Seite im Seitenverhältnis A4 hoch, deren Inhalt das Dokument ohne sichtbare perspektivische Verzerrung zeigt; die Prüfung läuft automatisiert.",
+      "then": "Es entsteht eine Seite im Seitenverhältnis 1:√2 (A4 hoch); jede erkannte Ecke weicht höchstens 1,5 % der Bilddiagonale von der markierten Soll-Ecke des Referenzfotos ab; die Prüfung läuft automatisiert.",
       "test_refs": []
     },
     {
@@ -28,8 +29,6 @@
       "test_refs": []
     }
   ],
-  "open_question_ids": [
-    "OQ-002"
-  ]
+  "open_question_ids": []
 }
 ```

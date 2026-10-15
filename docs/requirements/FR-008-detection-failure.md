@@ -10,12 +10,13 @@
   "source_refs": [
     "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „Kernfunktionen und Nutzerablauf“",
     "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „UX-Anforderungen“",
-    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „Qualitätsziele“"
+    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „Qualitätsziele“",
+    "Antwort von Alex auf OQ-002, 15.10.2026 07:20:27Z (Bilder) und 07:21:46Z (Messverfahren), siehe [Journal, Antworten](../clarifications.md#antworten)"
   ],
   "acceptance_criteria": [
     {
       "id": "FR-008-AC-1",
-      "given": "Das Referenzfoto ohne erkennbares Dokument liegt vor.",
+      "given": "Das Referenzfoto ohne vollständig erkennbares Dokument (Dokument am Bildrand angeschnitten) liegt vor.",
       "when": "Die Verarbeitung läuft.",
       "then": "Eine Meldung nennt, dass kein Dokument erkannt wurde; die App zeigt das Foto weiter an und bietet „Neu aufnehmen“ an; die Prüfung läuft automatisiert.",
       "test_refs": []
@@ -28,8 +29,6 @@
       "test_refs": []
     }
   ],
-  "open_question_ids": [
-    "OQ-002"
-  ]
+  "open_question_ids": []
 }
 ```

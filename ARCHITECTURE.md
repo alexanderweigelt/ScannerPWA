@@ -31,9 +31,9 @@ Architekturrelevante Qualitätsziele, je mit Anforderung als Quelle:
 | Nur auf dem Gerät | Keine Anfrage mit Bild-/PDF-Daten, keine Anfrage an fremde Ursprünge | [FR-011](docs/requirements/FR-011-on-device-only.md) |
 | Offline nach erstem Besuch | Start und Ablauf bis PDF ohne Netz | [FR-013](docs/requirements/FR-013-offline-use.md), [FR-010](docs/requirements/FR-010-export-pdf.md)-AC-2 |
 | Unterpfad | Alles lädt aus `/ScannerPWA/`, Installation und Offline-Start dort | [FR-014](docs/requirements/FR-014-subpath-hosting.md) |
-| Erkennungsqualität | Referenzbild Erfolg gelingt, Referenzbild Fehler scheitert sauber | [FR-006](docs/requirements/FR-006-detect-and-rectify.md), [FR-008](docs/requirements/FR-008-detection-failure.md), OQ-002 |
+| Erkennungsqualität | Referenzbild Erfolg gelingt, Referenzbild Fehler scheitert sauber | [FR-006](docs/requirements/FR-006-detect-and-rectify.md), [FR-008](docs/requirements/FR-008-detection-failure.md) (Maß: Antwort auf OQ-002) |
 | Eindeutige Zustände | Genau ein Zustand, nie ohne Aktion | [FR-015](docs/requirements/FR-015-clear-states.md) |
-| Stabiler Speicher | Kein stetiger Anstieg über Scan-Zyklen | [FR-017](docs/requirements/FR-017-stable-memory.md), OQ-005 |
+| Stabiler Speicher | Kein stetiger Anstieg über Scan-Zyklen | [FR-017](docs/requirements/FR-017-stable-memory.md) (Toleranz: Antwort auf OQ-005) |
 | Zugänglichkeit | WCAG 2.2 AA, Zielkette A11Y-1 bis A11Y-9 | [DESIGN.md](DESIGN.md#zielkette) |
 
 ### Zielkette Wartbarkeit und Reproduzierbarkeit
@@ -181,7 +181,7 @@ flowchart TB
 | CMP-05 | Seitenliste | Übernommene Seiten als JPEG-`Blob` im Arbeitsspeicher; hinzufügen, löschen, verschieben; Objekt-URLs verwalten | Methoden in TypeScript, keine Persistenz | FR-009, FR-017, FR-018, FR-019, FR-020 |
 | CMP-06 | Service Worker | Precache, Offline-Auslieferung, Update ohne Sitzungsabbruch | `install`, `activate`, `fetch` | FR-012, FR-013, FR-014 |
 | CMP-07 | PDF-Writer | PDF aus JPEG-Seiten, A4 hoch, Reihenfolge der Liste, Dateiname nach DESIGN.md | reine Funktion `Blob[] → Blob` | FR-010, FR-021 |
-| CMP-08 | Statische Dateien | `index.html` mit CSP, gebündelte Skripte und Styles, `manifest.webmanifest`, Icons (OQ-006), `sw.js` | HTTPS `GET` | FR-011, FR-012, FR-014 |
+| CMP-08 | Statische Dateien | `index.html` mit CSP, gebündelte Skripte und Styles, `manifest.webmanifest`, eigenes SVG-Icon (Antwort auf OQ-006), `sw.js` | HTTPS `GET` | FR-011, FR-012, FR-014 |
 
 Geplante Verzeichnisstruktur (Umsetzung ab P10): `src/app/` (CMP-01, CMP-02),
 `src/camera/` (CMP-03), `src/processing/` (CMP-04, nur reine Funktionen und
@@ -428,8 +428,8 @@ echten Gerät (R-02, OQ-010).
 * Kamera-Tracks werden beim Verlassen von „Kamera aktiv“ gestoppt.
 * Seiten liegen nur als JPEG-`Blob` vor (ca. einige hundert kB statt ca. 15 MB Rohpixel bei 1654 × 2339 × 4).
 * Jede `URL.createObjectURL` hat ein zugehöriges `revokeObjectURL`; Canvas-Hilfsflächen werden nach Gebrauch auf 0 × 0 gesetzt.
-* Messverfahren (Vorschlag zu OQ-005, keine Antwort): Playwright Chromium, nach 5 Aufwärmzyklen Garbage Collection per DevTools-Protokoll, dann 20 Zyklen Aufnehmen–Verarbeiten–Verwerfen; `JSHeapUsedSize` nach erneuter Garbage Collection höchstens 10 % über dem Ausgangswert.
-* Ergänzung (Vorschlag, FIND-022): `JSHeapUsedSize` erfasst Speicher hinter `Blob`, `ImageData` und Canvas nicht vollständig. Deshalb zählt der Test zusätzlich über eine nur im Testbuild aktive Zählung offene Objekt-URLs und Canvas-Flächen größer 0 × 0; beide müssen nach jedem Zyklus auf den Ausgangswert zurückgehen.
+* Messverfahren (Antwort von Alex auf OQ-005, 15.10.2026; Grenzwerte normativ in [FR-017-AC-1](docs/requirements/FR-017-stable-memory.md)): Playwright Chromium, nach 5 Aufwärmzyklen Garbage Collection per DevTools-Protokoll, dann 20 Zyklen Aufnehmen–Verarbeiten–Verwerfen; `JSHeapUsedSize` nach erneuter Garbage Collection höchstens 10 % über dem Ausgangswert.
+* Ergänzung (FIND-022, mit OQ-005 von Alex gewählt): `JSHeapUsedSize` erfasst Speicher hinter `Blob`, `ImageData` und Canvas nicht vollständig. Deshalb zählt der Test zusätzlich über eine nur im Testbuild aktive Zählung offene Objekt-URLs und Canvas-Flächen größer 0 × 0; beide müssen nach jedem Zyklus auf den Ausgangswert zurückgehen.
 
 ### 8.3 Offline, Speicherorte, Unterpfad
 
@@ -499,7 +499,7 @@ berichtet tatsächliche Ausführung.
 | `npm run build` (`vite build`) + Build-Prüfung | `dist/` mit Basis `/ScannerPWA/`, CSP-Meta vorhanden, kein Inline-Skript, Precache-Liste vollständig | ENG-3, FR-014 | CI vor Deployment |
 | `npm run test:e2e` (`playwright test`) | Ablauf in Chromium (Desktop, Smartphone-Profil, simulierte Kamera), Firefox, WebKit (iPhone-Profil, ohne Kamera); `vite preview` unter `/ScannerPWA/`; Offline (FR-013), Netzmitschnitt (FR-011), Sicherheitsprüfungen laut SECURITY.md Abschnitt 7 (u. a. App im `iframe`, CSP-Verstöße, Speicherinhalt), Diagnose (FR-016-AC-1 gegen Diagnose-Build, FR-016-AC-2 gegen Produktions-Build), Fokus und Live-Region (A11Y-2, A11Y-8), Installierbarkeit in Chromium (FR-012-AC-1; Annahme, in P10 zu prüfen: DevTools-Protokoll `Page.getInstallabilityErrors` liefert eine leere Liste), App im `iframe` (FR-027) | AC-Tests | CI |
 | `npm run test:a11y` (Playwright + `@axe-core/playwright`, Tags `wcag2a`, `wcag2aa`, `wcag21aa`, `wcag22aa`) | Scan aller Ansichten und Teilzustände (DESIGN.md) im Desktop- und Smartphone-Format | A11Y-1, -3, -7, -9 | CI |
-| `npm run test:memory` | Messverfahren 8.2 (Chromium) | FR-017 | CI, sobald OQ-005 beantwortet |
+| `npm run test:memory` | Messverfahren 8.2 (Chromium) | FR-017 | CI |
 | `npm run test:deployed` (Playwright gegen `https://alexanderweigelt.github.io/ScannerPWA/`) | Antwortheader (HSTS, `nosniff`, `Content-Type`) und HTTPS-Umleitung, TLS-Probe je Protokollversion (`openssl s_client`, Gültigkeit nach SECURITY.md SEC-01), CSP-Meta in ausgelieferter Seite, Ressourcen unter Unterpfad, Offline-Start (FR-014-AC-1) | Auslieferung | nach Deployment; Fehlschlag meldet, sperrt nicht rückwirkend |
 | `npm audit --audit-level=high` | bekannte Schwachstellen | ENG-5 | CI |
 | `npx secretlint "**/*"` | Secret-Scan des Repositorys | 10.3 | CI, Pre-Commit |
@@ -508,10 +508,11 @@ berichtet tatsächliche Ausführung.
 Lokale Hooks per `simple-git-hooks`: Pre-Commit `lint` und Secret-Scan,
 Pre-Push `typecheck` und `test:unit`. Hooks ersetzen CI nicht.
 
-Manuelle Gates (Verantwortung Maintainer, Vorschlag Alex; Ergebnis im
-Journal): Kamera auf echtem Android-Smartphone und iPhone sowie Laptop-Webcam
-(FR-002 einschließlich AC-3 auf einem Gerät ohne Rückkamera, FR-003, FR-005, FR-012-AC-2), Screenreader- und Zoomprüfung nach
-DESIGN.md.
+Manuelle Gates (Zuständigkeit von Alex festgelegt, FIND-023, 15.10.2026; Ergebnis im
+Journal): Alex prüft die Kamera auf echtem Android-Smartphone und iPhone sowie Laptop-Webcam
+(FR-002 einschließlich AC-3 auf einem Gerät ohne Rückkamera, FR-003, FR-005, FR-012-AC-2) und die Screenreader;
+der Agent prüft Tastatur, Zoom und Meldungstexte im Desktop-Browser als Selbstprüfung (Verteilung in
+DESIGN.md, „Manuelle Prüfungen“).
 
 ### 10.5 Abhängigkeiten, Laufzeiten, Build
 
@@ -533,7 +534,7 @@ DESIGN.md.
 | R-05 | Gemeinsamer Ursprung mit anderen Projektseiten von `alexanderweigelt.github.io` | Andere Seiten desselben Ursprungs können Caches und Speicher lesen oder Service Worker in ihrem Pfad registrieren | SECURITY.md T-04, SEC-09: Restrisiko von Alex ohne Gate angenommen (SD-1b) |
 | R-06 | Kein `frame-ancestors` per Meta-Element | Einbettung in fremde Seiten nicht verhinderbar | SECURITY.md T-05, SEC-08: keine Kamera im Frame (SD-2) |
 | R-07 | Lieferkette der Build-Werkzeuge (npm, Actions) | Manipulierter Build | SECURITY.md T-08, T-09, SEC-16 bis SEC-18 |
-| R-08 | Offene Fragen (OQ-002, OQ-005, OQ-006) | Tests unvollständig | P06/P07 |
+| R-08 | Offene Fragen OQ-010 (Wert der Zeitgrenze) und OQ-011 (Höchstzahl Seiten); echte Referenzfotos von Alex stehen aus (Antwort auf OQ-002) | Test FR-015-AC-3 und Grenze in Stufe 2 unvollständig | OQ-010 per Messung bei der Umsetzung, OQ-011 vor FR-018-Umsetzung |
 
 R-04 bis R-07, Speicherorte (OQ-004) und CSP-Wert (ADR-0005, unverändert übernommen) sind in [SECURITY.md](SECURITY.md) bewertet.
 
@@ -546,18 +547,18 @@ R-04 bis R-07, Speicherorte (OQ-004) und CSP-Wert (ADR-0005, unverändert übern
 | FR-003 | CMP-01, CMP-03 | FLOW-02 | Hochformat = Rahmen (FIND-007) |
 | FR-004 | CMP-02, CMP-03 | FLOW-02 | |
 | FR-005 | CMP-03 | FLOW-03 | |
-| FR-006 | CMP-04 | FLOW-03 | ADR-0002, OQ-002 |
+| FR-006 | CMP-04 | FLOW-03 | ADR-0002, Maß laut FR-006-AC-1 |
 | FR-007 | CMP-04, CMP-07 | FLOW-03, FLOW-04 | |
 | FR-008 | CMP-02, CMP-04 | FLOW-03 | |
 | FR-009 | CMP-01, CMP-05 | FLOW-04 | |
 | FR-010 | CMP-07 | FLOW-05 | |
 | FR-011 | CMP-06, CMP-08 | alle | CSP `connect-src 'self'`, Netzmitschnitt |
-| FR-012 | CMP-06, CMP-08 | FLOW-01 | Icon: OQ-006 |
+| FR-012 | CMP-06, CMP-08 | FLOW-01 | eigenes Icon (OQ-006) |
 | FR-013 | CMP-06 | FLOW-01, FLOW-06 | |
 | FR-014 | CMP-06, CMP-08 | FLOW-01, FLOW-07 | |
 | FR-015 | CMP-02 | STATE | |
 | FR-016 | CMP-01, CMP-04 | FLOW-03 | ADR-0007 |
-| FR-017 | CMP-03, CMP-04, CMP-05 | FLOW-03, FLOW-04 | 8.2, OQ-005 |
+| FR-017 | CMP-03, CMP-04, CMP-05 | FLOW-03, FLOW-04 | 8.2 |
 | FR-018 | CMP-05 | FLOW-04 | |
 | FR-019 | CMP-05 | FLOW-04 | |
 | FR-020 | CMP-05 | FLOW-04 | |

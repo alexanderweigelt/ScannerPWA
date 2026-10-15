@@ -9,26 +9,25 @@
   "basis": "supplied",
   "source_refs": [
     "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „Kernfunktionen und Nutzerablauf“",
-    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „UX-Anforderungen“"
+    "Zielbild Scanner PWA (angenommen von Alex, 14.10.2026), Abschnitt „UX-Anforderungen“",
+    "Antwort von Alex auf OQ-002, 15.10.2026 07:20:27Z (Bilder) und 07:21:46Z (Messverfahren), siehe [Journal, Antworten](../clarifications.md#antworten)"
   ],
   "acceptance_criteria": [
     {
       "id": "FR-007-AC-1",
       "given": "Das Referenzfoto für eine erfolgreiche Erkennung wurde entzerrt.",
       "when": "Der Scan-Look wird angewendet.",
-      "then": "Die Seite ist schwarz-weiß mit hellem Hintergrund und dunklem Text; der Text des Referenzdokuments ist in der Ausgabe lesbar.",
+      "then": "Die Seite ist schwarz-weiß mit hellem Hintergrund und dunklem Text; der Kontrast zwischen Text und Hintergrund beträgt mindestens 7:1.",
       "test_refs": []
     },
     {
       "id": "FR-007-AC-2",
       "given": "Die Seite des Referenzfotos für eine erfolgreiche Erkennung wurde übernommen und als PDF exportiert.",
       "when": "Die Seite im PDF wird mit der Seite vor der Kodierung verglichen.",
-      "then": "Die Seite im PDF erfüllt dasselbe Lesbarkeitsmaß wie vor der Kodierung (Messverfahren laut OQ-002).",
+      "then": "Die Seite im PDF erfüllt dasselbe Maß wie vor der Kodierung: Kontrast zwischen Text und Hintergrund mindestens 7:1.",
       "test_refs": []
     }
   ],
-  "open_question_ids": [
-    "OQ-002"
-  ]
+  "open_question_ids": []
 }
 ```
