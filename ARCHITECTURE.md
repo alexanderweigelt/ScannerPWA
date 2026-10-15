@@ -44,8 +44,8 @@ Datei verantwortet das Ziel wartbarer Code und reproduzierbare Änderungen:
 
 | Ziel | Messbares Kriterium | Nachweis | Gate | Quelle |
 | --- | --- | --- | --- | --- |
-| ENG-1 Typsicherheit | 0 Fehler bei `strict` und den Optionen in Abschnitt 10.1 | `npm run typecheck` | CI blockierend, Pre-Push | TypeScript 6.0, tsconfig-Referenz |
-| ENG-2 Statische Regeln | 0 Lint-Fehler und 0 Warnungen | `npm run lint` | CI blockierend, Pre-Commit | typescript-eslint `strictTypeChecked` |
+| ENG-1 Typsicherheit | 0 Fehler bei `strict` und den Optionen in Abschnitt 10.1 | `npm run typecheck` | CI blockierend, Pre-Push | TypeScript 6.0 ([ADR-0001](docs/adr/ADR-0001-typescript-vite-ohne-ui-framework.md)), <https://www.typescriptlang.org/tsconfig/> |
+| ENG-2 Statische Regeln | 0 Lint-Fehler und 0 Warnungen | `npm run lint` | CI blockierend, Pre-Commit | ESLint 10, typescript-eslint 8 (npm 8.71.2, abgefragt 15.10.2026), `strictTypeChecked`, <https://typescript-eslint.io/users/configs/> |
 | ENG-3 Reproduzierbarer Build | `npm ci && npm run build` aus sauberem Checkout mit Node 24 erzeugt `dist/` ohne Netz zur Laufzeit; Lockfile unverändert | CI-Job auf frischem Runner | CI blockierend vor Deployment | NIST SSDF 1.1 (SP 800-218), PS.3, PW.6 |
 | ENG-4 Kriterien getestet | Jedes AC eines `ready`-FR hat einen Test in `test_refs` oder einen benannten manuellen Nachweis | Spec-Check (P10) | CI blockierend | COMMON CONTRACT, FR-Vorlage |
 | ENG-5 Abhängigkeiten geprüft | Kein bekanntes Problem ab Schwere „high“ in Laufzeit- oder Build-Abhängigkeiten | `npm audit --audit-level=high` | CI blockierend | NIST SSDF 1.1, PW.4 |
@@ -110,7 +110,8 @@ Konten (siehe [REQUIREMENTS.md, Ausschlüsse](REQUIREMENTS.md#ausschlüsse)).
 | TB-3 | Hauptthread gegenüber Worker | Pixelpuffer und Ergebnisse als strukturierte Nachrichten; beide gleicher Ursprung, Prüfung der Nachrichtenform an der Grenze |
 
 **Gemeinsamer Ursprung:** `alexanderweigelt.github.io` ist der Ursprung aller
-Projektseiten dieses GitHub-Kontos. Cache Storage, IndexedDB und
+Projektseiten dieses GitHub-Kontos ohne eigene Domain; weitere Pages von Alex
+existieren dort (SD-1). Cache Storage, IndexedDB und
 Berechtigungen gelten je Ursprung, nicht je Unterpfad. Bewertung in
 [SECURITY.md](SECURITY.md) (T-04, SEC-09; Restrisiko von Alex angenommen).
 
@@ -173,7 +174,7 @@ flowchart TB
 
 | ID | Baustein | Verantwortung | Schnittstellen | FR |
 | --- | --- | --- | --- | --- |
-| CMP-01 | App-Shell und Ansichten | `index.html`, fünf Ansichten nach DESIGN.md, Fokusführung, Live-Region, Registrierung des Service Workers | DOM; abonniert CMP-02 | FR-001, FR-003, FR-004, FR-009, FR-015, FR-016, FR-019, FR-020 |
+| CMP-01 | App-Shell und Ansichten | `index.html`, fünf Ansichten nach DESIGN.md, Fokusführung, Live-Region, Registrierung des Service Workers, Erkennung der Einbettung im Frame | DOM; abonniert CMP-02 | FR-001, FR-003, FR-004, FR-009, FR-015, FR-016, FR-019, FR-020, FR-027 |
 | CMP-02 | Zustandsmaschine | Einziger Zustand der App und erlaubte Übergänge; ruft CMP-03, CMP-04, CMP-05, CMP-07 | `dispatch(event)`, `subscribe(listener)` | FR-015 |
 | CMP-03 | Kamera-Adapter | Kamera starten mit Rückfallreihenfolge, Fehler klassifizieren, Bild in voller Stromauflösung einfrieren, Kamera freigeben | `navigator.mediaDevices.getUserMedia`, `HTMLVideoElement`, `HTMLCanvasElement` | FR-001, FR-002, FR-003, FR-004, FR-005 |
 | CMP-04 | Bildverarbeitung | Erkennung, Ecken, Entzerrung auf A4 hoch, Scan-Look; Zwischenbilder nur im Diagnosemodus | `postMessage` mit übertragbarem `ArrayBuffer` | FR-006, FR-007, FR-008, FR-016 |
@@ -201,6 +202,7 @@ stateDiagram-v2
   [*] --> Start
   state Start {
     [*] --> Bereit
+    [*] --> Eingebettet: im Frame (FR-027)
     Bereit --> Kamerafehler: verweigert / keine Kamera
     Kamerafehler --> Bereit: Zurück
   }
@@ -215,13 +217,13 @@ stateDiagram-v2
   state ScanVorschau {
     [*] --> Verarbeitung
     Verarbeitung --> Erfolg
-    Verarbeitung --> NichtErkannt
+    Verarbeitung --> NichtErkannt: kein Viereck / Zeitgrenze
   }
   ScanVorschau --> KameraAktiv: Neu aufnehmen
   ScanVorschau --> Seitenliste: Übernehmen
   Seitenliste --> KameraAktiv: Seite hinzufügen
   Seitenliste --> Export: PDF erstellen
-  Export --> Seitenliste: Fertig
+  Export --> Seitenliste: Fertig / Abbrechen
 ```
 
 Der Zustand ist eine diskriminierte Union (`{ kind: 'start' | 'camera' |
@@ -281,9 +283,17 @@ sequenceDiagram
 
 `facingMode` als `ideal` (nicht `exact`) liefert die Rückkamera, wenn
 vorhanden, sonst eine andere Kamera, ohne Auswahl durch die Person
-(FR-002). Den Vorrang Front- vor Webcam steuert der Browser; ein Kriterium
-dafür fehlt in FR-002 (FIND-002). Vor der Aktion wird nie `getUserMedia`
-aufgerufen (FR-001-AC-1). Beim Verlassen des Zustands „Kamera aktiv“ werden
+(FR-002-AC-1, FR-002-AC-2). Den Vorrang Front- vor Webcam (FR-002-AC-3,
+Antwort von Alex auf OQ-008) setzt CMP-03 selbst durch: Ist die gelieferte
+Kamera keine Rückkamera, liest er nach der Zustimmung die Richtung aller
+Kameras (`getCapabilities().facingMode` bzw. `getSettings().facingMode`) und
+wechselt ohne Rückfrage auf eine Kamera mit `user`, falls vorhanden. Kameras
+ohne gemeldete Richtung gelten als Webcam. Nachweis manuell auf echten
+Geräten (Abschnitt 10.4); die simulierte Kamera im Browser-Test meldet keine
+Richtung. Vor der Aktion wird nie `getUserMedia`
+aufgerufen (FR-001-AC-1); läuft die App im Frame einer anderen Seite, bleibt
+sie im Teilzustand „Eingebettet“ und ruft `getUserMedia` nie auf (FR-027,
+SECURITY.md SEC-08). Beim Verlassen des Zustands „Kamera aktiv“ werden
 alle Tracks mit `stop()` beendet (FR-003-AC-2).
 
 ### FLOW-03 Aufnehmen und Verarbeiten
@@ -313,9 +323,9 @@ sequenceDiagram
   end
 ```
 
-Der Worker prüft eingehende Nachrichten auf Form und Grenzen (Breite und Höhe
-positiv und ≤ 8192, Puffergröße = Breite × Höhe × 4) und antwortet sonst mit
-einem Fehler statt zu rechnen (TB-3).
+Der Worker prüft eingehende Nachrichten an der Grenze TB-3 auf Form und
+Grenzen und antwortet sonst mit einem Fehler statt zu rechnen; die Grenzwerte
+legt [SECURITY.md](SECURITY.md) SEC-10 fest.
 
 ### FLOW-04 Übernehmen und Seitenliste
 
@@ -403,6 +413,15 @@ quer durch die Oberfläche. Unerwartete Ausnahmen in Worker oder Export führen
 in den Teilzustand des aktuellen Zustands mit „Erneut versuchen“ bzw.
 „Neu aufnehmen“, nie in eine Ansicht ohne Aktion.
 
+Abbruch und Zeitgrenze (FR-015-AC-2/AC-3, Antwort von Alex auf OQ-009):
+„Neu aufnehmen“ während der Verarbeitung beendet den Worker (`terminate()`)
+und startet für die nächste Aufnahme einen neuen; Ergebnisse einer
+abgebrochenen Verarbeitung werden verworfen. CMP-07 schreibt das PDF
+seitenweise asynchron und prüft zwischen den Seiten ein `AbortSignal`, damit
+„Abbrechen“ und die Zeitgrenze wirken. Die Zeitgrenze überwacht CMP-02 mit
+einem Zeitgeber je Vorgang; ihr Wert ist UNKNOWN bis zur Messung auf einem
+echten Gerät (R-02, OQ-010).
+
 ### 8.2 Speicher (FR-017)
 
 * Höchstens ein Foto in voller Auflösung zur Zeit; der Puffer wird an den Worker übertragen, nicht kopiert.
@@ -410,6 +429,7 @@ in den Teilzustand des aktuellen Zustands mit „Erneut versuchen“ bzw.
 * Seiten liegen nur als JPEG-`Blob` vor (ca. einige hundert kB statt ca. 15 MB Rohpixel bei 1654 × 2339 × 4).
 * Jede `URL.createObjectURL` hat ein zugehöriges `revokeObjectURL`; Canvas-Hilfsflächen werden nach Gebrauch auf 0 × 0 gesetzt.
 * Messverfahren (Vorschlag zu OQ-005, keine Antwort): Playwright Chromium, nach 5 Aufwärmzyklen Garbage Collection per DevTools-Protokoll, dann 20 Zyklen Aufnehmen–Verarbeiten–Verwerfen; `JSHeapUsedSize` nach erneuter Garbage Collection höchstens 10 % über dem Ausgangswert.
+* Ergänzung (Vorschlag, FIND-022): `JSHeapUsedSize` erfasst Speicher hinter `Blob`, `ImageData` und Canvas nicht vollständig. Deshalb zählt der Test zusätzlich über eine nur im Testbuild aktive Zählung offene Objekt-URLs und Canvas-Flächen größer 0 × 0; beide müssen nach jedem Zyklus auf den Ausgangswert zurückgehen.
 
 ### 8.3 Offline, Speicherorte, Unterpfad
 
@@ -454,7 +474,8 @@ berichtet tatsächliche Ausführung.
 ### 10.2 Lint und Format
 
 * ESLint 10 mit `typescript-eslint` `strictTypeChecked` und `stylisticTypeChecked`; zusätzlich als Fehler: `@typescript-eslint/no-explicit-any`, `no-unsafe-*`, `consistent-type-assertions` (`assertionStyle: 'as'`, `objectLiteralTypeAssertions: 'never'`), `no-floating-promises`.
-* Verbotene DOM-Ausgaben per `no-restricted-properties`/`no-restricted-syntax`: `innerHTML`, `outerHTML`, `insertAdjacentHTML`, `document.write`, `eval`, `new Function`, String-Argumente für `setTimeout`. Texte nur über `textContent`, Elemente über `createElement`.
+* Verbotene DOM-Ausgaben und dynamische Codeausführung per `no-restricted-properties`/`no-restricted-syntax` (maßgebliche Liste für SECURITY.md SEC-04): `innerHTML`, `outerHTML`, `insertAdjacentHTML`, `setHTMLUnsafe`, `Range.createContextualFragment`, `srcdoc`, `document.write`, `eval`, `new Function`, String-Argumente für `setTimeout` und `setInterval`. Texte nur über `textContent`, Elemente über `createElement`.
+* Netz-APIs in Worker und Service Worker (SECURITY.md SEC-05): im Bildverarbeitungs-Worker (`src/processing/`) keine `fetch`, `XMLHttpRequest`, `WebSocket`, `EventSource`, `importScripts`; im Service Worker (`src/sw/`) `fetch` nur für Anfragen des eigenen Ursprungs. Grund: Das CSP-Meta-Element gilt nur für das Dokument, nicht für Worker (FIND-015).
 * Prettier für Formatierung; `--max-warnings 0`.
 
 ### 10.3 Eingaben, Ausgabe, Ursprung, Transport
@@ -476,10 +497,10 @@ berichtet tatsächliche Ausführung.
 | `npm run format:check` (`prettier --check .`) | Format | ENG-2 | CI |
 | `npm run test:unit` (`vitest run`) | Zustandsmaschine, Pipeline-Stufen, Referenzbilder (FR-006/007/008-AC), PDF-Struktur (FR-010-AC-1, FR-021-AC-1), Seitenliste (FR-018 bis FR-020) | AC-Tests | CI, Pre-Push |
 | `npm run build` (`vite build`) + Build-Prüfung | `dist/` mit Basis `/ScannerPWA/`, CSP-Meta vorhanden, kein Inline-Skript, Precache-Liste vollständig | ENG-3, FR-014 | CI vor Deployment |
-| `npm run test:e2e` (`playwright test`) | Ablauf in Chromium (Desktop, Smartphone-Profil, simulierte Kamera), Firefox, WebKit (iPhone-Profil, ohne Kamera); `vite preview` unter `/ScannerPWA/`; Offline (FR-013), Netzmitschnitt (FR-011), Sicherheitsprüfungen laut SECURITY.md Abschnitt 7 (u. a. App im `iframe`, CSP-Verstöße, Speicherinhalt), Diagnose (FR-016-AC-1 gegen Diagnose-Build, FR-016-AC-2 gegen Produktions-Build), Fokus und Live-Region (A11Y-2, A11Y-8), Installierbarkeit soweit automatisierbar (FR-012-AC-1) | AC-Tests | CI |
+| `npm run test:e2e` (`playwright test`) | Ablauf in Chromium (Desktop, Smartphone-Profil, simulierte Kamera), Firefox, WebKit (iPhone-Profil, ohne Kamera); `vite preview` unter `/ScannerPWA/`; Offline (FR-013), Netzmitschnitt (FR-011), Sicherheitsprüfungen laut SECURITY.md Abschnitt 7 (u. a. App im `iframe`, CSP-Verstöße, Speicherinhalt), Diagnose (FR-016-AC-1 gegen Diagnose-Build, FR-016-AC-2 gegen Produktions-Build), Fokus und Live-Region (A11Y-2, A11Y-8), Installierbarkeit in Chromium (FR-012-AC-1; Annahme, in P10 zu prüfen: DevTools-Protokoll `Page.getInstallabilityErrors` liefert eine leere Liste), App im `iframe` (FR-027) | AC-Tests | CI |
 | `npm run test:a11y` (Playwright + `@axe-core/playwright`, Tags `wcag2a`, `wcag2aa`, `wcag21aa`, `wcag22aa`) | Scan aller Ansichten und Teilzustände (DESIGN.md) im Desktop- und Smartphone-Format | A11Y-1, -3, -7, -9 | CI |
 | `npm run test:memory` | Messverfahren 8.2 (Chromium) | FR-017 | CI, sobald OQ-005 beantwortet |
-| `npm run test:deployed` (Playwright gegen `https://alexanderweigelt.github.io/ScannerPWA/`) | Antwortheader (HSTS, `nosniff`, `Content-Type`) und HTTPS-Umleitung, TLS-Probe je Protokollversion (`openssl s_client`), CSP-Meta in ausgelieferter Seite, Ressourcen unter Unterpfad, Offline-Start (FR-014-AC-1) | Auslieferung | nach Deployment; Fehlschlag meldet, sperrt nicht rückwirkend |
+| `npm run test:deployed` (Playwright gegen `https://alexanderweigelt.github.io/ScannerPWA/`) | Antwortheader (HSTS, `nosniff`, `Content-Type`) und HTTPS-Umleitung, TLS-Probe je Protokollversion (`openssl s_client`, Gültigkeit nach SECURITY.md SEC-01), CSP-Meta in ausgelieferter Seite, Ressourcen unter Unterpfad, Offline-Start (FR-014-AC-1) | Auslieferung | nach Deployment; Fehlschlag meldet, sperrt nicht rückwirkend |
 | `npm audit --audit-level=high` | bekannte Schwachstellen | ENG-5 | CI |
 | `npx secretlint "**/*"` | Secret-Scan des Repositorys | 10.3 | CI, Pre-Commit |
 | `npm run check:spec` | FR/AC/OQ/ADR-IDs, `test_refs`, relative Links (P10) | ENG-4 | CI |
@@ -489,7 +510,7 @@ Pre-Push `typecheck` und `test:unit`. Hooks ersetzen CI nicht.
 
 Manuelle Gates (Verantwortung Maintainer, Vorschlag Alex; Ergebnis im
 Journal): Kamera auf echtem Android-Smartphone und iPhone sowie Laptop-Webcam
-(FR-002, FR-003, FR-005, FR-012-AC-2), Screenreader- und Zoomprüfung nach
+(FR-002 einschließlich AC-3 auf einem Gerät ohne Rückkamera, FR-003, FR-005, FR-012-AC-2), Screenreader- und Zoomprüfung nach
 DESIGN.md.
 
 ### 10.5 Abhängigkeiten, Laufzeiten, Build
@@ -512,7 +533,7 @@ DESIGN.md.
 | R-05 | Gemeinsamer Ursprung mit anderen Projektseiten von `alexanderweigelt.github.io` | Andere Seiten desselben Ursprungs können Caches und Speicher lesen oder Service Worker in ihrem Pfad registrieren | SECURITY.md T-04, SEC-09: Restrisiko von Alex ohne Gate angenommen (SD-1b) |
 | R-06 | Kein `frame-ancestors` per Meta-Element | Einbettung in fremde Seiten nicht verhinderbar | SECURITY.md T-05, SEC-08: keine Kamera im Frame (SD-2) |
 | R-07 | Lieferkette der Build-Werkzeuge (npm, Actions) | Manipulierter Build | SECURITY.md T-08, T-09, SEC-16 bis SEC-18 |
-| R-08 | Fehlende Kriterien (FIND-002) und offene Fragen (OQ-002, OQ-005, OQ-006) | Tests unvollständig | P06/P07 |
+| R-08 | Offene Fragen (OQ-002, OQ-005, OQ-006) | Tests unvollständig | P06/P07 |
 
 R-04 bis R-07, Speicherorte (OQ-004) und CSP-Wert (ADR-0005, unverändert übernommen) sind in [SECURITY.md](SECURITY.md) bewertet.
 
@@ -521,7 +542,7 @@ R-04 bis R-07, Speicherorte (OQ-004) und CSP-Wert (ADR-0005, unverändert übern
 | FR | Bausteine | Fluss | Hinweis |
 | --- | --- | --- | --- |
 | FR-001 | CMP-01, CMP-03 | FLOW-02 | |
-| FR-002 | CMP-03 | FLOW-02 | Front vor Webcam: Browser (FIND-002) |
+| FR-002 | CMP-03 | FLOW-02 | Front vor Webcam durch CMP-03 (OQ-008), Nachweis manuell |
 | FR-003 | CMP-01, CMP-03 | FLOW-02 | Hochformat = Rahmen (FIND-007) |
 | FR-004 | CMP-02, CMP-03 | FLOW-02 | |
 | FR-005 | CMP-03 | FLOW-03 | |
@@ -541,4 +562,5 @@ R-04 bis R-07, Speicherorte (OQ-004) und CSP-Wert (ADR-0005, unverändert übern
 | FR-019 | CMP-05 | FLOW-04 | |
 | FR-020 | CMP-05 | FLOW-04 | |
 | FR-021 | CMP-07 | FLOW-05 | |
+| FR-027 | CMP-01, CMP-02 | FLOW-02 | SECURITY.md SEC-08 |
 | FR-022 bis FR-026 | – | – | `draft`, Stufe 3; vorbereitet nur durch Parameter in CMP-07; FR-026 braucht Speicherentscheidung (OQ-004) |
