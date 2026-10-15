@@ -1,0 +1,7 @@
+node_modules/
+dist/
+dist-diagnose/
+coverage/
+test-results/
+playwright-report/
+*.tsbuildinfo

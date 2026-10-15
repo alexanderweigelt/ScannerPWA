@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tools.tsbuildinfo",
+    "lib": ["ES2023"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "types": ["node"],
+    "allowJs": true,
+    "checkJs": true
+  },
+  "include": [
+    "scripts",
+    "vite.config.ts",
+    "playwright.config.ts",
+    "playwright.deployed.config.ts",
+    "eslint.config.js"
+  ]
+}

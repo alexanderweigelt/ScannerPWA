@@ -11,10 +11,10 @@ installierbar und offline nutzbar, ohne Konten und ohne Server.
 > des Vorgehens ist die AI Prompt Library (PL-WEB-4.0). Hintergrund und
 > Projektvision stehen im [Wiki](https://github.com/alexanderweigelt/ScannerPWA/wiki).
 
-> **Projektphase: Spezifikation.** Das Repository enthält die geprüfte
-> Spezifikation. Anwendungscode, Build-, Test- und Deployment-Werkzeuge sind
-> noch nicht umgesetzt; die Dokumentation belegt weder eine lauffähige App
-> noch ihre Konformität. Baseline und offene Punkte stehen im
+> **Projektphase: Projektstart.** Das Repository enthält die geprüfte
+> Spezifikation sowie Build-, Prüf- und Testwerkzeuge mit CI. Anwendungscode
+> und Deployment sind noch nicht umgesetzt; die Dokumentation belegt weder eine
+> lauffähige App noch ihre Konformität. Baseline und offene Punkte stehen im
 > [Baseline-Bericht](docs/baseline-review.md), der aktuelle Schritt im
 > [Klärungsjournal](docs/clarifications.md#stand).
 
@@ -30,6 +30,7 @@ installierbar und offline nutzbar, ohne Konten und ohne Server.
 | [Sicherheit](SECURITY.md) | Bedrohungsmodell, Sicherheitsziele, Prüfplan und Meldeweg |
 | [Klärungsjournal](docs/clarifications.md) | Offene Fragen, Antworten, Befugnisse, Verlauf und Durchlaufprotokoll |
 | [Baseline-Bericht](docs/baseline-review.md) | Prüfung und Bezug der Spezifikation |
+| [Arbeitsplan](docs/work-plan.md) | Arbeitspakete, Reihenfolge und Lieferstand |
 | [Agent-Anweisungen](AGENTS.md) | Arbeitsregeln, Kommandos und Gates für Coding-Agents; Agents ohne automatisches Laden von `AGENTS.md` lesen die Datei zu Beginn jeder Sitzung |
 
 Diese README ist ein Einstieg, keine zweite Spezifikation. Neues Verhalten
@@ -38,10 +39,9 @@ Entscheidungen stehen in der jeweils zuständigen Datei oben.
 
 ## Kommandos
 
-Es gibt noch keine ausführbaren Projektkommandos; zum Lesen und Mitarbeiten
-genügen Git und ein Markdown-Betrachter. Die geplanten Kommandos stehen in
-[ARCHITECTURE.md, Abschnitt 10.4](ARCHITECTURE.md#104-geplante-kommandos-und-gates)
-und gelten erst, wenn sie eingerichtet und ausgeführt sind.
+Voraussetzung ist Node 24 (`.nvmrc`); installiert wird mit `npm ci`.
+Kommandos, Sperrbedingungen und ihr Stand stehen in
+[AGENTS.md](AGENTS.md#kommandos-und-gates).
 
 ## Mitarbeit
 

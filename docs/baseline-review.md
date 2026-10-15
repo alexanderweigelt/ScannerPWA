@@ -111,8 +111,71 @@ Nicht ausgeführt, ausdrücklich ausstehend:
   und tatsächlich ausführen; Ergebnisse dieses Berichts aktualisieren, falls die
   automatische Prüfung neue Blocker findet, bevor Produktarbeit beginnt.
 
+## P10: eingerichtete Prüfgrundlage
+
+Ergebnis von P10 (WP-001, [Arbeitsplan](work-plan.md)) vom 15.10.2026 auf dem
+Branch des P10-PR, Ausgangsstand `main` `d85c6b3`. Umgebung: Cloud-Container
+Linux x64, Node 24.22.0 (von nodejs.org, Prüfsumme gegen `SHASUMS256.txt`
+geprüft), npm 11.19.1; Chromium aus dem Container
+(`PLAYWRIGHT_CHROMIUM_EXECUTABLE`), weil Playwright dort keine Browser lädt.
+Selbstprüfung des Agenten; CI-Ergebnis siehe PR.
+
+### Ausgeführte Kommandos
+
+| Kommando | Ergebnis lokal | Bemerkung |
+| --- | --- | --- |
+| `npm ci` | bestanden | Hooks `pre-commit`, `pre-push` installiert |
+| `npm run check:spec` | bestanden | 27 FR, 46 AC, 12 Arbeitspakete; 39 von 39 `ready`-AC ohne `test_refs` = ausstehend |
+| `npm run check:spec -- --release` | zurückgewiesen (erwartet) | 39 Meldungen; Release erst mit Tests |
+| `npm run typecheck` | bestanden | Projekte Dokument, Werkzeuge, Tests |
+| `npm run lint` | bestanden | 0 Fehler, 0 Warnungen |
+| `npm run format:check` | bestanden | |
+| `npm run test:unit` | bestanden | 26 Tests: Negativproben für `check:spec` und `check:build`; noch keine Produkt-AC |
+| `npm run build` | bestanden | |
+| `npm run check:build` | bestanden | Precache-Prüfung ausstehend (kein Service Worker, WP-008) |
+| `npm run test:e2e` | Chromium Desktop und Smartphone bestanden; Firefox, WebKit nicht ausführbar | Browser im Container nicht vorhanden; laufen in CI |
+| `npm run test:a11y` | bestanden | nur Startseite; weitere Ansichten mit ihren Paketen |
+| `npm run test:memory` | Messwerkzeug bestanden, FR-017-AC-1 übersprungen | Messung folgt mit WP-009 |
+| `npm audit --audit-level=high` | bestanden | 0 Funde |
+| `npx secretlint "**/*"` | bestanden | 0 Funde |
+| `npm run test:deployed` | nicht ausführbar | Container löst `alexanderweigelt.github.io` nicht auf; nichts veröffentlicht; Offline-Start übersprungen (WP-008) |
+
+Befund während der Einrichtung: Der Browser fragt `/favicon.ico` außerhalb des
+Unterpfads an (404), bis WP-008 das App-Icon liefert; `test:e2e` nimmt nur
+diese Anfrage aus (FIND-032).
+
+### Fehlerproben
+
+Je Probe eine Wegwerfkopie des Repositorys mit genau einem absichtlichen Fehler;
+das Original blieb unverändert und wurde danach erneut geprüft (bestanden).
+
+| Gate | Absichtlicher Fehler | Ergebnis |
+| --- | --- | --- |
+| `check:spec` | toter Link und unbekannte FR-ID in README.md | Exit 1, beide gemeldet |
+| `typecheck` | `string` an `number` zugewiesen | Exit 1, TS2322 |
+| `lint` | `innerHTML` in `src/main.ts` | Exit 1, Regel SEC-04 |
+| `format:check` | unformatierte Datei | Exit 1 |
+| `test:unit` | fehlschlagender Test | Exit 1 |
+| `check:build` | Inline-Skript in `dist/index.html` | Exit 1 |
+| `secretlint` | GitHub-Token-Muster | Exit 1; ein unvollständiger RSA-Schlüssel wurde nicht gemeldet |
+| `npm ci` | `package.json` weicht vom Lockfile ab | Exit 1 |
+| `test:e2e` | Inline-Skript in `index.html` (CSP-Verstoß) | Exit 1 |
+| `test:a11y` | fehlendes `lang` | Exit 1, axe `html-has-lang` |
+| `npm audit` | `lodash@4.17.20` | Exit 1, 1 Fund „high“ |
+| Pre-Commit-Hook | `innerHTML` im Commit | Commit abgewiesen |
+| Pre-Push-Hook | Typfehler | Push abgewiesen |
+
+Dauerhafte Negativproben für `check:spec` (12 Fälle) und `check:build`
+(10 Fälle) liegen in `tests/unit/`.
+
+### Nicht belegt
+
+* Sperre beim Merge: Ruleset für `main` mit Pflichtprüfungen setzt Alex (MG-2); bis dahin meldet CI nur.
+* `test:deployed`, MG-1 bis MG-4, Geräte- und Screenreader-Prüfungen: erst mit Deployment bzw. vor Release.
+* Produkt-AC: keine Tests, kein Produktcode; neue Blocker für die Produktarbeit wurden nicht gefunden.
+
 ## Bereitschaft
 
 **Spezifikation: Baseline `827177c`** (eingetragen in P08). Automatische
-Prüfung: ausstehend (P10). Code, Tests, Deployment und Produktionsreife: nicht
-vorhanden bzw. nicht belegt.
+Prüfung: eingerichtet und lokal ausgeführt (P10, siehe oben). Produktcode,
+Produkttests, Deployment und Produktionsreife: nicht vorhanden bzw. nicht belegt.

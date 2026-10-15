@@ -1,0 +1,45 @@
+{
+  "name": "scanner-pwa",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Mobiler Dokumentenscanner im Browser: Foto, flache A4-Seite, PDF – ohne Upload.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "check:spec": "node scripts/check-spec.mjs",
+    "check:build": "node scripts/check-build.mjs",
+    "typecheck": "tsc -b --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test:unit": "vitest run",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test:e2e": "playwright test --project=e2e-desktop-chromium --project=e2e-mobile-chromium --project=e2e-firefox --project=e2e-webkit-iphone",
+    "test:a11y": "playwright test --project=a11y-desktop --project=a11y-mobile",
+    "test:memory": "playwright test --project=memory",
+    "test:deployed": "playwright test --config=playwright.deployed.config.ts",
+    "prepare": "simple-git-hooks"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npm run lint && npx secretlint \"**/*\"",
+    "pre-push": "npm run typecheck && npm run test:unit"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.64.1",
+    "@secretlint/secretlint-rule-preset-recommend": "13.0.7",
+    "@types/node": "24.19.2",
+    "eslint": "10.12.0",
+    "prettier": "3.9.10",
+    "secretlint": "13.0.7",
+    "simple-git-hooks": "2.14.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.2",
+    "vite": "8.3.4",
+    "vitest": "5.0.4"
+  }
+}

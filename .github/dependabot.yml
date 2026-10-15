@@ -1,0 +1,11 @@
+# Aktualisierungen per PR mit vollem Gate-Lauf (SECURITY.md SD-6, ARCHITECTURE.md 10.5).
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

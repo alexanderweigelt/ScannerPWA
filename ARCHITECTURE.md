@@ -460,14 +460,16 @@ einzeln per Auswahl entschieden (`accepted`); Belege im
 
 ## 10. Engineering-Regeln und geplante Gates
 
-Diese Regeln sind der Kommandovertrag für AGENTS.md (P09). Sie sind
-**festgelegt, aber nicht eingerichtet**; P10 legt Werkzeuge und CI an und
-berichtet tatsächliche Ausführung.
+Diese Regeln sind der Kommandovertrag für AGENTS.md (P09). P10 (WP-001,
+[Arbeitsplan](docs/work-plan.md)) hat Werkzeuge, Hooks und CI eingerichtet;
+welche Kommandos tatsächlich liefen und welche ausstehen, steht in
+[AGENTS.md](AGENTS.md#kommandos-und-gates) und im
+[Baseline-Bericht](docs/baseline-review.md).
 
 ### 10.1 TypeScript
 
 * `tsconfig.json`: `strict: true`, `noImplicitAny` (über `strict`), `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitOverride`, `noFallthroughCasesInSwitch`, `useUnknownInCatchVariables`, `verbatimModuleSyntax`, `isolatedModules`, `noEmit` (Vite baut).
-* Getrennte Projekte bzw. `lib`-Einstellungen für Dokument (`DOM`), Worker (`WebWorker`) und Service Worker (`WebWorker`), damit z. B. `document` im Worker ein Typfehler ist.
+* Getrennte Projekte bzw. `lib`-Einstellungen für Dokument (`DOM`), Worker (`WebWorker`) und Service Worker (`WebWorker`), damit z. B. `document` im Worker ein Typfehler ist. Eingerichtet sind `tsconfig.app.json` (Dokument), `tsconfig.tools.json` (Prüfskripte und Konfiguration, `checkJs`) und `tsconfig.test.json`; die Projekte für Worker und Service Worker entstehen mit ihrem ersten Quellcode (WP-004, WP-008), weil `tsc` leere Projekte ablehnt.
 * Kein `any`. `@ts-expect-error` nur mit Begründung im Kommentar; `@ts-ignore` verboten.
 * Typzusicherungen (`as`) nur an benannten externen Grenzen, gekapselt in je einer Funktion mit Laufzeitprüfung: Worker-Nachrichten (`src/processing/messages.ts`), `MediaStreamTrack.getSettings()`, Service-Worker-Ereignisse. Jede Ausnahme ist dort kommentiert.
 
@@ -489,21 +491,21 @@ berichtet tatsächliche Ausführung.
 
 ### 10.4 Geplante Kommandos und Gates
 
-| Kommando (geplant) | Zweck | Belegt | Wo blockierend |
+| Kommando | Zweck | Belegt | Wo blockierend |
 | --- | --- | --- | --- |
 | `npm ci` | Reproduzierbare Installation aus `package-lock.json` | ENG-3 | CI |
 | `npm run typecheck` (`tsc -b --noEmit`) | Typprüfung aller Teilprojekte | ENG-1 | CI, Pre-Push |
 | `npm run lint` (`eslint . --max-warnings 0`) | Regeln 10.2 | ENG-2 | CI, Pre-Commit |
 | `npm run format:check` (`prettier --check .`) | Format | ENG-2 | CI |
 | `npm run test:unit` (`vitest run`) | Zustandsmaschine, Pipeline-Stufen, Referenzbilder (FR-006/007/008-AC), PDF-Struktur (FR-010-AC-1, FR-021-AC-1), Seitenliste (FR-018 bis FR-020) | AC-Tests | CI, Pre-Push |
-| `npm run build` (`vite build`) + Build-Prüfung | `dist/` mit Basis `/ScannerPWA/`, CSP-Meta vorhanden, kein Inline-Skript, Precache-Liste vollständig | ENG-3, FR-014 | CI vor Deployment |
+| `npm run build` (`vite build`) + `npm run check:build` (`scripts/check-build.mjs`) | `dist/` mit Basis `/ScannerPWA/`, CSP-Meta mit dem Wert aus ADR-0005, Referrer-Meta, kein Inline-Skript oder -Stil, keine fremde URL, keine Diagnose-Kennung, nur erlaubte Dateitypen, `dependencies` leer, Precache-Liste vollständig (ab WP-008) | ENG-3, FR-014 | CI vor Deployment |
 | `npm run test:e2e` (`playwright test`) | Ablauf in Chromium (Desktop, Smartphone-Profil, simulierte Kamera), Firefox, WebKit (iPhone-Profil, ohne Kamera); `vite preview` unter `/ScannerPWA/`; Offline (FR-013), Netzmitschnitt (FR-011), Sicherheitsprüfungen laut SECURITY.md Abschnitt 7 (u. a. App im `iframe`, CSP-Verstöße, Speicherinhalt), Diagnose (FR-016-AC-1 gegen Diagnose-Build, FR-016-AC-2 gegen Produktions-Build), Fokus und Live-Region (A11Y-2, A11Y-8), Installierbarkeit in Chromium (FR-012-AC-1; Annahme, in P10 zu prüfen: DevTools-Protokoll `Page.getInstallabilityErrors` liefert eine leere Liste), App im `iframe` (FR-027) | AC-Tests | CI |
 | `npm run test:a11y` (Playwright + `@axe-core/playwright`, Tags `wcag2a`, `wcag2aa`, `wcag21aa`, `wcag22aa`) | Scan aller Ansichten und Teilzustände (DESIGN.md) im Desktop- und Smartphone-Format | A11Y-1, -3, -7, -9 | CI |
 | `npm run test:memory` | Messverfahren 8.2 (Chromium) | FR-017 | CI |
-| `npm run test:deployed` (Playwright gegen `https://alexanderweigelt.github.io/ScannerPWA/`) | Antwortheader (HSTS, `nosniff`, `Content-Type`) und HTTPS-Umleitung, TLS-Probe je Protokollversion (`openssl s_client`, Gültigkeit nach SECURITY.md SEC-01), CSP-Meta in ausgelieferter Seite, Ressourcen unter Unterpfad, Offline-Start (FR-014-AC-1) | Auslieferung | nach Deployment; Fehlschlag meldet, sperrt nicht rückwirkend |
+| `npm run test:deployed` (Playwright gegen `https://alexanderweigelt.github.io/ScannerPWA/`) | Antwortheader (HSTS, `nosniff`, `Content-Type`) und HTTPS-Umleitung, TLS-Probe je Protokollversion (`openssl s_client`, Gültigkeit nach SECURITY.md SEC-01), CSP- und Referrer-Meta in ausgelieferter Seite (FIND-031), Ressourcen unter Unterpfad, Offline-Start (FR-014-AC-1) | Auslieferung | nach Deployment; Fehlschlag meldet, sperrt nicht rückwirkend |
 | `npm audit --audit-level=high` | bekannte Schwachstellen | ENG-5 | CI |
 | `npx secretlint "**/*"` | Secret-Scan des Repositorys | 10.3 | CI, Pre-Commit |
-| `npm run check:spec` | FR/AC/OQ/ADR-IDs, `test_refs`, relative Links (P10) | ENG-4 | CI |
+| `npm run check:spec` (`scripts/check-spec.mjs`, ohne Abhängigkeiten) | FR-Format laut TEMPLATE.md, eindeutige FR/AC-IDs, REQUIREMENTS.md, FR/AC/OQ/ADR-Verweise, `test_refs` mit vorhandener Datei, die die AC-ID nennt, relative Links und Anker, keine Sitzungslinks, Arbeitspakete in `docs/work-plan.md` (Zuordnung aller `ready`-AC, `test_refs` gelieferter Pakete, keine Zyklen); mit `-- --release` sperrt jedes `ready`-AC ohne `test_refs` (FIND-025) | ENG-4 | CI, vor Release mit `--release` |
 
 Lokale Hooks per `simple-git-hooks`: Pre-Commit `lint` und Secret-Scan,
 Pre-Push `typecheck` und `test:unit`. Hooks ersetzen CI nicht.
@@ -518,7 +520,7 @@ DESIGN.md, „Manuelle Prüfungen“).
 
 * **Lockfile:** `package-lock.json` ist eingecheckt; CI nutzt ausschließlich `npm ci`. Versionen in `package.json` exakt (`save-exact=true` in `.npmrc`).
 * **Laufzeitabhängigkeiten:** keine geplant (`dependencies` leer). Jede neue Laufzeitabhängigkeit braucht eine ADR.
-* **Build-Abhängigkeiten:** nur die in ADR-0001, ADR-0006 und hier genannten Werkzeuge (Vite, TypeScript, ESLint, typescript-eslint, Prettier, Vitest, Playwright, axe-core, secretlint, simple-git-hooks).
+* **Build-Abhängigkeiten:** nur die in ADR-0001, ADR-0006 und hier genannten Werkzeuge (Vite, TypeScript, ESLint, typescript-eslint, Prettier, Vitest, Playwright, axe-core, secretlint mit `@secretlint/secretlint-rule-preset-recommend`, simple-git-hooks, `@types/node`). TypeScript bleibt bei 6.0.x, bis `typescript-eslint` TypeScript 7 unterstützt (Antwort D-P10-1); Hilfspakete laut Antwort D-P10-2 ([Journal](docs/clarifications.md#antworten)). Prettier formatiert nur Code und Konfiguration, keine Markdown-Dokumente (diese prüft `check:spec`).
 * **Aktualisierung:** per PR mit vollständigem Gate-Lauf; Dependabot für npm und GitHub Actions (von Alex entschieden, SECURITY.md SD-6; Einrichtung P10), Fristen nach SECURITY.md SD-5.
 * **Laufzeiten:** Node 24 LTS (`engines`, `.nvmrc`); Browser nach ADR-0008.
 * **Reproduzierbarer Build:** keine Zeitstempel oder Zufallswerte im Bundle außer dem Inhalts-Hash; Build-Version im Service Worker ist der Hash der Precache-Liste.

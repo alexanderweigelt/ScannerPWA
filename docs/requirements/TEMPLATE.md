@@ -56,8 +56,10 @@ auf eine offene Frage.
 - `given`, `when`, `then`: je ein unabhängiges Kriterium. `then` nennt ein von
   außen beobachtbares oder messbares Ergebnis. Subjektive Begriffe wie „lesbar“
   brauchen ein Messverfahren oder eine offene Frage.
-- `test_refs`: echte relative Pfade zu vorhandenen Testdateien. `[]` bedeutet
-  „Test geplant“, nicht „geprüft“.
+- `test_refs`: echte Pfade zu vorhandenen Testdateien, relativ zum
+  Repository-Wurzelverzeichnis (z. B. `tests/unit/state.test.ts`); jede Datei
+  nennt die Kriteriums-ID im Testnamen. `[]` bedeutet „Test geplant“, nicht
+  „geprüft“.
 
 ## Beispiel
 
@@ -97,6 +99,5 @@ Vor jedem Commit mit geänderten Datensätzen gilt:
    `OQ-…`-ID steht im Journal.
 
 Eine bestandene Formatprüfung belegt nicht, dass das Verhalten sinnvoll oder
-korrekt umgesetzt ist. Die automatische Ausführung dieser Prüfung wird in P10
-eingerichtet; bis dahin wird sie manuell bzw. per Ad-hoc-Kommando ausgeführt und
-im Journal festgehalten.
+korrekt umgesetzt ist. Automatisch prüft sie `npm run check:spec`
+([AGENTS.md](../../AGENTS.md#kommandos-und-gates)).

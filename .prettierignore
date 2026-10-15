@@ -1,0 +1,8 @@
+# Markdown-Dokumente prüft check:spec; Prettier formatiert nur Code und Konfiguration.
+*.md
+dist/
+dist-diagnose/
+coverage/
+test-results/
+playwright-report/
+package-lock.json

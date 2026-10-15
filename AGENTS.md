@@ -7,10 +7,17 @@ offline nach erstem Besuch, keine Serverkomponente, kein Upload, keine
 Laufzeit-Ressourcen von Fremdservern (Zielbild Scanner PWA (angenommen von
 Alex, 14.10.2026), Abschnitte „Kern“ und „Rahmenbedingungen“).
 
-**Stand der Kommandos:** festgelegt, aber noch nicht eingerichtet (P10). Ein
-Kommando, das nicht existiert oder nicht lief, gilt als *ausstehend*, nie als
-bestanden. Ob eingerichtet, zeigt `package.json`; der Schrittstand steht im
-[Klärungsjournal](docs/clarifications.md#stand).
+**Stand der Kommandos:** eingerichtet in P10 (WP-001) mit Node 24, Installation
+per `npm ci`. Alle Kommandos der Tabelle existieren in `package.json`; welche
+lokal und in CI tatsächlich liefen, steht im
+[Baseline-Bericht](docs/baseline-review.md#p10-eingerichtete-prüfgrundlage).
+Ein Kommando, das nicht lief, gilt als *ausstehend*, nie als bestanden.
+**Ausstehend:** `test:deployed` (nichts veröffentlicht), Firefox und WebKit in
+`test:e2e` (nur in CI), Messung FR-017-AC-1 in `test:memory` (WP-009). Produkt-AC
+haben noch keine Tests; `check:spec` zählt sie als ausstehend, mit `-- --release`
+sperrt es sie. Lokal ohne von Playwright geladene Browser:
+`PLAYWRIGHT_CHROMIUM_EXECUTABLE=<pfad>` setzt ein vorhandenes Chromium.
+Pakete und Reihenfolge stehen im [Arbeitsplan](docs/work-plan.md).
 
 ## Was du je Aufgabe lädst
 
@@ -44,7 +51,7 @@ A11Y-1 bis A11Y-9 ([DESIGN.md](DESIGN.md#zielkette)), SEC-01 bis SEC-20 ([SECURI
 
 | Ziel | Kommando | Wann | Blockiert bei | Beleg |
 | --- | --- | --- | --- | --- |
-| Spezifikation, IDs, Links (ENG-4) | `npm run check:spec` | jede Änderung | doppelte/unbekannte ID, toter Link, `ready`-AC ohne `test_refs` vor Release | CI-Log |
+| Spezifikation, IDs, Links, Arbeitspakete (ENG-4) | `npm run check:spec`, vor Release `npm run check:spec -- --release` | jede Änderung | doppelte/unbekannte ID, toter Link, `ready`-AC ohne `test_refs` vor Release | CI-Log |
 | Reproduzierbare Installation (ENG-3) | `npm ci` | CI, nach Lockfile-Änderung | Abweichung Lockfile | CI-Log |
 | Typen (ENG-1) | `npm run typecheck` | Pre-Push, CI | ≥ 1 Typfehler | CI-Log |
 | Lint, sichere Ausgabe (ENG-2, SEC-04) | `npm run lint` | Pre-Commit, CI | ≥ 1 Fehler oder Warnung | CI-Log |
@@ -54,16 +61,17 @@ A11Y-1 bis A11Y-9 ([DESIGN.md](DESIGN.md#zielkette)), SEC-01 bis SEC-20 ([SECURI
 | Browser-Abläufe mit FR/AC (SEC-03/05/07/08/12/13/15/20) | `npm run test:e2e` | CI | ≥ 1 Fehlschlag | Playwright-Bericht |
 | Zugänglichkeit, alle Ansichten und Teilzustände (A11Y-1/3/7/9) | `npm run test:a11y` | CI | ≥ 1 axe-Verstoß WCAG 2.2 A/AA | Playwright-Bericht |
 | Speicher (FR-017) | `npm run test:memory` | CI | Kriterium FR-017-AC-1 verfehlt | CI-Log |
-| Ausgelieferte Antwort (SEC-01/02/03/06) | `npm run test:deployed` | nach Deployment | `http://` ohne Umleitung, fehlendes HSTS/`nosniff`, falscher `Content-Type`, TLS ≤ 1.1, CSP-Meta fehlt | Bericht im Journal |
+| Ausgelieferte Antwort (SEC-01/02/03/06/07) | `npm run test:deployed` | nach Deployment | `http://` ohne Umleitung, fehlendes HSTS/`nosniff`, falscher `Content-Type`, TLS ≤ 1.1, CSP- oder Referrer-Meta fehlt | Bericht im Journal |
 | Abhängigkeiten inkl. Build/Test (ENG-5, SEC-16) | `npm audit --audit-level=high` | CI | Fund ab „high“ | CI-Log |
 | Geheimnisse (SEC-18) | `npx secretlint "**/*"` | Pre-Commit, CI | ≥ 1 Fund | CI-Log |
 
 CSP und Referrer-Policy kommen als Meta-Element, weil GitHub Pages keine
 eigenen Header erlaubt; HSTS und `nosniff` setzt Pages oder nicht (UNKNOWN,
-R-04). Das Referrer-Meta in der ausgelieferten Seite prüft `test:deployed`
-noch nicht (FIND-031, P10). Lokale Server belegen SEC-01, -02, -06 nicht. Lokale Hooks per
+R-04). Lokale Server belegen SEC-01, -02, -06 nicht. Lokale Hooks per
 `simple-git-hooks` (Pre-Commit `lint` + Secret-Scan, Pre-Push `typecheck` +
-`test:unit`) und blockierende CI richtet P10 ein; dieser Text selbst sperrt nichts.
+`test:unit`) installiert `npm ci`; CI läuft per `.github/workflows/ci.yml` bei
+jedem PR. Ob CI das Mergen tatsächlich sperrt, hängt am Ruleset für `main`
+(MG-2, Alex); bis dahin ist die Sperre beim Merge ausstehend.
 
 ## Manuelle Gates
 
