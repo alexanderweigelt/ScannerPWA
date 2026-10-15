@@ -215,7 +215,7 @@ Klärung bleibt bei P06).
 
 | Ansicht (Überschrift) | FR-015-Zustand | Teilzustände | Hauptaktion | Weitere Aktionen | Grundlage |
 | --- | --- | --- | --- | --- | --- |
-| Start („Scanner“) | Start | Standard; Kamerafehler (`alert-error`) | „Kamera starten“ | „Erneut versuchen“, „Zurück“ bei Fehler | [FR-001](docs/requirements/FR-001-start-camera.md), [FR-004](docs/requirements/FR-004-camera-errors.md) |
+| Start („Scanner“) | Start | Standard; Kamerafehler (`alert-error`); eingebettet in fremder Seite (Hinweistext, keine Kamera-Aktion) | „Kamera starten“; eingebettet: Link „Scanner direkt öffnen“ | „Erneut versuchen“, „Zurück“ bei Fehler | [FR-001](docs/requirements/FR-001-start-camera.md), [FR-004](docs/requirements/FR-004-camera-errors.md), [FR-027](docs/requirements/FR-027-no-camera-when-framed.md) |
 | Kamera („Dokument aufnehmen“) | Kamera aktiv | Kamera startet (`progress-indicator`); Live-Vorschau | Auslöser (`shutter-button`) | „Kamera beenden“ | [FR-002](docs/requirements/FR-002-camera-fallback.md), [FR-003](docs/requirements/FR-003-live-preview.md), [FR-005](docs/requirements/FR-005-capture-photo.md) |
 | Ergebnis („Seite prüfen“) | Scan-Vorschau | Verarbeitung (`progress-indicator` über eingefrorenem Foto); Erfolg; Erkennung fehlgeschlagen (`alert-error` mit Foto) | „Übernehmen“ bzw. bei Fehler „Neu aufnehmen“ | „Neu aufnehmen“ | [FR-006](docs/requirements/FR-006-detect-and-rectify.md) bis [FR-009](docs/requirements/FR-009-result-preview.md), [FR-016](docs/requirements/FR-016-debug-steps.md) |
 | Seiten („Seiten (n)“) | Seitenliste | mit Seiten; leer (`empty-state`) | „PDF erstellen“ (leer: deaktiviert) | „Seite hinzufügen“, je Seite „Löschen“, „Nach oben“, „Nach unten“ | [FR-009](docs/requirements/FR-009-result-preview.md)-AC-3, [FR-018](docs/requirements/FR-018-add-page.md) bis [FR-020](docs/requirements/FR-020-reorder-pages.md) |
@@ -336,7 +336,7 @@ entfernt und nie von Leisten verdeckt.
 | Komponente | Zweck | Zustände | Grundlage |
 | --- | --- | --- | --- |
 | `app-bar` | Titel der App, auf Unteransichten Zurück-Aktion | Standard | [FR-015](docs/requirements/FR-015-clear-states.md) |
-| `button-primary` | eine Hauptaktion je Ansicht | Standard, Hover, Fokus, deaktiviert, lädt (Beschriftung bleibt, Fortschritt daneben, nicht erneut auslösbar) | alle Ansichten |
+| `button-primary` | eine Hauptaktion je Ansicht; in der eingebetteten Ansicht als Link mit gleichem Aussehen ([FR-027](docs/requirements/FR-027-no-camera-when-framed.md)) | Standard, Hover, Fokus, deaktiviert, lädt (Beschriftung bleibt, Fortschritt daneben, nicht erneut auslösbar) | alle Ansichten |
 | `button-secondary` | Nebenaktionen („Neu aufnehmen“, „Seite hinzufügen“, „Erneut versuchen“) | Standard, Hover, Fokus; 1px Rand `{colors.outline}` | [FR-004](docs/requirements/FR-004-camera-errors.md), [FR-008](docs/requirements/FR-008-detection-failure.md), [FR-009](docs/requirements/FR-009-result-preview.md), [FR-018](docs/requirements/FR-018-add-page.md) |
 | `button-icon` | Seitenaktionen „Löschen“, „Nach oben“, „Nach unten“; „Kamera beenden“ | Standard, Fokus, deaktiviert (am Listenanfang/-ende) | [FR-003](docs/requirements/FR-003-live-preview.md), [FR-019](docs/requirements/FR-019-delete-page.md), [FR-020](docs/requirements/FR-020-reorder-pages.md) |
 | `shutter-button` | Aufnahme auslösen | Standard, Fokus, gedrückt (kurz eingedrückt, kein Blitzeffekt) | [FR-005](docs/requirements/FR-005-capture-photo.md) |
@@ -352,11 +352,14 @@ entfernt und nie von Leisten verdeckt.
 **Meldungstexte:** Jede Meldung hat die Form
 „Ursache. Nächster Schritt.“, z. B. „Kamerazugriff wurde nicht erlaubt.
 Erlaube den Zugriff in den Browser-Einstellungen und versuche es erneut.“,
-„Keine nutzbare Kamera gefunden.“, „Kein Dokument erkannt. Lege das Dokument
+„Keine nutzbare Kamera gefunden.“, „Die Kamera ist in eingebetteten Seiten gesperrt.
+Öffne den Scanner direkt.“, „Kein Dokument erkannt. Lege das Dokument
 auf einen kontrastreichen Untergrund und nimm es neu auf.“
 
-**Diagnosemodus:** Die Darstellung steht hier; wie er aktiviert wird, legt
-P04 fest. Im normalen Ablauf gibt es dafür keine sichtbare Bedienung.
+**Diagnosemodus:** Die Darstellung steht hier. Er existiert nur im
+Entwicklungs- und Diagnose-Build
+([ADR-0007](docs/adr/ADR-0007-diagnosemodus-nur-im-entwicklungs-build.md));
+in der veröffentlichten App gibt es ihn und eine Bedienung dafür nicht.
 
 **PDF-Dateiname:** `scan-JJJJ-MM-TT-hhmm.pdf` mit lokaler Zeit des Geräts,
 z. B. `scan-2026-10-14-1830.pdf` (Vorschlag; „scan“ ist auch im Deutschen
@@ -400,7 +403,7 @@ Semantik nach WHATWG HTML Living Standard,
 
 | Ziel | Messbares Kriterium | Nachweis | Gate | Quelle |
 | --- | --- | --- | --- | --- |
-| A11Y-1 Namen und Rollen | Jedes Bedienelement ist ein natives Element mit zugänglichem Namen; Symbolschaltflächen haben einen Textnamen (z. B. „Seite 2 löschen“); Seitenbilder haben einen Alternativtext „Seite n von m“ | automatischer Scan je Ansicht/Teilzustand; manuelle Prüfung mit Screenreader | Scan blockierend in CI (Werkzeug P04/P10); manuell vor Release | SC 1.1.1, 1.3.1, 4.1.2 |
+| A11Y-1 Namen und Rollen | Jedes Bedienelement ist ein natives Element mit zugänglichem Namen; Symbolschaltflächen haben einen Textnamen (z. B. „Seite 2 löschen“); Seitenbilder haben einen Alternativtext „Seite n von m“ | automatischer Scan je Ansicht/Teilzustand; manuelle Prüfung mit Screenreader | Scan blockierend in CI (Werkzeug [ADR-0006](docs/adr/ADR-0006-testwerkzeuge.md), Einrichtung P10); manuell vor Release | SC 1.1.1, 1.3.1, 4.1.2 |
 | A11Y-2 Tastatur und Fokus | Ganzer Leitablauf per Tastatur; Fokusreihenfolge folgt Lesereihenfolge; Fokus sichtbar (3px Ring) und nicht verdeckt; nach Ansichtswechsel liegt der Fokus auf der `h1` | manueller Tastaturdurchlauf; automatischer Ablauftest prüft Fokus nach Wechsel | Browser-Ablauftest (P10); manuell vor Release | SC 2.1.1, 2.4.3, 2.4.7, 2.4.11 |
 | A11Y-3 Textkontrast | Normaler Text ≥ 4,5:1, großer Text ≥ 3:1 für alle Paare in der Tabelle unten | Berechnung der Token-Paare (unten); automatischer Scan | Token-Prüfung je Änderung an DESIGN.md; Scan in CI | SC 1.4.3 |
 | A11Y-4 Nicht-Text-Kontrast | Ränder von Bedienelementen, Fokusring, Seitenrahmen ≥ 3:1 gegen angrenzende Fläche | Berechnung (unten); Sichtprüfung | Token-Prüfung; manuell | SC 1.4.11 |

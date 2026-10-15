@@ -18,6 +18,13 @@
       "when": "Der Scan-Look wird angewendet.",
       "then": "Die Seite ist schwarz-weiß mit hellem Hintergrund und dunklem Text; der Text des Referenzdokuments ist in der Ausgabe lesbar.",
       "test_refs": []
+    },
+    {
+      "id": "FR-007-AC-2",
+      "given": "Die Seite des Referenzfotos für eine erfolgreiche Erkennung wurde übernommen und als PDF exportiert.",
+      "when": "Die Seite im PDF wird mit der Seite vor der Kodierung verglichen.",
+      "then": "Die Seite im PDF erfüllt dasselbe Lesbarkeitsmaß wie vor der Kodierung (Messverfahren laut OQ-002).",
+      "test_refs": []
     }
   ],
   "open_question_ids": [

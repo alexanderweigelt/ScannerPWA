@@ -7,9 +7,9 @@ Dokumentationssprache Deutsch, Bezeichner Englisch.
 
 | Feld | Wert |
 | --- | --- |
-| Aktueller Schritt | P05 Projektsicherheit – abgeschlossen, von Alex akzeptiert (PR #15, Review „PR akzeptiert“, 14.10.2026 17:49:41Z); Squash-and-Merge von Alex freigegeben (17:50:09Z) |
-| Nächster Schritt | P06 Konsolidierung und Modellreview in neuer Session aus `main` |
-| Aktive Frage | keine (SD-1 bis SD-6 beantwortet, SD-3 zurückgestellt) |
+| Aktueller Schritt | P06 Konsolidierung und Modellreview – in Arbeit auf Branch `claude/project-thread-ggonde` (Start 14.10.2026 17:52:08Z aus `main` `9931e04`) |
+| Nächster Schritt | P06 abschließen: Befunde FIND-013 ff. einarbeiten, Antworten auf OQ-008/OQ-009 übernehmen, PR nach `main` |
+| Aktive Frage | OQ-008 (Kamerareihenfolge ohne Rückkamera), gestellt 15.10.2026 als Auswahl im Projektthread |
 | Review | P05: Selbstreview (Skriptprüfung siehe Schrittstatus), danach menschliches Review durch Alex (PR #15 ohne Änderungswunsch akzeptiert, 14.10.2026 17:49:41Z). P01: Selbstreview, danach menschliches Review durch Alex (PR #11 nach einer Rückweisungsrunde akzeptiert, 14.10.2026). P02: Selbstreview, danach menschliches Review durch Alex (PR #12 ohne Änderungswunsch akzeptiert, 14.10.2026). P03: Selbstreview, danach menschliches Review durch Alex (PR #13 ohne Änderungswunsch akzeptiert, 14.10.2026). P04: Selbstreview; erster Stand von Alex zurückgewiesen (FIND-010), Entscheidungen danach von Alex getroffen; PR #14 von Alex akzeptiert (Review „PR akzeptiert“, 14.10.2026 17:29Z) |
 
 ## Delegation und Befugnisse
@@ -20,6 +20,7 @@ Dokumentationssprache Deutsch, Bezeichner Englisch.
 | Ausführung P02 | Agent führt P02 in neuer Session aus den Dateien auf `main` aus („Nächster Schritt ist P02 in einer neuen Session direkt mit den Dateien auf main starten.“). | Alex, 14.10.2026 |
 | Ausführung P03 | Agent führt P03 in neuer Session aus den Dateien auf `main` aus („Nun folgt: P03 in einer neuen Session aus main“). Gestaltungswerte entscheidet der Agent als Vorschlag; Markenidentität (OQ-006) und Sprache (OQ-001, beantwortet) bleiben Alex vorbehalten. | Alex, 14.10.2026 |
 | Ausführung P04 | Agent führt P04 in neuer Session aus den Dateien auf `main` aus („Nächster Schritt ist P04 in einer neuen Session direkt mit den Dateien auf main starten.“). Technische Entscheidungen trifft Alex: jede wird einzeln als Auswahl mit Vorschlägen und Empfehlung gestellt, Freitext nur im Bedarfsfall (Alex, 14.10.2026 17:10Z und 17:16Z). Eine ADR steht erst nach seiner Auswahl auf `accepted`. | Alex, 14.10.2026 |
+| Ausführung P06 | Agent führt P06 in neuer Session aus den Dateien auf `main` aus („Weiter mit P06 aus dem aktuellen Stand von main“). Änderungen an angenommenem Verhalten nur nach Auswahl durch Alex (OQ-008, OQ-009). | Alex, 14.10.2026 17:52:08Z |
 | Ausführung P05 | Agent führt P05 in neuer Session aus den Dateien auf `main` aus („Führe den nächsten Schritt P05 aus dem aktuellen Stand von main aus“). Sicherheitsentscheidungen trifft Alex einzeln per Auswahl (SD-1 bis SD-6). | Alex, 14.10.2026 17:31:51Z |
 | Git | Arbeit auf eigenem Branch, Ergebnis als Pull Request. Keine claude.ai-Links in Dateien, PR-Beschreibungen oder Commit-Nachrichten. Kein direkter Push auf `main` (einmalige Ausnahme beim Leeren von `main`, Commit `d126d41`, ist verbraucht). | Alex, Arbeitsweise vom 14.10.2026 |
 | Merge | Nur auf ausdrückliche Anweisung je PR. Für PR #11 (P01) erteilt als Squash-and-Merge nach `main`. Für PR #12 (P02) erteilt als Squash-and-Merge nach `main` („PR ist akzeptiert - merge“). Für PR #13 (P03) erteilt („PR Akzeptiert - merge freigegeben“), Squash-and-Merge nach `main`. Für PR #14 (P04) erteilt per Auswahl „Squash-and-Merge“ auf Entscheidungskarte (14.10.2026 17:30:06Z). Für PR #15 (P05) erteilt per Auswahl „Squash-and-Merge“ auf Entscheidungskarte (14.10.2026 17:50:09Z). | Alex, 14.10.2026 |
@@ -46,6 +47,8 @@ Fragen werden gestellt, wenn ihr zuständiger Schritt sie benötigt.
 | OQ-003 | Zielbild verlangt „durchgängig A4 hoch“, Stufe 3 nennt Letter als Exportformat. Gilt A4 als Standard und Letter nur als Option? | FR-023 | Stufe 3 | nein | A4 Standard, Letter nur als bewusste Auswahl |
 | OQ-004 | Zielbild sagt „Bilder bleiben im Arbeitsspeicher“, Stufe 3 sieht lokale Entwürfe vor. Wie lange und wo dürfen Seiten lokal gespeichert werden, und wie werden sie gelöscht? | FR-026, FR-011, SECURITY.md (P05) | Stufe 3, Datenschutz | nein | Nur nach Zustimmung, mit Löschaktion. P05: als SD-3 zurückgestellt bis FR-026 `ready` werden soll; bis dahin keine Bilddaten in Browser-Speichern (SECURITY.md SEC-12) |
 | OQ-006 | Gelten Icon und Farbwelt des früheren Stands (`backup/opencv-stand-2026-10-14:public/icons/scanner.svg`, Blau `#102b5e`/`#17589f`) als Identität der App? | DESIGN.md | App-Icon (FR-012), Farb-Tokens | nein; Icon wird bei Umsetzung FR-012 gebraucht | Ja, Icon übernehmen; Tokens in `DESIGN.md` sind daraus abgeleitet |
+| OQ-008 | Soll ohne Rückkamera die Frontkamera Vorrang vor einer Webcam haben, oder wählt der Browser? | FR-002, ARCHITECTURE.md FLOW-02 | Stufe 1, Kamera | nein (FR-002-AC-1/AC-2 bleiben gültig) | Reihenfolge behalten, Kriterium ergänzen, Nachweis auf echten Geräten (FIND-002, FIND-009) |
+| OQ-009 | Welche Aktion bietet die App, während eine Seite verarbeitet oder das PDF erstellt wird, und nach welcher Zeit endet eine Verarbeitung mit Meldung? | FR-015, DESIGN.md (Ansichten und Zustände), SECURITY.md SEC-11 | Stufe 1, Zustände | nein (Umsetzung von FR-015 und SEC-11) | Abbrechen in beiden Teilzuständen plus Zeitgrenze (FIND-003, FIND-016) |
 | OQ-005 | Welche Speichertoleranz gilt bei wiederholtem Scannen, und gibt es eine Höchstzahl an Seiten? | FR-017, FR-018 | Speicher, Stufe 2 | nein | Messverfahren und Toleranz ≤ 10 % nach 20 Zyklen, siehe [ARCHITECTURE.md, 8.2](../ARCHITECTURE.md#82-speicher-fr-017); Höchstzahl offen |
 
 ## Antworten
@@ -112,6 +115,48 @@ Inhalte, Quellen und IDs wurden nicht umgedeutet; Befunde gehen an P06/P07.
 | --- | --- | --- | --- |
 | FIND-011 | Library-/Agentenbefund: Die erste SD-1-Frage (17:35:39Z) setzte als Fakt voraus, dass ScannerPWA den Ursprung „mit deinen anderen Pages“ teilt. Diese Annahme stammte aus dem P04-Auftrag und war nicht belegt. Alex wies die Aussage zurück (17:38:16Z, „Die Aussage ist falsch. Die URL ist https://alexanderweigelt.github.io/ScannerPWA/“). Sachlich bleibt: Ursprung = Schema + Host + Port, der Pfad trennt nicht. | SD-1, ARCHITECTURE.md R-05 und Abschnitt 3 („Ursprung aller Projektseiten dieses GitHub-Kontos“), L02 | Frage zurückgezogen; zuerst Faktfrage gestellt (17:39:27Z). Hinweis für die Library: Annahmen in Entscheidungsfragen als Annahme kennzeichnen oder vorher als Fakt abfragen. Formulierung in ARCHITECTURE.md nach Antwort prüfen |
 | FIND-012 | SD-2 (Sperre im Frame) führt eine Hinweisansicht ein, für die es weder FR noch Eintrag in DESIGN.md gibt. | SECURITY.md SEC-08, DESIGN.md, FR-015 | Für P06: Hinweis als Teilzustand in DESIGN.md und Kriterium in einem FR (z. B. FR-001) ergänzen; Grundlage ist die Entscheidung von Alex zu SD-2 |
+
+## Befunde aus P06
+
+Konsolidierung und Modellreview am 15.10.2026 als **Selbstreview** des Agenten
+(dieselbe Agentenart, die P01 bis P05 geschrieben hat; keine unabhängige
+Prüfung, kein weiterer Agent beauftragt). Geprüft: alle 27 FR-Datensätze gegen
+REQUIREMENTS.md, DESIGN.md, ARCHITECTURE.md mit ADR-0001 bis ADR-0008 und
+SECURITY.md; Zielketten ENG, A11Y und SEC; Bedrohungsmodell T-01 bis T-17 mit
+Missbrauchsszenarien; ausgewählte ASVS-IDs gegen den Text der gepinnten
+ASVS-5.0.0-JSON. Schwere: hoch = ein Nachweis würde Falsches belegen,
+mittel = Lücke oder Widerspruch in Ziel, Kontrolle oder Zuständigkeit,
+niedrig = Form, Verweis oder Quelle.
+
+| ID | Schwere | Fundstelle | Problem | Behandlung | Status | Beleg |
+| --- | --- | --- | --- | --- | --- | --- |
+| FIND-013 | niedrig | DESIGN.md, Components („Diagnosemodus“) und Zielkette A11Y-1 | Verweise auf „legt P04 fest“ bzw. „Werkzeug P04/P10“ waren nach ADR-0006 und ADR-0007 veraltet | Verweise auf ADR-0007 und ADR-0006 gesetzt | erledigt | Diff DESIGN.md |
+| FIND-014 | hoch | SECURITY.md SEC-01, ARCHITECTURE.md 10.4 (`test:deployed`) | Die Negativprobe „TLS 1.0/1.1 scheitert“ wäre mit aktuellem OpenSSL immer bestanden, weil der Client diese Versionen im Standard selbst nicht anbietet; das Kommando prüfte sein Kriterium nicht | Probe mit `-tls1`/`-tls1_1` und `DEFAULT:@SECLEVEL=0`; gültig nur mit Kontrollprobe gegen lokalen `openssl s_server` | erledigt (Spezifikation); Ausführung P10 | SECURITY.md SEC-01, Abschnitt 7 |
+| FIND-015 | mittel | SECURITY.md T-03, SEC-03, SEC-05 | Das CSP-Meta-Element gilt nur für das Dokument; Worker und Service Worker erhalten ihre Richtlinie aus eigenen Antwortheadern, die Pages nicht setzt. SEC-05 nannte CSP als Durchsetzung auch für sie (Quelle W3C CSP Level 3 nicht abrufbar; in P10 per Browser-Test zu bestätigen) | Lint-Regel für Netz-APIs in Worker und Service Worker (ARCHITECTURE.md 10.2), Netzmitschnitt auf Kontextebene einschließlich Worker, Lücke in T-03 benannt | erledigt (Spezifikation) | SECURITY.md T-03, SEC-03, SEC-05; ARCHITECTURE.md 10.2 |
+| FIND-016 | mittel | SECURITY.md SEC-11, T-11; FR-015 | ASVS 5.0.0 V15.1.3 verlangt festzulegen, wie eine rechenintensive Funktion nicht unbegrenzt läuft; SEC-11 hat keine Zeitgrenze. Ein Bildinhalt mit sehr vielen Kanten kann die Verarbeitung hängen lassen; „Seite wird verarbeitet“ und „PDF wird erstellt“ haben in DESIGN.md keine Aktion (Widerspruch zu FR-015-AC-1, vgl. FIND-003) | Missbrauchsszenario in T-11; Kriterium hängt an Entscheidung OQ-009 | offen (OQ-009) | SECURITY.md T-11; ASVS-JSON V15.1.3 |
+| FIND-017 | niedrig | SECURITY.md SEC-04 und ARCHITECTURE.md 10.2; ARCHITECTURE.md FLOW-03 und SEC-10 | Doppelte normative Listen: verbotene DOM-Ausgaben in beiden Dateien, Worker-Grenzwerte in FLOW-03 abweichend von SEC-10 (ohne „ganzzahlig“ und Typ-Feld) | Liste nur in ARCHITECTURE.md 10.2 (ergänzt um `setHTMLUnsafe`, `createContextualFragment`, `srcdoc`, String-`setInterval`), SEC-04 verweist; Grenzwerte nur in SEC-10, FLOW-03 verweist | erledigt | Diff ARCHITECTURE.md, SECURITY.md |
+| FIND-018 | mittel | SECURITY.md Abschnitt 6 | V3.4.7, V3.4.8, V12.1.2, V12.1.4, V12.1.5 standen als Ausschluss, obwohl die Fähigkeit vorhanden ist und nur die Plattform die Kontrolle verhindert | Neuer Unterabschnitt „Plattformbedingte Lücken“; Ausschlüsse nur noch bei tatsächlich fehlender Fähigkeit | erledigt | SECURITY.md Abschnitt 6 |
+| FIND-019 | mittel | SECURITY.md T-04 | Missbrauchsszenarien fehlten: Zugriff per `window.open` auf das App-Dokument und Service Worker mit Scope `/` aus einer Benutzerseite; Folge reicht bis zur Codeübernahme auf dem Gerät | T-04 ergänzt; SD-1b gilt unverändert (betraf den gemeinsamen Ursprung insgesamt); Alex kann die Annahme in P07 erneut aufrufen | erledigt | SECURITY.md T-04 |
+| FIND-020 | mittel | SECURITY.md T-08, SEC-17 | Missbrauchsszenario Pull Request aus einem Fork ohne Kontrolle: Auslöser `pull_request_target`/`workflow_run` würden fremden Code mit Rechten von `main` ausführen | Kriterium in SEC-17: diese Auslöser = 0, PR-Prüfjobs nur `contents: read` | erledigt (Spezifikation) | SECURITY.md T-08, SEC-17 |
+| FIND-021 | niedrig | ARCHITECTURE.md ENG-1, ENG-2 | Quelle ohne Version bzw. ohne Fundstelle | Version und URL ergänzt (TypeScript 6.0 laut ADR-0001, typescript-eslint 8.71.2 laut npm-Registry 15.10.2026) | erledigt | Diff ARCHITECTURE.md |
+| FIND-022 | mittel | ARCHITECTURE.md 8.2 (`test:memory`) | `JSHeapUsedSize` erfasst Speicher hinter `Blob`, `ImageData` und Canvas nicht vollständig; ein Leck dort bliebe unentdeckt | Zusätzliche Zählung offener Objekt-URLs und Canvas-Flächen als Vorschlag in 8.2; Toleranz bleibt OQ-005 | teilweise; Rest P07 (OQ-005) und P10 | ARCHITECTURE.md 8.2 |
+| FIND-023 | niedrig | DESIGN.md (Manuelle Prüfungen), ARCHITECTURE.md 10.4, SECURITY.md MG-1, MG-3 | Verantwortung manueller Gates ist „Vorschlag Alex“ bzw. ohne Entscheidung eingetragen; ein Vorschlag ist keine Antwort | Für P07 vorgemerkt (Zuständigkeit bestätigen) | offen (P07) | DESIGN.md, ARCHITECTURE.md 10.4 |
+
+### Abgleich früherer Befunde
+
+| ID | Behandlung in P06 | Status | Beleg |
+| --- | --- | --- | --- |
+| FIND-001 | Belassen: Jedes Teilverhalten in FR-003, FR-011 und FR-023 hat ein eigenes Kriterium; Teilen würde AC-IDs verschieben (COMMON CONTRACT: IDs stabil). Neue Verhalten erhalten eigene FR (FR-027) | erledigt | FR-003-AC-1/AC-2, FR-011-AC-1, FR-023-AC-1/AC-2 |
+| FIND-002 | FR-007-AC-2 (Kompression, Maß aus OQ-002) und FR-012-AC-3 (Installation auf Smartphone und Desktop) ergänzt; FR-002 hängt an OQ-008 | teilweise (OQ-008) | FR-007, FR-012 |
+| FIND-003 | Gestaltung behandelt Verarbeitung und Fehler als Teilzustände; Widerspruch „Teilzustand ohne Aktion“ zu FR-015-AC-1 als FIND-016 präzisiert | offen (OQ-009) | DESIGN.md, Ansichten und Zustände |
+| FIND-005 | Unverändert; Abbildung als Gate in P09/P10 | offen (P09/P10) | FR-006-AC-1, FR-008-AC-1 |
+| FIND-006 | Unverändert; OQ-002 ist Blocker für die Testerstellung, nicht für das Verhalten | offen (P07, Umsetzungsblocker) | Offene Fragen |
+| FIND-007 | FR-003 Aussage und AC-1 auf Hochformat-Rahmen ohne Sperre der Ausrichtung präzisiert, gemäß DESIGN.md „Layout“ | erledigt | FR-003 |
+| FIND-008 | Zuständig ist DESIGN.md (A11Y-7, „Nach oben“/„Nach unten“; FR-022 Hinweis unter „Stufe 3“); keine FR-Änderung nötig | erledigt | DESIGN.md A11Y-7 |
+| FIND-009 | Mit FIND-002 in OQ-008 zusammengeführt | offen (OQ-008) | ARCHITECTURE.md FLOW-02 |
+| FIND-010 | Library-Hinweis, keine Repository-Änderung | erledigt (Hinweis an die Library) | – |
+| FIND-011 | ARCHITECTURE.md Abschnitt 3 nennt den gemeinsamen Ursprung jetzt mit Bezug auf SD-1 | erledigt | ARCHITECTURE.md Abschnitt 3 |
+| FIND-012 | Neues [FR-027](requirements/FR-027-no-camera-when-framed.md) auf Grundlage von SD-2; Teilzustand „eingebettet“ in DESIGN.md und Zustandsdiagramm; SEC-08 und T-05 verweisen darauf | erledigt | FR-027, DESIGN.md, ARCHITECTURE.md STATE, SECURITY.md |
 
 ## Schrittstatus
 

@@ -76,6 +76,7 @@ vorgesehen und noch offen ([OQ-004](docs/clarifications.md#offene-fragen)).
 | [FR-015](docs/requirements/FR-015-clear-states.md) | Eindeutige App-Zustände | ready |
 | [FR-016](docs/requirements/FR-016-debug-steps.md) | Zwischenschritte zur Fehlersuche sichtbar machen | ready |
 | [FR-017](docs/requirements/FR-017-stable-memory.md) | Speicherverbrauch bei wiederholtem Scannen stabil | draft |
+| [FR-027](docs/requirements/FR-027-no-camera-when-framed.md) | Keine Kamera in eingebetteter Ansicht | ready |
 
 ### Stufe 2 – Mehrseitig
 

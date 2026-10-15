@@ -25,6 +25,13 @@
       "when": "Sie wird vom Home-Bildschirm bzw. Desktop gestartet.",
       "then": "Sie öffnet in einem eigenständigen Fenster ohne Browser-Bedienleiste und zeigt ihr App-Icon.",
       "test_refs": []
+    },
+    {
+      "id": "FR-012-AC-3",
+      "given": "Die App ist unter ihrer öffentlichen Adresse auf einem Android-Smartphone, einem iPhone und einem Desktop-Rechner in einem unterstützten Browser geöffnet.",
+      "when": "Die Person installiert sie über die Installationsfunktion des jeweiligen Browsers.",
+      "then": "Die Installation gelingt auf allen drei Geräten.",
+      "test_refs": []
     }
   ],
   "open_question_ids": []
