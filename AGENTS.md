@@ -84,6 +84,7 @@ Release abgenommen wird, ist offen (Journal, „Unbearbeitete Themen“).
 ## Arbeitsweise
 
 * Kleine Slices, je Slice ein PR; kein Push auf `main`; Merge nur auf Anweisung von Alex.
+* Neue Wünsche kommen als GitHub-Issue in Alltagssprache. Umsetzung erst nach einer per PR freigegebenen FR; das Issue verlinkt die FR und wiederholt keine Kriterien, der Umsetzungs-PR schließt es (`Closes #…`).
 * Keine Links auf Agenten-Sitzungen oder Chat-Verläufe in Dateien, Commits oder PR-Texten.
 * Fragen an Alex als Auswahl mit zwei oder drei Optionen, Folgen und Empfehlung; Annahmen als Annahme kennzeichnen.
 * Jede PR-Beschreibung enthält diesen Reviewpunkt:
