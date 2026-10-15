@@ -9,7 +9,7 @@ Dokumentationssprache Deutsch, Bezeichner Englisch.
 | --- | --- |
 | Aktueller Schritt | P08 Projekt-README – bereit für Review (Pull Request); Baseline `827177c` (Squash-Merge von PR #17) in [baseline-review.md](baseline-review.md) eingetragen |
 | Nächster Schritt | Nach Review und Merge des P08-PR: P09 Agent-Anweisungen (`AGENTS.md`) in neuer Session aus `main`; danach den README-Eintrag „AGENTS.md geplant“ in einen Link ändern |
-| Aktive Frage | keine (OQ-002, OQ-005, OQ-006 und FIND-023 in P07 beantwortet; OQ-010 ist eine Messung; OQ-011 erst vor Stufe 2) |
+| Aktive Frage | Aufbau der README (FIND-029): stabile Einstiegsseite wie Beispiel aces-and-ale PR #6 (Empfehlung) oder Stand-Tabelle mit Projektregel zur Nachpflege; gestellt 15.10.2026 08:4xZ nach Merge-Verweigerung durch Alex (08:40:33Z) |
 | Review | P08: Selbstreview des Agenten, menschliches Review ausstehend. P07: Selbstreview des Agenten, keine unabhängige Prüfung; danach menschliches Review durch Alex (PR #17 ohne Änderungswunsch akzeptiert, 15.10.2026 07:43:26Z). P06: Selbstreview des Agenten, keine unabhängige Prüfung; danach menschliches Review durch Alex (PR #16 ohne Änderungswunsch genehmigt, 15.10.2026 07:04:38Z). P05: Selbstreview (Skriptprüfung siehe Schrittstatus), danach menschliches Review durch Alex (PR #15 ohne Änderungswunsch akzeptiert, 14.10.2026 17:49:41Z). P01: Selbstreview, danach menschliches Review durch Alex (PR #11 nach einer Rückweisungsrunde akzeptiert, 14.10.2026). P02: Selbstreview, danach menschliches Review durch Alex (PR #12 ohne Änderungswunsch akzeptiert, 14.10.2026). P03: Selbstreview, danach menschliches Review durch Alex (PR #13 ohne Änderungswunsch akzeptiert, 14.10.2026). P04: Selbstreview; erster Stand von Alex zurückgewiesen (FIND-010), Entscheidungen danach von Alex getroffen; PR #14 von Alex akzeptiert (Review „PR akzeptiert“, 14.10.2026 17:29Z) |
 
 ## Delegation und Befugnisse
@@ -197,6 +197,7 @@ Einzelheiten in [baseline-review.md](baseline-review.md).
 
 | ID | Schwere | Fundstelle | Problem | Behandlung | Status | Beleg |
 | --- | --- | --- | --- | --- | --- | --- |
+| FIND-029 | mittel | Library P08–P10 und COMMON CONTRACT | Die README wird nicht dauerhaft gepflegt: P09 darf sie nicht schreiben (Writable nur AGENTS.md, Adapter, Journal), P10 aktualisiert sie einmal, die Prüfung je Umsetzungs-Slice nennt nur FRs, Tests und Fachdateien. Angaben zum Stand in der README veralten daher. Von Alex im Review von PR #18 erkannt (Merge verweigert, 15.10.2026 08:40:33Z) | README-Aufbau per Auswahl von Alex; Library-Hinweis: P08 auf stabile Einstiegsseite festlegen und README in P09 bzw. Slice-Prüfung aufnehmen | offen (Projekt: Auswahl ausstehend; Library: Hinweis) | Projektthread, 15.10.2026 |
 | FIND-028 | niedrig | Library P08 („Writable: README.md and docs/clarifications.md“), P07-Übergabe | P07 übergab das Eintragen des Baseline-Commits an P08, die P08-Anweisung erlaubt aber nur README.md und das Journal; Library-Befund zur Übergabe zwischen P07 und P08 | Baseline-Bezug in baseline-review.md trotzdem eingetragen (Übergabe aus P07, Auftrag zu P08); Abweichung hier offen gelegt | erledigt (Projekt), Library-Hinweis | [baseline-review.md](baseline-review.md#baseline-bezug) |
 
 ## Schrittstatus
