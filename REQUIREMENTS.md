@@ -9,8 +9,8 @@ Neue und geänderte Datensätze folgen der
 
 **Grundlage:** das von Alex am 14.10.2026 angenommene
 Zielbild Scanner PWA
-(Basis `supplied`). Technik, Frameworks und Architektur werden erst in P04
-entschieden.
+(Basis `supplied`). Technik und Architektur stehen in
+[ARCHITECTURE.md](ARCHITECTURE.md) und den ADRs.
 
 ## Zweck
 
@@ -75,7 +75,7 @@ vorgesehen und noch offen ([OQ-004](docs/clarifications.md#offene-fragen)).
 | [FR-014](docs/requirements/FR-014-subpath-hosting.md) | Unter dem Unterpfad /ScannerPWA/ voll funktionsfähig | ready |
 | [FR-015](docs/requirements/FR-015-clear-states.md) | Eindeutige App-Zustände | ready |
 | [FR-016](docs/requirements/FR-016-debug-steps.md) | Zwischenschritte zur Fehlersuche sichtbar machen | ready |
-| [FR-017](docs/requirements/FR-017-stable-memory.md) | Speicherverbrauch bei wiederholtem Scannen stabil | draft |
+| [FR-017](docs/requirements/FR-017-stable-memory.md) | Speicherverbrauch bei wiederholtem Scannen stabil | ready |
 | [FR-027](docs/requirements/FR-027-no-camera-when-framed.md) | Keine Kamera in eingebetteter Ansicht | ready |
 
 ### Stufe 2 – Mehrseitig

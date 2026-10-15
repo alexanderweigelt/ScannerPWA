@@ -179,8 +179,9 @@ sie fügt keine Funktionen hinzu und wählt keine Technik.
 im Rahmen der Ausführung von P03. Farben sind aus dem Icon des früheren
 Projektstands abgeleitet (beobachtet in
 `backup/opencv-stand-2026-10-14:public/icons/scanner.svg`, Farben `#102b5e`,
-`#17589f`); ob diese Farbwelt und das Icon übernommen werden, ist offen
-([OQ-006](docs/clarifications.md#offene-fragen)). Die Oberflächensprache ist
+`#17589f`). Alex hat die Farbwelt bestätigt; das alte Icon wird nicht
+übernommen, sondern bei FR-012 durch ein eigenes, schlichtes SVG-Icon im Stil eines
+Scan-Rahmens ersetzt ([OQ-006, Antworten](docs/clarifications.md#antworten)). Die Oberflächensprache ist
 Deutsch (OQ-001, Antwort von Alex am 14.10.2026, siehe
 [Antworten](docs/clarifications.md#antworten)); Dokumentsprache `de`.
 
@@ -229,7 +230,7 @@ Ohne eigene Ansicht: [FR-011](docs/requirements/FR-011-on-device-only.md) und
 [FR-013](docs/requirements/FR-013-offline-use.md) betreffen die Gestaltung nur
 über selbst ausgelieferte Schriften und Symbole (siehe Typography);
 [FR-012](docs/requirements/FR-012-installable-pwa.md) über App-Icon und
-Manifestfarben (siehe Colors, OQ-006);
+Manifestfarben (siehe Colors);
 [FR-014](docs/requirements/FR-014-subpath-hosting.md) und
 [FR-017](docs/requirements/FR-017-stable-memory.md) haben keine
 Gestaltungsaspekte.
@@ -420,10 +421,11 @@ Automatisch gescannt werden alle Ansichten und Teilzustände aus der Tabelle
 Kamera wird im Test durch eine simulierte Quelle ersetzt (Einrichtung P10).
 Ein automatischer Scan belegt keine volle Konformität.
 
-**Manuelle Prüfungen** (Verantwortung: Maintainer, Vorschlag Alex; vor jedem
-Release, Ergebnis im Journal): Tastaturdurchlauf am Desktop; Zoom 200 % und
-400 %; VoiceOver auf iPhone und TalkBack auf Android mit Rückkamera;
-Inhaltsprüfung der Meldungstexte auf Ursache und nächsten Schritt.
+**Manuelle Prüfungen** (vor jedem Release, Ergebnis im Journal; Zuständigkeit
+von Alex festgelegt, FIND-023, 15.10.2026): Alex prüft VoiceOver auf iPhone und
+TalkBack auf Android mit Rückkamera. Der Agent prüft den Tastaturdurchlauf am
+Desktop, Zoom 200 % und 400 % und den Inhalt der Meldungstexte auf Ursache und
+nächsten Schritt, mit Bildschirmfotos als Beleg und als Selbstprüfung gekennzeichnet.
 
 ### Berechnete Kontrastpaare
 

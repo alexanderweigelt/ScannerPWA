@@ -38,7 +38,7 @@ Objekte nach ISO 32000 braucht, das JPEG unverändert eingebettet werden kann
 
 Seiten werden nach der Übernahme einmal als JPEG kodiert (Qualität als
 Konstante, Startwert 0,92; FR-007 „ohne sichtbare Qualitätseinbuße“ wird mit
-OQ-002 gemessen). Seitengröße und Bildqualität sind Parameter, damit FR-023
+dem Kontrastmaß aus FR-007-AC-2 gemessen). Seitengröße und Bildqualität sind Parameter, damit FR-023
 und FR-024 ohne neuen Writer möglich sind.
 
 ### Consequences
