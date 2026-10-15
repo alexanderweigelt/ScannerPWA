@@ -30,7 +30,7 @@ installierbar und offline nutzbar, ohne Konten und ohne Server.
 | [Sicherheit](SECURITY.md) | Bedrohungsmodell, Sicherheitsziele, Prüfplan und Meldeweg |
 | [Klärungsjournal](docs/clarifications.md) | Offene Fragen, Antworten, Befugnisse, Verlauf und Durchlaufprotokoll |
 | [Baseline-Bericht](docs/baseline-review.md) | Prüfung und Bezug der Spezifikation |
-| `AGENTS.md` | Arbeitsregeln und Kommandos für Coding-Agents; folgt im nächsten Schritt (P09) |
+| [Agent-Anweisungen](AGENTS.md) | Arbeitsregeln, Kommandos und Gates für Coding-Agents; Agents ohne automatisches Laden von `AGENTS.md` lesen die Datei zu Beginn jeder Sitzung |
 
 Diese README ist ein Einstieg, keine zweite Spezifikation. Neues Verhalten
 wird als Anforderungsdatensatz nach der Vorlage beschrieben; bestehende
