@@ -118,7 +118,7 @@ Branch des P10-PR, Ausgangsstand `main` `d85c6b3`. Umgebung: Cloud-Container
 Linux x64, Node 24.22.0 (von nodejs.org, Prüfsumme gegen `SHASUMS256.txt`
 geprüft), npm 11.19.1; Chromium aus dem Container
 (`PLAYWRIGHT_CHROMIUM_EXECUTABLE`), weil Playwright dort keine Browser lädt.
-Selbstprüfung des Agenten; CI-Ergebnis siehe PR.
+Selbstprüfung des Agenten. CI in PR #20: GitHub-Actions-Lauf 38717859357 auf `b65c2ac`, beide Jobs grün (Prüfungen; Browser-Abläufe mit Chromium, Firefox und WebKit, Zugänglichkeit, Speicher).
 
 ### Ausgeführte Kommandos
 
